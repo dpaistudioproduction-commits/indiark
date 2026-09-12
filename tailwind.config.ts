@@ -9,52 +9,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#FAF6F5", // Soft blush warm rose
-        foreground: "#141115", // Deep espresso charcoal
+        background: "#090B0D", // Deep near-black canvas
+        foreground: "#F8F9FA", // Warm white
         card: {
-          DEFAULT: "#FFFFFF",
-          hover: "#FFFDFD",
-          border: "#EAE0DD",
+          DEFAULT: "#141820",
+          hover: "#181D26",
+          border: "rgba(255, 255, 255, 0.08)",
         },
         brand: {
-          maroon: "#781D2A",
-          maroonDark: "#5C121E",
-          maroonLight: "#9B2C3B",
+          yellow: "#F5DE88",
+          yellowLight: "#FCEEAC",
+          yellowDark: "#EAB308",
+          charcoal: "#090B0D",
+          charcoalSurface: "#141820",
+          charcoalCard: "#181D26",
+          charcoalBorder: "rgba(255, 255, 255, 0.08)",
+          textPrimary: "#F8F9FA",
+          textSecondary: "#94A3B8",
+          textMuted: "#64748B",
           teal: "#00A896",
           tealDark: "#028090",
-          tealLight: "#02C39A",
-          green: "#1B998B",
-          greenDark: "#147267",
+          green: "#10B981",
           lime: "#84CC16",
-          limeLight: "#A3E635",
-          blush: "#FAF6F5",
-          blushWarm: "#F8EFEA",
-          blushSurface: "#F4ECE9",
-          blushBorder: "#E8D8D3",
-          charcoal: "#141115",
-          charcoalMuted: "#4A3F45",
-          // backward compat mapping
-          crimson: "#781D2A",
-          crimsonLight: "#9B2C3B",
-          crimsonDark: "#5C121E",
-          gold: "#781D2A",
-          goldLight: "#9B2C3B",
-          goldDark: "#5C121E",
-          amber: "#00A896",
         },
       },
       fontFamily: {
-        serif: ["var(--font-cinzel)", "Cinzel", "Georgia", "serif"],
-        sans: ["var(--font-sans)", "Plus Jakarta Sans", "Inter", "sans-serif"],
-        display: ["var(--font-display)", "Syne", "Outfit", "sans-serif"],
+        sans: ["var(--font-sans)", "Poppins", "Inter", "sans-serif"],
+        display: ["var(--font-display)", "Poppins", "sans-serif"],
+        serif: ["var(--font-sans)", "Poppins", "sans-serif"], // Smooth fallback to modern sans
         mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
       },
       backgroundImage: {
-        "blush-gradient": "linear-gradient(180deg, #FAF6F5 0%, #F8EFEA 50%, #FAF6F5 100%)",
-        "maroon-gradient": "linear-gradient(135deg, #9B2C3B 0%, #781D2A 50%, #5C121E 100%)",
-        "crimson-gradient": "linear-gradient(135deg, #9B2C3B 0%, #781D2A 50%, #5C121E 100%)",
-        "teal-gradient": "linear-gradient(135deg, #02C39A 0%, #00A896 50%, #028090 100%)",
-        "text-gradient": "linear-gradient(135deg, #141115 0%, #2A1B20 60%, #781D2A 100%)",
+        "dark-gradient": "linear-gradient(180deg, #090B0D 0%, #0E1217 50%, #090B0D 100%)",
+        "card-gradient": "linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.005) 100%)",
+        "yellow-gradient": "linear-gradient(135deg, #FCEEAC 0%, #F5DE88 50%, #EAB308 100%)",
       },
       animation: {
         "dot-float": "dotFloat 7s ease-in-out infinite",
@@ -63,12 +51,12 @@ const config: Config = {
       },
       keyframes: {
         dotFloat: {
-          "0%, 100%": { transform: "translateY(0px) scale(1)", opacity: "0.7" },
-          "50%": { transform: "translateY(-10px) scale(1.08)", opacity: "1" },
+          "0%, 100%": { transform: "translateY(0px) scale(1)", opacity: "0.5" },
+          "50%": { transform: "translateY(-10px) scale(1.08)", opacity: "0.8" },
         },
         pulseSubtle: {
-          "0%, 100%": { opacity: "0.5" },
-          "50%": { opacity: "0.9" },
+          "0%, 100%": { opacity: "0.4" },
+          "50%": { opacity: "0.8" },
         },
         shimmer: {
           "0%": { backgroundPosition: "-200% 0" },

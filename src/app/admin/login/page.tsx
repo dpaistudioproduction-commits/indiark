@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF6F5] flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-[#090B0D] flex items-center justify-center p-4 relative overflow-hidden">
       <div className="max-w-md w-full relative z-10">
         
         {/* Brand Header */}
@@ -49,27 +49,27 @@ export default function AdminLoginPage() {
             <IndiarkLogo className="h-14 w-auto drop-shadow-sm" />
           </Link>
 
-          <h1 className="font-serif text-2xl font-bold text-[#141115] mb-1">
+          <h1 className="text-2xl font-bold text-[#F8F9FA] mb-1">
             Admin Management Console
           </h1>
-          <p className="text-xs text-[#5C5056]">
+          <p className="text-xs text-[#94A3B8]">
             Confidential B2B Representation Management Portal
           </p>
         </div>
 
         {/* Login Form Card */}
-        <div className="p-8 rounded-3xl bg-[#FFFFFF] border border-[#E8D8D3] shadow-2xl space-y-6">
+        <div className="p-8 rounded-3xl bg-[#141820] border border-white/[0.08] shadow-2xl space-y-6">
           
           {error && (
-            <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2.5">
-              <AlertCircle className="w-4 h-4 text-red-500 shrink-0" />
+            <div className="p-3.5 rounded-xl bg-red-950/40 border border-red-800/60 text-red-300 text-xs flex items-center gap-2.5">
+              <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
               <span>{error}</span>
             </div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
                 Username
               </label>
               <input
@@ -78,12 +78,12 @@ export default function AdminLoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter administrator username"
-                className="w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
                 Password
               </label>
               <input
@@ -92,7 +92,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors"
               />
             </div>
 
@@ -100,7 +100,7 @@ export default function AdminLoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-lg bg-[#C82333] hover:bg-[#8B1524] text-white text-xs font-mono font-bold tracking-widest uppercase transition-all shadow-lg shadow-[#C82333]/20 disabled:opacity-50"
+                className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-full bg-[#F5DE88] hover:bg-[#FACC15] text-[#090B0D] text-xs font-bold tracking-wider uppercase transition-all shadow-lg shadow-[#F5DE88]/20 disabled:opacity-50"
               >
                 {isLoading ? (
                   <span>Authenticating...</span>
@@ -114,10 +114,10 @@ export default function AdminLoginPage() {
             </div>
           </form>
 
-          <div className="pt-4 border-t border-[#EAE0DD] text-center">
+          <div className="pt-4 border-t border-white/[0.08] text-center">
             <Link
               href="/"
-              className="text-xs text-[#7A6C72] hover:text-[#C82333] transition-colors font-mono"
+              className="text-xs text-[#94A3B8] hover:text-[#F5DE88] transition-colors font-mono"
             >
               ← Return to public website
             </Link>

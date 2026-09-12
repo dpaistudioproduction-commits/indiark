@@ -14,23 +14,23 @@ export const metadata: Metadata = {
 
 export default function WhatWeDoPage() {
   return (
-    <div className="pt-32 pb-24 bg-[#FAF6F5] min-h-screen relative overflow-hidden">
+    <div className="pt-32 pb-24 bg-[#090B0D] min-h-screen relative overflow-hidden">
       <BrandDotMotif count={8} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FDE8E9] border border-[#781D2A]/20 text-[10px] font-mono tracking-[0.25em] text-[#781D2A] uppercase font-bold mb-4 shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[10px] font-semibold tracking-[0.2em] text-[#F5DE88] uppercase mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-[#00A896] pulse-node" />
             <span>CORE CAPABILITIES &amp; ADVISORY</span>
           </div>
 
-          <h1 className="font-serif text-3xl sm:text-5xl font-bold text-[#141115] tracking-tight mb-4">
-            WHAT WE <span className="text-[#781D2A]">DO</span>
+          <h1 className="text-3xl sm:text-5xl font-light text-[#F8F9FA] tracking-tight mb-4">
+            WHAT WE <span className="font-extrabold text-[#F5DE88]">DO</span>
           </h1>
 
-          <p className="text-[#5C5056] text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+          <p className="text-[#94A3B8] text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
             Indiark operates across six focused service pillars designed to monetize, position, and protect intellectual property at every stage of the entertainment lifecycle.
           </p>
         </div>
@@ -39,39 +39,39 @@ export default function WhatWeDoPage() {
         <ServicesSection />
 
         {/* Rights Licensing Deep Dive Matrix */}
-        <div id="rights-licensing" className="my-20 p-8 sm:p-12 rounded-3xl bg-[#FFFFFF] border border-[#E8D8D3] shadow-lg">
+        <div id="rights-licensing" className="my-20 p-8 sm:p-12 rounded-3xl bg-[#141820] border border-white/[0.08] shadow-2xl">
           <div className="max-w-3xl mb-8">
-            <span className="text-[10px] font-mono tracking-widest uppercase font-bold inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FDE8E9] border border-[#781D2A]/20 text-[#781D2A] mb-3 shadow-2xs">
+            <span className="text-[10px] font-semibold tracking-widest uppercase inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[#F5DE88] mb-3">
               <span className="w-1.5 h-1.5 rounded-full bg-[#00A896]" />
               <span>COMPREHENSIVE RIGHTS EXPLOITATION</span>
             </span>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#141115] mb-3">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#F8F9FA] mb-3">
               The 360° Media Rights Matrix
             </h2>
-            <p className="text-sm text-[#4A3F45] leading-relaxed">
+            <p className="text-sm text-[#94A3B8] leading-relaxed">
               We dissect and monetize intellectual property across distinct windows and geographic territories to ensure zero cannibalization and maximum aggregate revenue.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-            <div className="p-5 rounded-2xl bg-[#FAF6F5] border border-[#EAE0DD]">
-              <h4 className="font-bold text-[#141115] uppercase tracking-wider mb-2">Primary Digital Window</h4>
-              <p className="text-[#5C5056] leading-relaxed">Exclusive SVOD/TVOD premieres on leading national &amp; international OTT streamers.</p>
+            <div className="p-5 rounded-2xl bg-[#181D26] border border-white/[0.06]">
+              <h4 className="font-bold text-[#F8F9FA] uppercase tracking-wider mb-2">Primary Digital Window</h4>
+              <p className="text-[#94A3B8] leading-relaxed">Exclusive SVOD/TVOD premieres on leading national &amp; international OTT streamers.</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#FAF6F5] border border-[#EAE0DD]">
-              <h4 className="font-bold text-[#141115] uppercase tracking-wider mb-2">Linear &amp; Satellite TV</h4>
-              <p className="text-[#5C5056] leading-relaxed">Terrestrial &amp; satellite broadcasting across regional and Hindi-language television networks.</p>
+            <div className="p-5 rounded-2xl bg-[#181D26] border border-white/[0.06]">
+              <h4 className="font-bold text-[#F8F9FA] uppercase tracking-wider mb-2">Linear &amp; Satellite TV</h4>
+              <p className="text-[#94A3B8] leading-relaxed">Terrestrial &amp; satellite broadcasting across regional and Hindi-language television networks.</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#FAF6F5] border border-[#EAE0DD]">
-              <h4 className="font-bold text-[#141115] uppercase tracking-wider mb-2">Ancillary &amp; In-Flight (IFE)</h4>
-              <p className="text-[#5C5056] leading-relaxed">Licensing to global commercial airlines, maritime fleets, and closed-circuit hospitality networks.</p>
+            <div className="p-5 rounded-2xl bg-[#181D26] border border-white/[0.06]">
+              <h4 className="font-bold text-[#F8F9FA] uppercase tracking-wider mb-2">Ancillary &amp; In-Flight (IFE)</h4>
+              <p className="text-[#94A3B8] leading-relaxed">Licensing to global commercial airlines, maritime fleets, and closed-circuit hospitality networks.</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#FAF6F5] border border-[#EAE0DD]">
-              <h4 className="font-bold text-[#141115] uppercase tracking-wider mb-2">Derivative &amp; Dubbing</h4>
-              <p className="text-[#5C5056] leading-relaxed">Regional and foreign language dubbing rights, remake rights, and book/format adaptation deals.</p>
+            <div className="p-5 rounded-2xl bg-[#181D26] border border-white/[0.06]">
+              <h4 className="font-bold text-[#F8F9FA] uppercase tracking-wider mb-2">Derivative &amp; Dubbing</h4>
+              <p className="text-[#94A3B8] leading-relaxed">Regional and foreign language dubbing rights, remake rights, and book/format adaptation deals.</p>
             </div>
           </div>
         </div>

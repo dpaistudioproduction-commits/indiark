@@ -12,7 +12,7 @@ export default function BusinessBridge() {
     {
       id: 0,
       role: "CONTENT OWNER",
-      badgeColor: "bg-[#00A896] text-white border-[#00A896]",
+      badgeColor: "bg-white/[0.08] text-[#F8F9FA] border-white/15",
       dotColor: "bg-[#00A896]",
       title: "Content Owners",
       subtitle: "Producers, Filmmakers & Artists",
@@ -24,8 +24,8 @@ export default function BusinessBridge() {
     {
       id: 1,
       role: "THE STRATEGIC CONNECTOR",
-      badgeColor: "bg-[#1B998B] text-white border-[#1B998B]",
-      dotColor: "bg-[#1B998B]",
+      badgeColor: "bg-[#F5DE88] text-[#090B0D] border-[#F5DE88]",
+      dotColor: "bg-[#F5DE88]",
       title: "Indiark Entertainments",
       subtitle: "Media Rights & Entertainment Business Agency",
       description: "We act as the specialized commercial bridge: auditing rights, packaging commercial pitch decks, negotiating optimal license terms, and securing deal closures.",
@@ -36,7 +36,7 @@ export default function BusinessBridge() {
     {
       id: 2,
       role: "RIGHT PLATFORM & OPPORTUNITY",
-      badgeColor: "bg-[#00A896] text-white border-[#00A896]",
+      badgeColor: "bg-white/[0.08] text-[#F8F9FA] border-white/15",
       dotColor: "bg-[#00A896]",
       title: "Platforms, Buyers & Markets",
       subtitle: "OTTs, Broadcasters & Distributors",
@@ -48,48 +48,48 @@ export default function BusinessBridge() {
   ];
 
   return (
-    <section className="py-24 bg-[#FAF6F5] border-y border-[#E8D8D3] relative overflow-hidden">
+    <section className="py-24 bg-[#090B0D] border-y border-white/[0.08] relative overflow-hidden">
       <BrandDotMotif count={6} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FDE8E9] border border-[#781D2A]/20 text-[10px] font-mono tracking-[0.25em] text-[#781D2A] uppercase font-bold mb-4 shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[10px] font-semibold tracking-[0.2em] text-[#F5DE88] uppercase mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-[#00A896] pulse-node" />
             <span>THE BUSINESS IDEA</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#141115] tracking-tight mb-4">
-            GREAT CONTENT NEEDS THE <span className="text-[#781D2A]">RIGHT CONNECTION</span>.
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-[#F8F9FA] tracking-tight mb-4">
+            GREAT CONTENT NEEDS THE <span className="font-extrabold text-[#F5DE88]">RIGHT CONNECTION</span>.
           </h2>
-          <p className="text-[#4A3F45] text-sm sm:text-base leading-relaxed">
+          <p className="text-[#94A3B8] text-sm sm:text-base leading-relaxed">
             Content creation and media distribution require distinct skill sets. Indiark Entertainments operates as the commercial catalyst bridging creative vision with institutional buyers.
           </p>
         </div>
 
         {/* 5-Step Flow Vector Strip */}
-        <div className="mb-14 p-4 rounded-2xl bg-[#FFFFFF] border border-[#EAE0DD] shadow-xs flex flex-wrap items-center justify-around gap-2 text-center text-[11px] font-mono font-bold text-[#141115]">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FDE8E9] text-[#781D2A] border border-[#781D2A]/20 shadow-2xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#781D2A]" />
+        <div className="mb-14 p-4 rounded-2xl bg-[#141820] border border-white/[0.08] shadow-lg flex flex-wrap items-center justify-around gap-2 text-center text-[11px] font-mono font-bold text-[#F8F9FA]">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.05] text-[#CBD5E1] border border-white/10">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#F5DE88]" />
             CONTENT OWNER
           </span>
-          <span className="text-[#781D2A] font-bold text-base">→</span>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#781D2A] text-white shadow-xs">
+          <span className="text-[#F5DE88] font-bold text-base">→</span>
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F5DE88] text-[#090B0D] shadow-md shadow-[#F5DE88]/20">
             <span className="w-1.5 h-1.5 rounded-full bg-[#00A896] pulse-node" />
             INDIARK
           </span>
-          <span className="text-[#781D2A] font-bold text-base">→</span>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FDE8E9] text-[#781D2A] border border-[#781D2A]/20 shadow-2xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#781D2A]" />
+          <span className="text-[#F5DE88] font-bold text-base">→</span>
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.05] text-[#CBD5E1] border border-white/10">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#F5DE88]" />
             RIGHT PLATFORM
           </span>
-          <span className="text-[#781D2A] font-bold text-base">→</span>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FDE8E9] text-[#781D2A] border border-[#781D2A]/20 shadow-2xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#781D2A]" />
+          <span className="text-[#F5DE88] font-bold text-base">→</span>
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.05] text-[#CBD5E1] border border-white/10">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#F5DE88]" />
             RIGHT MARKET
           </span>
-          <span className="text-[#781D2A] font-bold text-base">→</span>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FDE8E9] text-[#781D2A] border border-[#781D2A]/20 shadow-2xs">
+          <span className="text-[#F5DE88] font-bold text-base">→</span>
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.05] text-[#CBD5E1] border border-white/10">
             <span className="w-1.5 h-1.5 rounded-full bg-[#84CC16]" />
             RIGHT OPPORTUNITY
           </span>
@@ -107,33 +107,32 @@ export default function BusinessBridge() {
                 onClick={() => setActiveNode(index)}
                 className={`relative rounded-3xl p-7 sm:p-8 cursor-pointer transition-all duration-300 flex flex-col justify-between ${
                   isIndiark
-                    ? "bg-[#FFFFFF] border-2 border-[#781D2A] shadow-xl shadow-[#781D2A]/10 -translate-y-1"
-                    : "bg-[#FFFFFF] border border-[#EAE0DD] hover:border-[#781D2A]/50 shadow-md"
-                } ${isSelected ? "ring-2 ring-[#781D2A]/30" : ""}`}
+                    ? "bg-[#181D26] border-2 border-[#F5DE88] shadow-2xl shadow-black/80 -translate-y-1"
+                    : "bg-[#141820] border border-white/[0.08] hover:border-white/20 shadow-lg"
+                } ${isSelected ? "ring-2 ring-[#F5DE88]/30" : ""}`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
-                    {/* Small Blush/Maroon Box Heading */}
-                    <span className={`text-[10px] font-mono tracking-widest uppercase font-bold px-3 py-1.5 rounded-lg shadow-2xs ${
+                    <span className={`text-[10px] font-semibold tracking-wider uppercase px-3 py-1.5 rounded-full ${
                       isIndiark
-                        ? "bg-[#781D2A] text-white"
-                        : "bg-[#FDE8E9] text-[#781D2A] border border-[#781D2A]/20"
+                        ? "bg-[#F5DE88] text-[#090B0D] font-bold"
+                        : "bg-white/[0.06] text-[#CBD5E1] border border-white/10"
                     }`}>
                       {node.role}
                     </span>
-                    <span className="text-xs font-mono text-[#781D2A] font-bold px-2 py-0.5 rounded bg-[#FDE8E9]">
+                    <span className="text-xs font-mono text-[#F5DE88] font-bold px-2 py-0.5 rounded bg-white/[0.06]">
                       0{index + 1}
                     </span>
                   </div>
 
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#141115] mb-1">
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#F8F9FA] mb-1">
                     {node.title}
                   </h3>
-                  <div className="text-xs font-mono font-bold text-[#781D2A] mb-4">
+                  <div className="text-xs font-semibold text-[#F5DE88] mb-4">
                     {node.subtitle}
                   </div>
 
-                  <p className="text-sm text-[#4A3F45] leading-relaxed mb-6">
+                  <p className="text-sm text-[#94A3B8] leading-relaxed mb-6">
                     {node.description}
                   </p>
                 </div>
@@ -143,7 +142,7 @@ export default function BusinessBridge() {
                     {node.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-[10px] font-mono tracking-wider px-2 py-0.5 rounded bg-[#FAF6F5] text-[#4A3F45] border border-[#E8D8D3]"
+                        className="text-[10px] font-mono tracking-wider px-2.5 py-0.5 rounded-full bg-white/[0.04] text-[#CBD5E1] border border-white/[0.06]"
                       >
                         {tag}
                       </span>
@@ -152,7 +151,7 @@ export default function BusinessBridge() {
 
                   <Link
                     href={node.actionHref}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#781D2A] hover:bg-[#5C121E] text-white text-xs font-mono font-bold tracking-widest uppercase transition-all shadow-md shadow-[#781D2A]/20"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F5DE88] hover:bg-[#FACC15] text-[#090B0D] text-xs font-bold tracking-wider uppercase transition-all shadow-md shadow-[#F5DE88]/20"
                   >
                     <span>{node.actionLabel}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -160,7 +159,7 @@ export default function BusinessBridge() {
                 </div>
 
                 {isSelected && (
-                  <div className="absolute top-0 left-8 right-8 h-[3px] bg-[#781D2A] rounded-full" />
+                  <div className="absolute top-0 left-8 right-8 h-[3px] bg-[#F5DE88] rounded-full" />
                 )}
               </div>
             );
@@ -168,19 +167,19 @@ export default function BusinessBridge() {
         </div>
 
         {/* Business Equation Callout */}
-        <div className="mt-12 p-6 rounded-2xl bg-[#FFFFFF] border border-[#EAE0DD] flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left shadow-xs">
+        <div className="mt-12 p-6 rounded-3xl bg-[#141820] border border-white/[0.08] flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left shadow-lg">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-[#FDE8E9] border border-[#781D2A]/20 flex items-center justify-center shrink-0 shadow-2xs">
-              <ShieldCheck className="w-5 h-5 text-[#781D2A]" />
+            <div className="w-10 h-10 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-5 h-5 text-[#F5DE88]" />
             </div>
             <div>
-              <div className="text-sm font-bold text-[#141115]">Commercial Integrity &amp; Pure Advocacy</div>
-              <div className="text-xs text-[#5C5056]">Indiark does not claim ownership of rights—we champion content creators to achieve the highest possible market valuation.</div>
+              <div className="text-sm font-bold text-[#F8F9FA]">Commercial Integrity &amp; Pure Advocacy</div>
+              <div className="text-xs text-[#94A3B8]">Indiark does not claim ownership of rights—we champion content creators to achieve the highest possible market valuation.</div>
             </div>
           </div>
           <Link
             href="/who-we-are"
-            className="shrink-0 text-xs font-mono font-bold tracking-widest uppercase px-6 py-3 rounded-xl bg-[#781D2A] hover:bg-[#5C121E] text-white transition-all shadow-md shadow-[#781D2A]/20"
+            className="shrink-0 text-xs font-bold tracking-wider uppercase px-6 py-3 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/15 transition-all shadow-sm"
           >
             DISCOVER OUR STORY
           </Link>

@@ -83,22 +83,22 @@ export default function EcosystemConstellation() {
   const [selectedNode, setSelectedNode] = useState<EcosystemNode>(NODES[0]);
 
   return (
-    <section className="py-24 bg-[#F5ECE8] border-y border-[#E8D8D3] relative overflow-hidden">
+    <section className="py-24 bg-[#0B0E14] border-y border-white/[0.08] relative overflow-hidden">
       <BrandDotMotif count={6} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FDE8E9] border border-[#781D2A]/20 text-[10px] font-mono tracking-[0.25em] text-[#781D2A] uppercase font-bold mb-4 shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[10px] font-semibold tracking-[0.2em] text-[#F5DE88] uppercase mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-[#00A896] pulse-node" />
             <span>MARKET CONNECTIVITY</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#141115] tracking-tight mb-4">
-            THE CONTENT <span className="text-[#781D2A]">ECOSYSTEM</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-[#F8F9FA] tracking-tight mb-4">
+            THE CONTENT <span className="font-extrabold text-[#F5DE88]">ECOSYSTEM</span>
           </h2>
-          <p className="text-[#5C5056] text-sm sm:text-base leading-relaxed">
-            All entertainment formats and monetization corridors revolve around the central connector node: <strong className="text-[#781D2A] font-bold">INDIARK</strong>.
+          <p className="text-[#94A3B8] text-sm sm:text-base leading-relaxed">
+            All entertainment formats and monetization corridors revolve around the central connector node: <strong className="text-[#F5DE88] font-bold">INDIARK</strong>.
           </p>
         </div>
 
@@ -106,16 +106,16 @@ export default function EcosystemConstellation() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           <div className="lg:col-span-7">
-            <div className="relative rounded-3xl bg-[#FAF6F5] border border-[#E8D8D3] p-6 sm:p-10 shadow-lg overflow-hidden">
+            <div className="relative rounded-3xl bg-[#141820] border border-white/[0.08] p-6 sm:p-10 shadow-2xl overflow-hidden">
               
               {/* Central Indiark Node */}
               <div className="flex flex-col items-center justify-center mb-8">
-                <div className="relative p-6 rounded-2xl bg-[#FFFFFF] border-2 border-[#781D2A] shadow-xl shadow-[#781D2A]/10 flex flex-col items-center justify-center max-w-xs text-center">
+                <div className="relative p-6 rounded-2xl bg-[#181D26] border-2 border-[#F5DE88] shadow-2xl shadow-[#F5DE88]/10 flex flex-col items-center justify-center max-w-xs text-center">
                   <div className="w-3 h-3 rounded-full bg-[#00A896] mb-2 pulse-node" />
-                  <span className="font-serif text-xl font-black tracking-[0.2em] text-[#141115]">
+                  <span className="text-xl font-black tracking-[0.2em] text-[#F8F9FA]">
                     INDIARK
                   </span>
-                  <span className="text-[9px] font-mono tracking-widest text-[#781D2A] uppercase font-bold">
+                  <span className="text-[9px] font-mono tracking-widest text-[#F5DE88] uppercase font-bold">
                     CENTRAL CONNECTOR HUB
                   </span>
                 </div>
@@ -129,21 +129,21 @@ export default function EcosystemConstellation() {
                     <button
                       key={node.id}
                       onClick={() => setSelectedNode(node)}
-                      className={`p-3.5 rounded-xl text-left transition-all duration-200 border flex flex-col justify-between ${
+                      className={`p-3.5 rounded-2xl text-left transition-all duration-200 border flex flex-col justify-between ${
                         isSelected
-                          ? "bg-[#FFFFFF] border-[#781D2A] text-[#141115] shadow-md shadow-[#781D2A]/10"
-                          : "bg-[#FFFFFF]/80 border-[#E8D8D3] text-[#5C5056] hover:border-[#D8C7C3] hover:text-[#141115]"
+                          ? "bg-[#1E2430] border-[#F5DE88] text-[#F8F9FA] shadow-lg shadow-black/60"
+                          : "bg-[#181D26]/80 border-white/[0.06] text-[#94A3B8] hover:border-white/20 hover:text-white"
                       }`}
                     >
                       <div className="flex items-center justify-between mb-1.5">
                         <span className={`text-[11px] font-mono font-bold tracking-wider ${
-                          isSelected ? "text-[#781D2A]" : "text-[#141115]"
+                          isSelected ? "text-[#F5DE88]" : "text-[#F8F9FA]"
                         }`}>
                           {node.name}
                         </span>
                         {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#00A896]" />}
                       </div>
-                      <span className="text-[10px] text-[#7A6C72] truncate block">
+                      <span className="text-[10px] text-[#64748B] truncate block">
                         {node.category}
                       </span>
                     </button>
@@ -151,7 +151,7 @@ export default function EcosystemConstellation() {
                 })}
               </div>
 
-              <div className="mt-6 text-center text-xs text-[#7A6C72] font-mono">
+              <div className="mt-6 text-center text-xs text-[#64748B] font-mono">
                 Click any sector node to explore commercial monetization corridors
               </div>
             </div>
@@ -159,39 +159,39 @@ export default function EcosystemConstellation() {
 
           {/* Right: Selected Node Deep Dive */}
           <div className="lg:col-span-5">
-            <div className="rounded-3xl p-8 bg-[#FFFFFF] border border-[#E8D8D3] shadow-xl flex flex-col justify-between min-h-[420px]">
+            <div className="rounded-3xl p-8 bg-[#141820] border border-white/[0.08] shadow-2xl flex flex-col justify-between min-h-[420px]">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-[10px] font-mono tracking-widest uppercase font-bold px-3 py-1.5 rounded-full bg-[#FDE8E9] border border-[#781D2A]/20 text-[#781D2A] shadow-2xs">
+                  <span className="text-[10px] font-semibold tracking-widest uppercase px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[#F5DE88]">
                     ECOSYSTEM NODE
                   </span>
-                  <span className="text-xs font-mono text-[#7A6C72] uppercase tracking-widest">
+                  <span className="text-xs font-mono text-[#64748B] uppercase tracking-widest">
                     {selectedNode.category}
                   </span>
                 </div>
 
-                <h3 className="font-serif text-3xl font-bold text-[#141115] mb-2">
+                <h3 className="text-3xl font-bold text-[#F8F9FA] mb-2">
                   {selectedNode.name}
                 </h3>
                 
-                <p className="text-sm text-[#4A3F45] leading-relaxed mb-6">
+                <p className="text-sm text-[#94A3B8] leading-relaxed mb-6">
                   {selectedNode.description}
                 </p>
 
-                <div className="p-4 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] mb-6">
-                  <div className="text-[10px] font-mono text-[#781D2A] tracking-wider uppercase font-bold mb-1">
+                <div className="p-4 rounded-2xl bg-[#181D26] border border-white/[0.06] mb-6">
+                  <div className="text-[10px] font-mono text-[#F5DE88] tracking-wider uppercase font-bold mb-1">
                     PRIMARY MONETIZATION CORRIDOR
                   </div>
-                  <div className="text-xs font-semibold text-[#141115]">
+                  <div className="text-xs font-semibold text-[#CBD5E1]">
                     {selectedNode.marketPotential}
                   </div>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#EAE0DD] flex items-center justify-between gap-4">
+              <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between gap-4">
                 <Link
                   href="/submit-content"
-                  className="px-4 py-2.5 rounded-lg bg-[#781D2A] text-white text-xs font-mono font-bold tracking-widest uppercase hover:bg-[#5C121E] transition-all flex items-center gap-1 shadow-md shadow-[#781D2A]/20"
+                  className="px-5 py-2.5 rounded-full bg-[#F5DE88] hover:bg-[#FACC15] text-[#090B0D] text-xs font-bold tracking-wider uppercase transition-all flex items-center gap-1 shadow-md shadow-[#F5DE88]/20"
                 >
                   <span>Submit {selectedNode.name}</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -199,7 +199,7 @@ export default function EcosystemConstellation() {
 
                 <Link
                   href="/for-platforms"
-                  className="text-xs font-mono font-semibold text-[#5C5056] hover:text-[#141115] transition-colors"
+                  className="text-xs font-semibold text-[#94A3B8] hover:text-white transition-colors"
                 >
                   Buyer Catalog Request
                 </Link>

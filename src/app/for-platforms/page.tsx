@@ -20,23 +20,23 @@ export default function ForPlatformsPage() {
   ];
 
   return (
-    <div className="pt-32 pb-24 bg-[#FAF6F5] min-h-screen relative overflow-hidden">
+    <div className="pt-32 pb-24 bg-[#090B0D] min-h-screen relative overflow-hidden">
       <BrandDotMotif count={8} />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FDE8E9] border border-[#781D2A]/20 text-[10px] font-mono tracking-[0.25em] text-[#781D2A] uppercase font-bold mb-4 shadow-xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[10px] font-semibold tracking-[0.2em] text-[#F5DE88] uppercase mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-[#00A896] pulse-node" />
             <span>B2B BUYER &amp; PLATFORM NETWORK</span>
           </div>
 
-          <h1 className="font-serif text-3xl sm:text-5xl font-bold text-[#141115] tracking-tight mb-4">
-            LOOKING FOR <span className="text-[#781D2A]">CONTENT?</span>
+          <h1 className="text-3xl sm:text-5xl font-light text-[#F8F9FA] tracking-tight mb-4">
+            LOOKING FOR <span className="font-extrabold text-[#F5DE88]">CONTENT?</span>
           </h1>
 
-          <p className="text-[#5C5056] text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+          <p className="text-[#94A3B8] text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
             Indiark Entertainments serves as an institutional representation and connection point for OTT platforms, satellite broadcasters, airline IFE curators, and global distributors seeking vetted Indian entertainment properties.
           </p>
         </div>
@@ -46,12 +46,12 @@ export default function ForPlatformsPage() {
           {CATEGORIES.map((cat) => (
             <div
               key={cat.title}
-              className="p-5 rounded-2xl bg-[#FFFFFF] border border-[#E8D8D3] hover:border-[#C82333]/40 shadow-sm transition-all"
+              className="p-5 rounded-2xl bg-[#141820] border border-white/[0.08] hover:border-[#F5DE88]/40 shadow-lg transition-all"
             >
-              <h3 className="font-serif text-sm font-bold text-[#141115] mb-1 tracking-wider">
+              <h3 className="text-sm font-bold text-[#F8F9FA] mb-1 tracking-wider">
                 {cat.title}
               </h3>
-              <p className="text-xs text-[#5C5056] leading-relaxed">
+              <p className="text-xs text-[#94A3B8] leading-relaxed">
                 {cat.desc}
               </p>
             </div>

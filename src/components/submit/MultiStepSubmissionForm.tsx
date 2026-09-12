@@ -167,20 +167,20 @@ export default function MultiStepSubmissionForm() {
 
   if (isSuccess) {
     return (
-      <div className="rounded-3xl p-8 sm:p-12 bg-[#FFFFFF] border border-[#E8D8D3] text-center shadow-2xl animate-fadeIn">
-        <div className="w-16 h-16 rounded-full bg-[#FDE8E9] border border-[#C82333]/30 flex items-center justify-center mx-auto mb-6">
-          <CheckCircle2 className="w-8 h-8 text-[#C82333]" />
+      <div className="rounded-3xl p-8 sm:p-12 bg-[#141820] border border-white/[0.08] text-center shadow-2xl animate-fadeIn">
+        <div className="w-16 h-16 rounded-full bg-white/[0.06] border border-[#F5DE88]/40 flex items-center justify-center mx-auto mb-6">
+          <CheckCircle2 className="w-8 h-8 text-[#F5DE88]" />
         </div>
-        <h2 className="font-serif text-3xl font-bold text-[#141115] mb-3">
+        <h2 className="text-3xl font-bold text-[#F8F9FA] mb-3">
           Content Submission Received
         </h2>
-        <p className="text-base text-[#4A3F45] max-w-xl mx-auto mb-6 leading-relaxed">
-          Thank you. Your title <strong className="text-[#C82333]">&ldquo;{formData.projectName}&rdquo;</strong> has been securely logged into Indiark&apos;s evaluation queue.
+        <p className="text-base text-[#94A3F8] max-w-xl mx-auto mb-6 leading-relaxed">
+          Thank you. Your title <strong className="text-[#F5DE88]">&ldquo;{formData.projectName}&rdquo;</strong> has been securely logged into Indiark&apos;s evaluation queue.
         </p>
-        <div className="p-5 rounded-2xl bg-[#FAF6F5] border border-[#EAE0DD] max-w-lg mx-auto text-xs text-[#5C5056] mb-8 text-left space-y-2">
-          <div className="text-[#141115] font-bold">What happens next:</div>
+        <div className="p-5 rounded-2xl bg-[#181D26] border border-white/[0.06] max-w-lg mx-auto text-xs text-[#CBD5E1] mb-8 text-left space-y-2">
+          <div className="text-[#F8F9FA] font-bold">What happens next:</div>
           <div>1. Our acquisitions team performs a confidential rights &amp; commercial viability audit.</div>
-          <div>2. We will contact you at <span className="text-[#C82333] font-semibold">{formData.email}</span> within 3-5 business days.</div>
+          <div>2. We will contact you at <span className="text-[#F5DE88] font-semibold">{formData.email}</span> within 3-5 business days.</div>
         </div>
         <button
           onClick={() => {
@@ -188,7 +188,7 @@ export default function MultiStepSubmissionForm() {
             setIsSuccess(false);
             setStep(1);
           }}
-          className="px-6 py-3 rounded-lg bg-[#C82333] hover:bg-[#8B1524] text-white text-xs font-mono font-bold tracking-widest uppercase transition-all shadow-md shadow-[#C82333]/20"
+          className="px-6 py-3 rounded-full bg-[#F5DE88] hover:bg-[#FACC15] text-[#090B0D] text-xs font-bold tracking-wider uppercase transition-all shadow-lg shadow-[#F5DE88]/20"
         >
           Submit Another Title
         </button>
@@ -205,7 +205,7 @@ export default function MultiStepSubmissionForm() {
   ];
 
   return (
-    <div className="rounded-3xl bg-[#FFFFFF] border border-[#E8D8D3] shadow-xl p-6 sm:p-10">
+    <div className="rounded-3xl bg-[#141820] border border-white/[0.08] shadow-2xl p-6 sm:p-10">
       
       {/* Progress Bar & Step Indicators */}
       <div className="mb-10">
@@ -215,33 +215,33 @@ export default function MultiStepSubmissionForm() {
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold transition-all ${
                   step === s.num
-                    ? "bg-[#C82333] text-white shadow-md shadow-[#C82333]/30"
+                    ? "bg-[#F5DE88] text-[#090B0D] shadow-lg shadow-[#F5DE88]/30"
                     : step > s.num
-                    ? "bg-[#FDE8E9] text-[#C82333] border border-[#C82333]/30"
-                    : "bg-[#FAF6F5] text-[#8C7D84]"
+                    ? "bg-white/[0.08] text-[#F5DE88] border border-white/15"
+                    : "bg-white/[0.04] text-[#64748B]"
                 }`}
               >
                 {step > s.num ? "✓" : s.num}
               </div>
               <span className={`text-[10px] uppercase font-mono tracking-wider mt-1 hidden sm:block ${
-                step === s.num ? "text-[#C82333] font-bold" : "text-[#7A6C72]"
+                step === s.num ? "text-[#F5DE88] font-bold" : "text-[#64748B]"
               }`}>
                 {s.title}
               </span>
             </div>
           ))}
         </div>
-        <div className="w-full bg-[#FAF6F5] h-1.5 rounded-full overflow-hidden border border-[#EAE0DD]">
+        <div className="w-full bg-white/[0.06] h-1.5 rounded-full overflow-hidden border border-white/[0.06]">
           <div
-            className="bg-[#C82333] h-full transition-all duration-300"
+            className="bg-[#F5DE88] h-full transition-all duration-300"
             style={{ width: `${((step - 1) / 4) * 100}%` }}
           />
         </div>
       </div>
 
       {serverError && (
-        <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-3">
-          <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
+        <div className="mb-6 p-4 rounded-xl bg-red-950/40 border border-red-800/60 text-red-300 text-xs flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />
           <span>{serverError}</span>
         </div>
       )}
@@ -250,33 +250,33 @@ export default function MultiStepSubmissionForm() {
       {step === 1 && (
         <div className="space-y-6 animate-fadeIn">
           <div>
-            <h3 className="font-serif text-xl font-bold text-[#141115] mb-1">
+            <h3 className="text-xl font-bold text-[#F8F9FA] mb-1">
               Step 1: Applicant &amp; Entity Information
             </h3>
-            <p className="text-xs text-[#5C5056]">
+            <p className="text-xs text-[#94A3B8]">
               Provide contact details of the primary producer, rights holder, or authorized representative.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
-                Full Name <span className="text-[#C82333]">*</span>
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
+                Full Name <span className="text-[#F5DE88]">*</span>
               </label>
               <input
                 type="text"
                 value={formData.applicantName}
                 onChange={(e) => setFormData({ ...formData, applicantName: e.target.value })}
                 placeholder="e.g. Ramesh Varma"
-                className={`w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors ${
-                  errors.applicantName ? "border-red-500" : "border-[#EAE0DD]"
+                className={`w-full px-4 py-3 rounded-xl bg-[#181D26] border text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors ${
+                  errors.applicantName ? "border-red-500" : "border-white/10"
                 }`}
               />
-              {errors.applicantName && <p className="text-red-500 text-[11px] mt-1">{errors.applicantName}</p>}
+              {errors.applicantName && <p className="text-red-400 text-[11px] mt-1">{errors.applicantName}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
                 Company / Production House
               </label>
               <input
@@ -284,12 +284,12 @@ export default function MultiStepSubmissionForm() {
                 value={formData.companyName}
                 onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                 placeholder="e.g. CineCraft Studios LLP"
-                className="w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
                 Designation
               </label>
               <input
@@ -297,44 +297,44 @@ export default function MultiStepSubmissionForm() {
                 value={formData.designation}
                 onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
                 placeholder="e.g. Producer / Director / Rights Holder"
-                className="w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
-                Email Address <span className="text-[#C82333]">*</span>
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
+                Email Address <span className="text-[#F5DE88]">*</span>
               </label>
               <input
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="producer@studio.com"
-                className={`w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors ${
-                  errors.email ? "border-red-500" : "border-[#EAE0DD]"
+                className={`w-full px-4 py-3 rounded-xl bg-[#181D26] border text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors ${
+                  errors.email ? "border-red-500" : "border-white/10"
                 }`}
               />
-              {errors.email && <p className="text-red-500 text-[11px] mt-1">{errors.email}</p>}
+              {errors.email && <p className="text-red-400 text-[11px] mt-1">{errors.email}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
-                Mobile / WhatsApp <span className="text-[#C82333]">*</span>
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
+                Mobile / WhatsApp <span className="text-[#F5DE88]">*</span>
               </label>
               <input
                 type="tel"
                 value={formData.mobile}
                 onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                 placeholder="+91 98400 12345"
-                className={`w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors ${
-                  errors.mobile ? "border-red-500" : "border-[#EAE0DD]"
+                className={`w-full px-4 py-3 rounded-xl bg-[#181D26] border text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors ${
+                  errors.mobile ? "border-red-500" : "border-white/10"
                 }`}
               />
-              {errors.mobile && <p className="text-red-500 text-[11px] mt-1">{errors.mobile}</p>}
+              {errors.mobile && <p className="text-red-400 text-[11px] mt-1">{errors.mobile}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
                 City / Country
               </label>
               <input
@@ -342,7 +342,7 @@ export default function MultiStepSubmissionForm() {
                 value={formData.city}
                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                 placeholder="e.g. Chennai, India"
-                className="w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors"
               />
             </div>
           </div>
@@ -353,39 +353,39 @@ export default function MultiStepSubmissionForm() {
       {step === 2 && (
         <div className="space-y-6 animate-fadeIn">
           <div>
-            <h3 className="font-serif text-xl font-bold text-[#141115] mb-1">
+            <h3 className="text-xl font-bold text-[#F8F9FA] mb-1">
               Step 2: Project &amp; Content Details
             </h3>
-            <p className="text-xs text-[#5C5056]">
+            <p className="text-xs text-[#94A3B8]">
               Provide specific creative and metadata parameters of the title being submitted.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
-                Project Title <span className="text-[#C82333]">*</span>
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
+                Project Title <span className="text-[#F5DE88]">*</span>
               </label>
               <input
                 type="text"
                 value={formData.projectName}
                 onChange={(e) => setFormData({ ...formData, projectName: e.target.value })}
                 placeholder="e.g. CHRONICLES OF VENUR"
-                className={`w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors ${
-                  errors.projectName ? "border-red-500" : "border-[#EAE0DD]"
+                className={`w-full px-4 py-3 rounded-xl bg-[#181D26] border text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors ${
+                  errors.projectName ? "border-red-500" : "border-white/10"
                 }`}
               />
-              {errors.projectName && <p className="text-red-500 text-[11px] mt-1">{errors.projectName}</p>}
+              {errors.projectName && <p className="text-red-400 text-[11px] mt-1">{errors.projectName}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
-                Content Type <span className="text-[#C82333]">*</span>
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
+                Content Type <span className="text-[#F5DE88]">*</span>
               </label>
               <select
                 value={formData.contentType}
                 onChange={(e) => setFormData({ ...formData, contentType: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors"
               >
                 <option value="Feature Film">Feature Film</option>
                 <option value="Web Series / Episodic">Web Series / Episodic</option>
@@ -397,23 +397,23 @@ export default function MultiStepSubmissionForm() {
             </div>
 
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
-                Primary Language(s) <span className="text-[#C82333]">*</span>
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
+                Primary Language(s) <span className="text-[#F5DE88]">*</span>
               </label>
               <input
                 type="text"
                 value={formData.language}
                 onChange={(e) => setFormData({ ...formData, language: e.target.value })}
                 placeholder="e.g. Tamil, Telugu, Malayalam, Hindi"
-                className={`w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors ${
-                  errors.language ? "border-red-500" : "border-[#EAE0DD]"
+                className={`w-full px-4 py-3 rounded-xl bg-[#181D26] border text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors ${
+                  errors.language ? "border-red-500" : "border-white/10"
                 }`}
               />
-              {errors.language && <p className="text-red-500 text-[11px] mt-1">{errors.language}</p>}
+              {errors.language && <p className="text-red-400 text-[11px] mt-1">{errors.language}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
                 Genre
               </label>
               <input
@@ -421,18 +421,18 @@ export default function MultiStepSubmissionForm() {
                 value={formData.genre}
                 onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
                 placeholder="e.g. Crime Thriller / Action / Drama"
-                className="w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
                 Production Status
               </label>
               <select
                 value={formData.productionStatus}
                 onChange={(e) => setFormData({ ...formData, productionStatus: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors"
               >
                 <option value="Completed / Ready for Delivery">Completed / Ready for Delivery</option>
                 <option value="Post-Production (Rough Cut Ready)">Post-Production (Rough Cut Ready)</option>
@@ -442,7 +442,7 @@ export default function MultiStepSubmissionForm() {
             </div>
 
             <div>
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
                 Duration &amp; Year
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -451,36 +451,36 @@ export default function MultiStepSubmissionForm() {
                   value={formData.duration}
                   onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
                   placeholder="e.g. 128 mins"
-                  className="w-full px-3 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333]"
+                  className="w-full px-3 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88]"
                 />
                 <input
                   type="text"
                   value={formData.yearOfProduction}
                   onChange={(e) => setFormData({ ...formData, yearOfProduction: e.target.value })}
                   placeholder="2024"
-                  className="w-full px-3 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333]"
+                  className="w-full px-3 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88]"
                 />
               </div>
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
-                Synopsis / Logline <span className="text-[#C82333]">*</span>
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
+                Synopsis / Logline <span className="text-[#F5DE88]">*</span>
               </label>
               <textarea
                 rows={4}
                 value={formData.synopsis}
                 onChange={(e) => setFormData({ ...formData, synopsis: e.target.value })}
                 placeholder="Provide a clear, engaging summary of the core plot, central conflict, and thematic hook..."
-                className={`w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors ${
-                  errors.synopsis ? "border-red-500" : "border-[#EAE0DD]"
+                className={`w-full px-4 py-3 rounded-xl bg-[#181D26] border text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors ${
+                  errors.synopsis ? "border-red-500" : "border-white/10"
                 }`}
               />
-              {errors.synopsis && <p className="text-red-500 text-[11px] mt-1">{errors.synopsis}</p>}
+              {errors.synopsis && <p className="text-red-400 text-[11px] mt-1">{errors.synopsis}</p>}
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
+              <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
                 Screener / Trailer Link (Vimeo / YouTube / Drive)
               </label>
               <input
@@ -488,7 +488,7 @@ export default function MultiStepSubmissionForm() {
                 value={formData.trailerLink}
                 onChange={(e) => setFormData({ ...formData, trailerLink: e.target.value })}
                 placeholder="https://vimeo.com/your-screener (Include password if protected)"
-                className="w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors"
               />
             </div>
           </div>
@@ -499,10 +499,10 @@ export default function MultiStepSubmissionForm() {
       {step === 3 && (
         <div className="space-y-6 animate-fadeIn">
           <div>
-            <h3 className="font-serif text-xl font-bold text-[#141115] mb-1">
+            <h3 className="text-xl font-bold text-[#F8F9FA] mb-1">
               Step 3: Available Rights Matrix
             </h3>
-            <p className="text-xs text-[#5C5056]">
+            <p className="text-xs text-[#94A3B8]">
               Select which commercial exploitation rights are unencumbered and available for representation.
             </p>
           </div>
@@ -524,8 +524,8 @@ export default function MultiStepSubmissionForm() {
                   key={item.key}
                   className={`p-3.5 rounded-2xl border cursor-pointer flex items-center gap-3 transition-all ${
                     checked
-                      ? "bg-[#FDE8E9] border-[#C82333] text-[#141115]"
-                      : "bg-[#FAF6F5] border-[#EAE0DD] text-[#5C5056] hover:border-[#D8C7C3]"
+                      ? "bg-white/[0.08] border-[#F5DE88] text-[#F8F9FA]"
+                      : "bg-[#181D26] border-white/10 text-[#94A3B8] hover:border-white/20"
                   }`}
                 >
                   <input
@@ -537,7 +537,7 @@ export default function MultiStepSubmissionForm() {
                         rights: { ...formData.rights, [item.key]: e.target.checked },
                       })
                     }
-                    className="w-4 h-4 accent-[#C82333] rounded"
+                    className="w-4 h-4 accent-[#F5DE88] rounded"
                   />
                   <span className="text-xs font-semibold">{item.label}</span>
                 </label>
@@ -546,23 +546,23 @@ export default function MultiStepSubmissionForm() {
           </div>
 
           <div className="pt-4">
-            <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
-              Available Territory Scope <span className="text-[#C82333]">*</span>
+            <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
+              Available Territory Scope <span className="text-[#F5DE88]">*</span>
             </label>
             <input
               type="text"
               value={formData.territory}
               onChange={(e) => setFormData({ ...formData, territory: e.target.value })}
               placeholder="e.g. Worldwide, India Only, Worldwide Excl. India Satellite"
-              className={`w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors ${
-                errors.territory ? "border-red-500" : "border-[#EAE0DD]"
+              className={`w-full px-4 py-3 rounded-xl bg-[#181D26] border text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors ${
+                errors.territory ? "border-red-500" : "border-white/10"
               }`}
             />
-            {errors.territory && <p className="text-red-500 text-[11px] mt-1">{errors.territory}</p>}
+            {errors.territory && <p className="text-red-400 text-[11px] mt-1">{errors.territory}</p>}
           </div>
 
           <div>
-            <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
+            <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
               Other Rights / Specific Restrictions
             </label>
             <input
@@ -575,7 +575,7 @@ export default function MultiStepSubmissionForm() {
                 })
               }
               placeholder="e.g. Theatrical released in Tamil Nadu; Satellite sold to regional network"
-              className="w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors"
+              className="w-full px-4 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors"
             />
           </div>
         </div>
@@ -585,25 +585,25 @@ export default function MultiStepSubmissionForm() {
       {step === 4 && (
         <div className="space-y-6 animate-fadeIn">
           <div>
-            <h3 className="font-serif text-xl font-bold text-[#141115] mb-1">
+            <h3 className="text-xl font-bold text-[#F8F9FA] mb-1">
               Step 4: Submission Authorization Protocol
             </h3>
-            <p className="text-xs text-[#5C5056]">
+            <p className="text-xs text-[#94A3B8]">
               Download the official Content Submission &amp; Evaluation Authorization letter or proceed with electronic confirmation.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Download Template Box */}
-            <div className="p-6 rounded-2xl bg-[#FAF6F5] border border-[#EAE0DD] flex flex-col justify-between">
+            <div className="p-6 rounded-2xl bg-[#181D26] border border-white/10 flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-xl bg-[#FDE8E9] border border-[#C82333]/30 flex items-center justify-center mb-4">
-                  <FileText className="w-5 h-5 text-[#C82333]" />
+                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-[#F5DE88]/30 flex items-center justify-center mb-4">
+                  <FileText className="w-5 h-5 text-[#F5DE88]" />
                 </div>
-                <h4 className="font-serif text-base font-bold text-[#141115] mb-1">
+                <h4 className="text-base font-bold text-[#F8F9FA] mb-1">
                   Authorization Template
                 </h4>
-                <p className="text-xs text-[#5C5056] leading-relaxed mb-4">
+                <p className="text-xs text-[#94A3B8] leading-relaxed mb-4">
                   Official standard document granting Indiark Entertainments non-exclusive authority to evaluate and pitch material.
                 </p>
               </div>
@@ -611,23 +611,23 @@ export default function MultiStepSubmissionForm() {
               <a
                 href="/docs/INDIARK_CONTENT_SUBMISSION_AUTHORIZATION.txt"
                 download="INDIARK_AUTHORIZATION_LETTER.txt"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-[#FFFFFF] border border-[#E8D8D3] hover:border-[#C82333] text-[#141115] text-xs font-mono font-bold tracking-wider uppercase transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.06] border border-white/15 hover:border-[#F5DE88] text-[#F8F9FA] text-xs font-semibold tracking-wider uppercase transition-colors"
               >
-                <Download className="w-4 h-4 text-[#C82333]" />
+                <Download className="w-4 h-4 text-[#F5DE88]" />
                 <span>DOWNLOAD AUTHORIZATION TEMPLATE</span>
               </a>
             </div>
 
             {/* Signed Document Upload Simulation */}
-            <div className="p-6 rounded-2xl bg-[#FAF6F5] border border-[#EAE0DD] flex flex-col justify-between">
+            <div className="p-6 rounded-2xl bg-[#181D26] border border-white/10 flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-xl bg-[#FFFFFF] border border-[#EAE0DD] flex items-center justify-center mb-4">
-                  <Upload className="w-5 h-5 text-[#7A6C72]" />
+                <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center mb-4">
+                  <Upload className="w-5 h-5 text-[#94A3B8]" />
                 </div>
-                <h4 className="font-serif text-base font-bold text-[#141115] mb-1">
+                <h4 className="text-base font-bold text-[#F8F9FA] mb-1">
                   Upload Signed Letter (Optional)
                 </h4>
-                <p className="text-xs text-[#5C5056] leading-relaxed mb-4">
+                <p className="text-xs text-[#94A3B8] leading-relaxed mb-4">
                   Attach PDF or signed scan (Max 15MB). You may also submit via email after initial discussion.
                 </p>
               </div>
@@ -649,9 +649,9 @@ export default function MultiStepSubmissionForm() {
                 />
                 <label
                   htmlFor="auth-upload"
-                  className="cursor-pointer inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg border border-dashed border-[#C82333]/40 bg-[#FFFFFF] hover:border-[#C82333] text-[#141115] text-xs font-mono font-semibold uppercase transition-colors"
+                  className="cursor-pointer inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-full border border-dashed border-[#F5DE88]/40 bg-white/[0.03] hover:border-[#F5DE88] text-[#F8F9FA] text-xs font-semibold uppercase transition-colors"
                 >
-                  <Upload className="w-4 h-4 text-[#C82333]" />
+                  <Upload className="w-4 h-4 text-[#F5DE88]" />
                   <span>
                     {formData.authorizationFilename
                       ? formData.authorizationFilename
@@ -663,12 +663,12 @@ export default function MultiStepSubmissionForm() {
           </div>
 
           {/* Mandatory Confirmation Checkbox */}
-          <div className="pt-4 border-t border-[#EAE0DD]">
+          <div className="pt-4 border-t border-white/[0.08]">
             <label
               className={`p-4 rounded-2xl border flex items-start gap-3 cursor-pointer transition-all ${
                 formData.authorizationSigned
-                  ? "bg-[#FDE8E9] border-[#C82333]"
-                  : "bg-[#FAF6F5] border-[#EAE0DD] hover:border-[#D8C7C3]"
+                  ? "bg-white/[0.08] border-[#F5DE88]"
+                  : "bg-[#181D26] border-white/10 hover:border-white/20"
               }`}
             >
               <input
@@ -677,14 +677,14 @@ export default function MultiStepSubmissionForm() {
                 onChange={(e) =>
                   setFormData({ ...formData, authorizationSigned: e.target.checked })
                 }
-                className="w-5 h-5 accent-[#C82333] rounded mt-0.5 shrink-0"
+                className="w-5 h-5 accent-[#F5DE88] rounded mt-0.5 shrink-0"
               />
-              <span className="text-xs text-[#4A3F45] leading-relaxed">
+              <span className="text-xs text-[#CBD5E1] leading-relaxed">
                 I confirm that I have the legitimate authority to submit this content and that all information provided is accurate. I authorize Indiark Entertainments to evaluate the submitted material for potential business and content representation opportunities.
               </span>
             </label>
             {errors.authorizationSigned && (
-              <p className="text-red-500 text-xs mt-2">{errors.authorizationSigned}</p>
+              <p className="text-red-400 text-xs mt-2">{errors.authorizationSigned}</p>
             )}
           </div>
         </div>
@@ -694,54 +694,54 @@ export default function MultiStepSubmissionForm() {
       {step === 5 && (
         <div className="space-y-6 animate-fadeIn">
           <div>
-            <h3 className="font-serif text-xl font-bold text-[#141115] mb-1">
+            <h3 className="text-xl font-bold text-[#F8F9FA] mb-1">
               Step 5: Review &amp; Secure Submission
             </h3>
-            <p className="text-xs text-[#5C5056]">
+            <p className="text-xs text-[#94A3B8]">
               Please verify all details before submitting to Indiark Entertainments acquisitions queue.
             </p>
           </div>
 
           <div className="space-y-4 text-xs">
             {/* Applicant Summary */}
-            <div className="p-5 rounded-2xl bg-[#FAF6F5] border border-[#EAE0DD]">
-              <div className="text-[10px] font-mono text-[#C82333] tracking-widest uppercase font-bold mb-2">
+            <div className="p-5 rounded-2xl bg-[#181D26] border border-white/10">
+              <div className="text-[10px] font-mono text-[#F5DE88] tracking-widest uppercase font-bold mb-2">
                 APPLICANT INFORMATION
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[#4A3F45]">
-                <div><span className="text-[#7A6C72] block">Name:</span> {formData.applicantName}</div>
-                <div><span className="text-[#7A6C72] block">Company:</span> {formData.companyName || "N/A"}</div>
-                <div><span className="text-[#7A6C72] block">Designation:</span> {formData.designation || "N/A"}</div>
-                <div><span className="text-[#7A6C72] block">Email:</span> {formData.email}</div>
-                <div><span className="text-[#7A6C72] block">Mobile:</span> {formData.mobile}</div>
-                <div><span className="text-[#7A6C72] block">Location:</span> {formData.city || "India"}</div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[#CBD5E1]">
+                <div><span className="text-[#64748B] block">Name:</span> {formData.applicantName}</div>
+                <div><span className="text-[#64748B] block">Company:</span> {formData.companyName || "N/A"}</div>
+                <div><span className="text-[#64748B] block">Designation:</span> {formData.designation || "N/A"}</div>
+                <div><span className="text-[#64748B] block">Email:</span> {formData.email}</div>
+                <div><span className="text-[#64748B] block">Mobile:</span> {formData.mobile}</div>
+                <div><span className="text-[#64748B] block">Location:</span> {formData.city || "India"}</div>
               </div>
             </div>
 
             {/* Project Summary */}
-            <div className="p-5 rounded-2xl bg-[#FAF6F5] border border-[#EAE0DD]">
-              <div className="text-[10px] font-mono text-[#C82333] tracking-widest uppercase font-bold mb-2">
+            <div className="p-5 rounded-2xl bg-[#181D26] border border-white/10">
+              <div className="text-[10px] font-mono text-[#F5DE88] tracking-widest uppercase font-bold mb-2">
                 PROJECT SPECIFICATION
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[#4A3F45] mb-3">
-                <div><span className="text-[#7A6C72] block">Title:</span> <strong className="text-[#141115]">{formData.projectName}</strong></div>
-                <div><span className="text-[#7A6C72] block">Format:</span> {formData.contentType}</div>
-                <div><span className="text-[#7A6C72] block">Language:</span> {formData.language}</div>
-                <div><span className="text-[#7A6C72] block">Status:</span> {formData.productionStatus}</div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[#CBD5E1] mb-3">
+                <div><span className="text-[#64748B] block">Title:</span> <strong className="text-[#F8F9FA]">{formData.projectName}</strong></div>
+                <div><span className="text-[#64748B] block">Format:</span> {formData.contentType}</div>
+                <div><span className="text-[#64748B] block">Language:</span> {formData.language}</div>
+                <div><span className="text-[#64748B] block">Status:</span> {formData.productionStatus}</div>
               </div>
-              <div className="pt-2 border-t border-[#EAE0DD]">
-                <span className="text-[#7A6C72] block mb-1">Synopsis:</span>
-                <p className="text-[#4A3F45] line-clamp-3">{formData.synopsis}</p>
+              <div className="pt-2 border-t border-white/[0.08]">
+                <span className="text-[#64748B] block mb-1">Synopsis:</span>
+                <p className="text-[#CBD5E1] line-clamp-3">{formData.synopsis}</p>
               </div>
             </div>
 
             {/* Rights Summary */}
-            <div className="p-5 rounded-2xl bg-[#FAF6F5] border border-[#EAE0DD]">
-              <div className="text-[10px] font-mono text-[#C82333] tracking-widest uppercase font-bold mb-2">
+            <div className="p-5 rounded-2xl bg-[#181D26] border border-white/10">
+              <div className="text-[10px] font-mono text-[#F5DE88] tracking-widest uppercase font-bold mb-2">
                 RIGHTS &amp; TERRITORIES
               </div>
-              <div className="text-[#4A3F45] mb-2">
-                <span className="text-[#7A6C72]">Territory Scope:</span> {formData.territory}
+              <div className="text-[#CBD5E1] mb-2">
+                <span className="text-[#64748B]">Territory Scope:</span> {formData.territory}
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {Object.entries(formData.rights)
@@ -749,7 +749,7 @@ export default function MultiStepSubmissionForm() {
                   .map(([k]) => (
                     <span
                       key={k}
-                      className="px-2.5 py-0.5 rounded-md bg-[#FDE8E9] text-[#C82333] border border-[#C82333]/30 text-[10px] font-mono uppercase font-bold"
+                      className="px-2.5 py-0.5 rounded-full bg-white/[0.08] text-[#F5DE88] border border-[#F5DE88]/30 text-[10px] font-mono uppercase font-bold"
                     >
                       {k.replace("Rights", "").toUpperCase()}
                     </span>
@@ -761,12 +761,12 @@ export default function MultiStepSubmissionForm() {
       )}
 
       {/* Navigation Buttons */}
-      <div className="mt-10 pt-6 border-t border-[#EAE0DD] flex items-center justify-between">
+      <div className="mt-10 pt-6 border-t border-white/[0.08] flex items-center justify-between">
         {step > 1 ? (
           <button
             type="button"
             onClick={handleBack}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-[#E8D8D3] text-[#5C5056] hover:text-[#141115] hover:border-[#C82333] text-xs font-mono font-bold tracking-wider uppercase transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 text-[#CBD5E1] hover:text-white hover:border-white/40 text-xs font-bold tracking-wider uppercase transition-colors bg-white/[0.03]"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back</span>
@@ -779,7 +779,7 @@ export default function MultiStepSubmissionForm() {
           <button
             type="button"
             onClick={handleNext}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#C82333] hover:bg-[#8B1524] text-white text-xs font-mono font-bold tracking-widest uppercase transition-all shadow-md shadow-[#C82333]/20"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#F5DE88] hover:bg-[#FACC15] text-[#090B0D] text-xs font-bold tracking-wider uppercase transition-all shadow-lg shadow-[#F5DE88]/20"
           >
             <span>Proceed to Step {step + 1}</span>
             <ArrowRight className="w-4 h-4" />
@@ -789,7 +789,7 @@ export default function MultiStepSubmissionForm() {
             type="button"
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-[#C82333] hover:bg-[#8B1524] text-white text-xs font-mono font-bold tracking-widest uppercase transition-all shadow-xl shadow-[#C82333]/20 disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#F5DE88] hover:bg-[#FACC15] text-[#090B0D] text-xs font-bold tracking-wider uppercase transition-all shadow-xl shadow-[#F5DE88]/20 disabled:opacity-50"
           >
             {isSubmitting ? (
               <span>Submitting Material...</span>

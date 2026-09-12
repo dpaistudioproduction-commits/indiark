@@ -69,14 +69,14 @@ export default function ContactForm() {
 
   if (isSuccess) {
     return (
-      <div className="p-8 sm:p-10 rounded-3xl bg-[#FFFFFF] border border-[#E8D8D3] text-center shadow-2xl animate-fadeIn">
-        <div className="w-14 h-14 rounded-full bg-[#FDE8E9] border border-[#C82333]/30 flex items-center justify-center mx-auto mb-4">
-          <CheckCircle2 className="w-7 h-7 text-[#C82333]" />
+      <div className="p-8 sm:p-10 rounded-3xl bg-[#141820] border border-white/[0.08] text-center shadow-2xl animate-fadeIn">
+        <div className="w-14 h-14 rounded-full bg-white/[0.06] border border-[#F5DE88]/40 flex items-center justify-center mx-auto mb-4">
+          <CheckCircle2 className="w-7 h-7 text-[#F5DE88]" />
         </div>
-        <h3 className="font-serif text-2xl font-bold text-[#141115] mb-2">
+        <h3 className="text-2xl font-bold text-[#F8F9FA] mb-2">
           Enquiry Sent Successfully
         </h3>
-        <p className="text-sm text-[#4A3F45] max-w-md mx-auto mb-6 leading-relaxed">
+        <p className="text-sm text-[#94A3B8] max-w-md mx-auto mb-6 leading-relaxed">
           Thank you for reaching out. An Indiark team representative will review your message and respond shortly.
         </p>
         <button
@@ -84,7 +84,7 @@ export default function ContactForm() {
             setFormData(INITIAL_CONTACT_FORM);
             setIsSuccess(false);
           }}
-          className="px-5 py-2.5 rounded-lg bg-[#C82333] hover:bg-[#8B1524] text-white text-xs font-mono font-bold tracking-widest uppercase transition-all shadow-md shadow-[#C82333]/20"
+          className="px-6 py-3 rounded-full bg-[#F5DE88] hover:bg-[#FACC15] text-[#090B0D] text-xs font-bold tracking-wider uppercase transition-all shadow-lg shadow-[#F5DE88]/20"
         >
           Send Another Message
         </button>
@@ -95,50 +95,50 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-6 sm:p-10 rounded-3xl bg-[#FFFFFF] border border-[#E8D8D3] shadow-xl space-y-6"
+      className="p-6 sm:p-10 rounded-3xl bg-[#141820] border border-white/[0.08] shadow-2xl space-y-6"
     >
       {serverError && (
-        <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-3">
-          <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
+        <div className="p-4 rounded-xl bg-red-950/40 border border-red-800/60 text-red-300 text-xs flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />
           <span>{serverError}</span>
         </div>
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
-            Your Name <span className="text-[#C82333]">*</span>
+          <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
+            Your Name <span className="text-[#F5DE88]">*</span>
           </label>
           <input
             type="text"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             placeholder="e.g. Ramesh Varma"
-            className={`w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors ${
-              errors.name ? "border-red-500" : "border-[#EAE0DD]"
+            className={`w-full px-4 py-3 rounded-xl bg-[#181D26] border text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors ${
+              errors.name ? "border-red-500" : "border-white/10"
             }`}
           />
-          {errors.name && <p className="text-red-500 text-[11px] mt-1">{errors.name}</p>}
+          {errors.name && <p className="text-red-400 text-[11px] mt-1">{errors.name}</p>}
         </div>
 
         <div>
-          <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
-            Email Address <span className="text-[#C82333]">*</span>
+          <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
+            Email Address <span className="text-[#F5DE88]">*</span>
           </label>
           <input
             type="email"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             placeholder="you@domain.com"
-            className={`w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors ${
-              errors.email ? "border-red-500" : "border-[#EAE0DD]"
+            className={`w-full px-4 py-3 rounded-xl bg-[#181D26] border text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors ${
+              errors.email ? "border-red-500" : "border-white/10"
             }`}
           />
-          {errors.email && <p className="text-red-500 text-[11px] mt-1">{errors.email}</p>}
+          {errors.email && <p className="text-red-400 text-[11px] mt-1">{errors.email}</p>}
         </div>
 
         <div>
-          <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
+          <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
             Company / Studio Name
           </label>
           <input
@@ -146,12 +146,12 @@ export default function ContactForm() {
             value={formData.company}
             onChange={(e) => setFormData({ ...formData, company: e.target.value })}
             placeholder="e.g. Cine Production House"
-            className="w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors"
+            className="w-full px-4 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
+          <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
             Mobile Number
           </label>
           <input
@@ -159,18 +159,18 @@ export default function ContactForm() {
             value={formData.mobile}
             onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
             placeholder="+91 98400 12345"
-            className="w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors"
+            className="w-full px-4 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors"
           />
         </div>
 
         <div className="sm:col-span-2">
-          <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
-            Enquiry Type <span className="text-[#C82333]">*</span>
+          <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
+            Enquiry Type <span className="text-[#F5DE88]">*</span>
           </label>
           <select
             value={formData.enquiryType}
             onChange={(e) => setFormData({ ...formData, enquiryType: e.target.value as any })}
-            className="w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border border-[#EAE0DD] text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors"
+            className="w-full px-4 py-3 rounded-xl bg-[#181D26] border border-white/10 text-sm text-[#F8F9FA] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors"
           >
             <option value="PRODUCER_PITCH">Producer / Content Representation Pitch</option>
             <option value="BUYER_REQUIREMENT">OTT / Broadcaster / Buyer Requirement</option>
@@ -181,27 +181,27 @@ export default function ContactForm() {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="block text-xs font-mono tracking-wider uppercase text-[#5C5056] mb-1.5">
-            Message / Specific Opportunity Details <span className="text-[#C82333]">*</span>
+          <label className="block text-xs font-mono tracking-wider uppercase text-[#94A3B8] mb-1.5">
+            Message / Specific Opportunity Details <span className="text-[#F5DE88]">*</span>
           </label>
           <textarea
             rows={5}
             value={formData.message}
             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
             placeholder="Share details regarding your content, mandate, or business proposal..."
-            className={`w-full px-4 py-3 rounded-xl bg-[#FAF6F5] border text-sm text-[#141115] focus:border-[#C82333] focus:bg-[#FFFFFF] transition-colors ${
-              errors.message ? "border-red-500" : "border-[#EAE0DD]"
+            className={`w-full px-4 py-3 rounded-xl bg-[#181D26] border text-sm text-[#F8F9FA] placeholder:text-[#64748B] focus:border-[#F5DE88] focus:bg-[#1E2430] transition-colors ${
+              errors.message ? "border-red-500" : "border-white/10"
             }`}
           />
-          {errors.message && <p className="text-red-500 text-[11px] mt-1">{errors.message}</p>}
+          {errors.message && <p className="text-red-400 text-[11px] mt-1">{errors.message}</p>}
         </div>
       </div>
 
-      <div className="flex justify-end pt-4 border-t border-[#EAE0DD]">
+      <div className="flex justify-end pt-4 border-t border-white/[0.08]">
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-[#C82333] hover:bg-[#8B1524] text-white text-xs font-mono font-bold tracking-widest uppercase transition-all shadow-xl shadow-[#C82333]/20 disabled:opacity-50"
+          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#F5DE88] hover:bg-[#FACC15] text-[#090B0D] text-xs font-bold tracking-wider uppercase transition-all shadow-xl shadow-[#F5DE88]/20 disabled:opacity-50"
         >
           {isSubmitting ? (
             <span>Sending Enquiry...</span>
