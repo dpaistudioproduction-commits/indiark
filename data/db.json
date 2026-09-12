@@ -1,0 +1,114 @@
+{
+  "projects": [
+    {
+      "id": "bheeshmar",
+      "title": "BHEESHMAR",
+      "tagline": "Epic Narrative & Commercial Canvas",
+      "description": "High-octane drama and cinematic storytelling positioned for global regional and international digital distribution.",
+      "synopsis": "An intense, high-stakes feature drama capturing timeless conflicts of loyalty, legacy, and power across an expansive cinematic landscape.",
+      "category": "FILMS",
+      "projectType": "Feature Film",
+      "language": "Tamil / Multi-language Dub",
+      "genre": "Action / Drama / Commercial Cinema",
+      "year": "2024",
+      "indiarkRole": "Exclusive OTT Representation, Strategic Positioning & Digital Rights Pitching",
+      "posterUrl": "/images/projects/bheeshmar.svg",
+      "status": "Featured",
+      "published": true,
+      "createdAt": "2026-09-12T08:42:35.211Z"
+    },
+    {
+      "id": "secret-of-kalinga",
+      "title": "SECRET OF KALINGA",
+      "tagline": "Historical Mystery & Enthralling Adventure",
+      "description": "A deeply researched historical mystery that explores forgotten heritage, ancient secrets, and legendary lore.",
+      "synopsis": "Set against the mystique of ancient Indian heritage, an investigative journey unfolds ancient secrets, historical artifacts, and untold regional legends.",
+      "category": "FILMS",
+      "projectType": "Feature Film / Historical Mystery",
+      "language": "Multi-lingual (South & Pan-India)",
+      "genre": "Historical Thriller / Mystery / Drama",
+      "year": "2024",
+      "indiarkRole": "Media Rights Advisory, Domestic & Pan-India OTT Representation",
+      "posterUrl": "/images/projects/secret_of_kalinga.svg",
+      "status": "Featured",
+      "published": true,
+      "createdAt": "2026-09-12T08:42:35.212Z"
+    }
+  ],
+  "submissions": [
+    {
+      "id": "sub_sample_1",
+      "createdAt": "2026-09-10T08:42:35.403Z",
+      "status": "UNDER REVIEW",
+      "applicantName": "Rajan Narayanan",
+      "companyName": "Southern Waves Cine Craft",
+      "designation": "Managing Producer",
+      "email": "rajan@southernwaves.example",
+      "mobile": "+91 98401 23456",
+      "city": "Chennai",
+      "country": "India",
+      "projectName": "THE DELTA CORRIDOR",
+      "contentType": "Feature Film",
+      "language": "Tamil / Telugu Dub",
+      "genre": "Political Thriller / Neo-Noir",
+      "duration": "138 mins",
+      "yearOfProduction": "2024",
+      "productionStatus": "Post-Production Complete",
+      "synopsis": "An investigative journalist uncovers high-level coastal infrastructure corruption in a gripping procedural thriller.",
+      "director": "K. Sundaram",
+      "producer": "Southern Waves Cine Craft",
+      "cast": "Vikram Prabhu, Shweta Menon, Kishore",
+      "trailerLink": "https://vimeo.com/sample-screener-delta",
+      "rights": {
+        "ottRights": true,
+        "digitalRights": true,
+        "satelliteRights": true,
+        "musicRights": false,
+        "inFlightRights": true,
+        "dubRights": true,
+        "remakeRights": false,
+        "internationalRights": true,
+        "otherRights": "Direct-to-digital premiere preferred"
+      },
+      "territory": "Worldwide / India Excl Satellite",
+      "authorizationSigned": true
+    }
+  ],
+  "buyerRequirements": [
+    {
+      "id": "req_sample_1",
+      "createdAt": "2026-09-08T08:42:35.403Z",
+      "status": "NEW",
+      "companyName": "AuraStream International (MENA & SEA)",
+      "contactPerson": "David Henderson",
+      "designation": "VP Content Acquisitions",
+      "email": "d.henderson@aurastream.example",
+      "mobile": "+971 50 123 4567",
+      "website": "https://aurastream.example",
+      "countryTerritory": "UAE / Middle East & Southeast Asia",
+      "contentType": "Movies / Web Series",
+      "languages": "Tamil, Telugu, Malayalam, Hindi (with English subtitles)",
+      "genre": "Crime Thriller, Action, High-Concept Drama",
+      "numberOfTitles": "8-12 Titles per quarter",
+      "rightsRequired": "SVOD / TVOD / Multi-territory Streaming",
+      "territory": "MENA, Singapore, Malaysia, GCC",
+      "timeline": "Q3 - Q4 2024 Acquisitions",
+      "detailedRequirement": "Actively seeking fresh, critically acclaimed South Indian commercial films and high-production value investigative web series with completed master delivery (4K HDR, 5.1/Dolby Atmos).",
+      "additionalInformation": "Looking for 24-month exclusive SVOD window with direct distributor representation."
+    }
+  ],
+  "contactEnquiries": [
+    {
+      "id": "enq_sample_1",
+      "createdAt": "2026-09-11T08:42:35.403Z",
+      "status": "NEW",
+      "name": "Suresh Menon",
+      "company": "Menon Motion Pictures",
+      "designation": "Executive Producer",
+      "email": "suresh@menonfilms.example",
+      "mobile": "+91 98840 98765",
+      "enquiryType": "PRODUCER_PITCH",
+      "message": "We have two Malayalam crime-drama features completing post-production next month and are looking for exclusive OTT representation with premier national platforms."
+    }
+  ]
+}

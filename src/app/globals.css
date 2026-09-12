@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-cinzel: 'Cinzel', serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-display: 'Syne', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --bg-primary: #FAF6F5;
+  --bg-warm: #F8EFEA;
+  --bg-surface: #F4ECE9;
+  --bg-card: #FFFFFF;
+  --text-primary: #141115;
+  --text-secondary: #4A3F45;
+  --text-muted: #7E7077;
+  
+  --accent-maroon: #781D2A;
+  --accent-maroon-dark: #5C121E;
+  --accent-teal: #00A896;
+  --accent-green: #1B998B;
+  --accent-lime: #84CC16;
+  
+  --border-light: #EAE0DD;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body {
+  font-family: var(--font-sans);
+  background: linear-gradient(180deg, #FAF6F5 0%, #F8EFEA 40%, #FAF6F5 100%);
+  color: var(--text-secondary);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #781D2A;
+  color: #FFFFFF;
+}
+
+/* Custom Soft Rose Luxury Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF6F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D8C7C3;
+  border-radius: 9999px;
+  border: 1px solid rgba(120, 29, 42, 0.1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #781D2A;
+}
+
+/* Subtle Blush Atmosphere Grid */
+.bg-blush-pattern {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, rgba(120, 29, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(120, 29, 42, 0.035) 1px, transparent 1px);
+}
+
+.bg-blush-glow {
+  background: radial-gradient(circle at 50% 20%, rgba(120, 29, 42, 0.07) 0%, rgba(250, 246, 245, 0) 70%);
+}
+
+.editorial-headline {
+  color: #141115;
+  letter-spacing: -0.02em;
+}
+
+.maroon-gradient-text, .crimson-gradient-text {
+  background: linear-gradient(135deg, #141115 0%, #3D1C22 50%, #781D2A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.teal-gradient-text {
+  background: linear-gradient(135deg, #00A896 0%, #028090 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Premium Editorial Card */
+.blush-card {
+  background: #FFFFFF;
+  border: 1px solid #EAE0DD;
+  box-shadow: 0 4px 20px -2px rgba(90, 40, 50, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.blush-card:hover {
+  border-color: rgba(120, 29, 42, 0.35);
+  box-shadow: 0 16px 36px -10px rgba(120, 29, 42, 0.08), 0 0 1px rgba(120, 29, 42, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Brand Dot System Animations */
+@keyframes dotFloatA {
+  0%, 100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+  50% { transform: translateY(-12px) scale(1.1); opacity: 0.9; }
+}
+
+@keyframes dotFloatB {
+  0%, 100% { transform: translateY(0px) scale(1); opacity: 0.7; }
+  50% { transform: translateY(10px) scale(0.92); opacity: 0.45; }
+}
+
+@keyframes dotFloatC {
+  0%, 100% { transform: translateX(0px) scale(1); opacity: 0.5; }
+  50% { transform: translateX(-8px) scale(1.15); opacity: 0.85; }
+}
+
+.brand-dot-a {
+  animation: dotFloatA 6s ease-in-out infinite;
+}
+
+.brand-dot-b {
+  animation: dotFloatB 8s ease-in-out infinite 1s;
+}
+
+.brand-dot-c {
+  animation: dotFloatC 7s ease-in-out infinite 2s;
+}
+
+/* Subtle node pulse for connection moments */
+@keyframes subtlePulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(120, 29, 42, 0.4); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(120, 29, 42, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(120, 29, 42, 0); }
+}
+
+.pulse-node {
+  animation: subtlePulse 3s infinite;
+}
+
+/* Accessible focus states */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid #781D2A;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
