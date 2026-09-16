@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   ArrowUpRight, ArrowRight, Sparkles, CheckCircle2, Tv, Film, 
   Layers, Music, Globe2, Video, Sliders, ChevronRight, ChevronLeft, Briefcase, 
@@ -12,6 +12,48 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
   const [activeProjectIdx, setActiveProjectIdx] = useState(0);
   const [activePillarIdx, setActivePillarIdx] = useState(0);
   const [hoveredPath, setHoveredPath] = useState(null);
+  const serviceScrollRef = useRef(null);
+
+  const scrollServiceTrack = (direction) => {
+    if (serviceScrollRef.current) {
+      const cardWidth = serviceScrollRef.current.offsetWidth * 0.75;
+      serviceScrollRef.current.scrollBy({
+        left: direction === 'left' ? -cardWidth : cardWidth,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const scrollToServiceIndex = (idx) => {
+    setActiveServiceIdx(idx);
+    if (serviceScrollRef.current) {
+      const cards = serviceScrollRef.current.querySelectorAll('.service-scroll-card');
+      if (cards[idx]) {
+        cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  };
+
+  const handleServiceScroll = () => {
+    if (!serviceScrollRef.current) return;
+    const container = serviceScrollRef.current;
+    const cards = container.querySelectorAll('.service-scroll-card');
+    const containerCenter = container.scrollLeft + container.offsetWidth / 2;
+    
+    let closestIdx = 0;
+    let minDiff = Infinity;
+    cards.forEach((card, idx) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const diff = Math.abs(containerCenter - cardCenter);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIdx = idx;
+      }
+    });
+    if (closestIdx !== activeServiceIdx) {
+      setActiveServiceIdx(closestIdx);
+    }
+  };
 
   const handleNav = (pageId) => {
     setActivePage(pageId);
@@ -586,33 +628,92 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
 
 
       {/* =====================================================================
-          SECTION 04 — WHAT WE DO (Large Single-Active Interactive Showcase)
+          SECTION 04 — WHAT WE DO (Scroll-Based Right-to-Left Horizontal Showcase)
           ===================================================================== */}
-      <section className="section section-secondary">
+      <section className="section section-secondary" style={{ position: 'relative', overflow: 'hidden' }}>
         <div className="container">
           
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2.5rem' }}>
+          {/* Header & Controls */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2rem' }}>
             <div>
               <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Seven Specialized Business Streams</span>
               <h2 className="display-statement">WHAT WE DO</h2>
+              <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.95rem', margin: '0.4rem 0 0 0' }}>
+                Scroll or swipe horizontally through our end-to-end entertainment representation services.
+              </p>
             </div>
-            <button
-              onClick={() => handleNav('what-we-do')}
-              className="btn btn-secondary-dark btn-sm"
-            >
-              <span>View Full Services Atlas</span>
-              <ArrowRight size={14} />
-            </button>
+
+            {/* Carousel Navigation Controls */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--brand-lime)', marginRight: '0.5rem', fontFamily: 'var(--font-heading)' }}>
+                <span>0{activeServiceIdx + 1}</span>
+                <span style={{ color: 'var(--text-light-subtle)', margin: '0 0.3rem' }}>/</span>
+                <span style={{ color: 'var(--text-light-muted)' }}>07</span>
+              </div>
+
+              <button
+                onClick={() => scrollServiceTrack('left')}
+                style={{
+                  width: '42px',
+                  height: '42px',
+                  borderRadius: '50%',
+                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid var(--border-dark)',
+                  color: '#FFFFFF',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                }}
+                aria-label="Previous Service Stream"
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--brand-teal)'; e.currentTarget.style.borderColor = 'var(--brand-teal)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; e.currentTarget.style.borderColor = 'var(--border-dark)'; }}
+              >
+                <ChevronLeft size={20} />
+              </button>
+
+              <button
+                onClick={() => scrollServiceTrack('right')}
+                style={{
+                  width: '42px',
+                  height: '42px',
+                  borderRadius: '50%',
+                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid var(--border-dark)',
+                  color: '#FFFFFF',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                }}
+                aria-label="Next Service Stream"
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--brand-teal)'; e.currentTarget.style.borderColor = 'var(--brand-teal)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; e.currentTarget.style.borderColor = 'var(--border-dark)'; }}
+              >
+                <ChevronRight size={20} />
+              </button>
+
+              <button
+                onClick={() => handleNav('what-we-do')}
+                className="btn btn-secondary-dark btn-sm"
+                style={{ marginLeft: '0.5rem' }}
+              >
+                <span>Full Atlas</span>
+                <ArrowRight size={14} />
+              </button>
+            </div>
           </div>
 
-          {/* Stream Selector Tabs */}
+          {/* Quick Stream Jump Tabs */}
           <div 
             style={{ 
               display: 'flex', 
               gap: '0.5rem', 
               overflowX: 'auto', 
               paddingBottom: '0.75rem', 
-              marginBottom: '2rem',
+              marginBottom: '1.75rem',
               scrollbarWidth: 'none',
             }}
           >
@@ -621,134 +722,200 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
               return (
                 <button
                   key={svc.id}
-                  onClick={() => setActiveServiceIdx(idx)}
+                  onClick={() => scrollToServiceIndex(idx)}
                   style={{
-                    padding: '0.75rem 1.25rem',
+                    padding: '0.65rem 1.15rem',
                     borderRadius: 'var(--radius-sm)',
                     backgroundColor: isSelected ? 'var(--brand-teal)' : 'rgba(255, 255, 255, 0.04)',
                     color: isSelected ? '#FFFFFF' : 'var(--text-light-secondary)',
-                    border: '1px solid transparent',
+                    border: isSelected ? '1px solid var(--brand-teal)' : '1px solid transparent',
                     fontFamily: 'var(--font-heading)',
-                    fontSize: '0.84rem',
+                    fontSize: '0.82rem',
                     fontWeight: isSelected ? 800 : 600,
                     cursor: 'pointer',
                     whiteSpace: 'nowrap',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.5rem',
+                    gap: '0.45rem',
                     transition: 'all 0.25s ease',
                   }}
                 >
-                  <span style={{ opacity: isSelected ? 1 : 0.6, color: isSelected ? 'var(--brand-lime)' : 'inherit' }}>{svc.id}</span>
+                  <span style={{ color: isSelected ? 'var(--brand-lime)' : 'inherit', opacity: isSelected ? 1 : 0.6 }}>{svc.id}</span>
                   <span>{svc.title}</span>
                 </button>
               );
             })}
           </div>
 
-          {/* Large Active Service Stage Card with 500ms transition */}
+          {/* Right-to-Left Scroll-Based Track Container */}
           <div
-            key={currentService.id}
+            ref={serviceScrollRef}
+            onScroll={handleServiceScroll}
             style={{
-              backgroundColor: 'rgba(7, 13, 20, 0.85)',
-              border: '1px solid var(--border-dark)',
-              borderRadius: 'var(--radius-lg)',
-              padding: 'clamp(2rem, 4vw, 3.25rem)',
-              boxShadow: '0 20px 50px rgba(0, 0, 0, 0.45)',
-              animation: 'heroUpwardReveal 0.45s cubic-bezier(0.16, 1, 0.3, 1)',
+              display: 'flex',
+              gap: '1.5rem',
+              overflowX: 'auto',
+              scrollSnapType: 'x mandatory',
+              scrollBehavior: 'smooth',
+              padding: '0.5rem 0.25rem 1.5rem 0.25rem',
+              scrollbarWidth: 'thin',
+              scrollbarColor: 'var(--brand-teal) rgba(255, 255, 255, 0.05)',
+              WebkitOverflowScrolling: 'touch',
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.4rem' }}>
-                  <span className="badge badge-teal" style={{ fontSize: '0.72rem' }}>Stream {currentService.id}</span>
-                  <span style={{ fontSize: '0.78rem', color: 'var(--brand-lime)', fontWeight: 700, letterSpacing: '0.08em' }}>
-                    {currentService.code}
-                  </span>
-                  {currentService.isPitchable && (
-                    <span style={{ fontSize: '0.68rem', fontWeight: 800, padding: '0.15rem 0.55rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(148, 200, 32, 0.15)', color: 'var(--brand-lime-light)', border: '1px solid rgba(148, 200, 32, 0.35)' }}>
-                      OPEN FOR PITCHING
-                    </span>
-                  )}
-                </div>
-                <h3 style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.3rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em', margin: 0 }}>
-                  {currentService.title}
-                </h3>
-                <p style={{ color: 'var(--brand-teal-light)', fontSize: '0.95rem', fontWeight: 500, marginTop: '0.25rem', marginBottom: 0 }}>
-                  {currentService.subtitle}
-                </p>
-              </div>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <button
-                  onClick={() => handleNav(currentService.isPitchable ? 'submit-content' : 'contact')}
-                  className={`btn ${currentService.isPitchable ? 'btn-lime' : 'btn-secondary-dark'} btn-sm`}
+            {services.map((svc, idx) => {
+              const SvcIcon = svc.icon;
+              const isActive = activeServiceIdx === idx;
+              return (
+                <div
+                  key={svc.id}
+                  className="service-scroll-card"
+                  style={{
+                    flex: '0 0 clamp(310px, 82vw, 840px)',
+                    scrollSnapAlign: 'start',
+                    backgroundColor: 'rgba(7, 13, 20, 0.92)',
+                    border: isActive ? '1px solid var(--border-teal-subtle)' : '1px solid var(--border-dark)',
+                    borderRadius: 'var(--radius-lg)',
+                    padding: 'clamp(1.75rem, 3.5vw, 2.75rem)',
+                    boxShadow: isActive ? '0 20px 50px -10px rgba(0, 157, 165, 0.15)' : '0 15px 40px rgba(0, 0, 0, 0.4)',
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                  }}
                 >
-                  <span>{currentService.isPitchable ? 'PITCH THIS STREAM' : 'CONTACT US'}</span>
-                  <ArrowUpRight size={14} />
-                </button>
-              </div>
-            </div>
+                  <div>
+                    {/* Card Top Strip */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                        <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(0, 157, 165, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-teal-light)' }}>
+                          <SvcIcon size={22} />
+                        </div>
+                        <div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--brand-lime)', letterSpacing: '0.08em' }}>STREAM {svc.id}</span>
+                            <span style={{ fontSize: '0.72rem', color: 'var(--text-light-subtle)' }}>•</span>
+                            <span style={{ fontSize: '0.72rem', color: 'var(--brand-teal-light)', fontWeight: 700 }}>{svc.code}</span>
+                          </div>
+                          <h3 style={{ fontSize: 'clamp(1.35rem, 2.2vw, 1.85rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em', margin: '0.2rem 0 0 0' }}>
+                            {svc.title}
+                          </h3>
+                        </div>
+                      </div>
 
-            <p style={{ color: 'var(--text-light-secondary)', fontSize: '1.02rem', lineHeight: '1.7', marginBottom: '2rem', maxWidth: '900px' }}>
-              {currentService.overview}
-            </p>
+                      {svc.isPitchable ? (
+                        <span style={{ fontSize: '0.68rem', fontWeight: 800, padding: '0.2rem 0.65rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(148, 200, 32, 0.15)', color: 'var(--brand-lime-light)', border: '1px solid rgba(148, 200, 32, 0.35)' }}>
+                          OPEN FOR PITCHING
+                        </span>
+                      ) : (
+                        <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '0.2rem 0.65rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-light-secondary)', border: '1px solid var(--border-dark)' }}>
+                          STUDIO SERVICE
+                        </span>
+                      )}
+                    </div>
 
-            {/* Target Buyers & Formats */}
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: '1.5rem',
-                padding: '1.5rem',
-                backgroundColor: 'rgba(11, 19, 31, 0.75)',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid rgba(255, 255, 255, 0.05)',
-                marginBottom: '2rem',
-              }}
-            >
-              <div>
-                <div style={{ fontSize: '0.74rem', color: 'var(--brand-lime)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.6rem' }}>
-                  Target Platforms & Buyers:
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-                  {currentService.buyers.map((b, bI) => (
-                    <span key={bI} style={{ fontSize: '0.76rem', padding: '0.25rem 0.65rem', backgroundColor: 'rgba(0, 157, 165, 0.08)', border: '1px solid rgba(0, 157, 165, 0.2)', borderRadius: 'var(--radius-xs)', color: '#FFFFFF' }}>
-                      {b}
-                    </span>
-                  ))}
-                </div>
-              </div>
+                    <p style={{ color: 'var(--brand-teal-light)', fontSize: '0.92rem', fontWeight: 600, marginBottom: '0.85rem' }}>
+                      {svc.subtitle}
+                    </p>
 
-              <div>
-                <div style={{ fontSize: '0.74rem', color: 'var(--brand-teal-light)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.6rem' }}>
-                  Accepted Content Formats:
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-                  {currentService.formats.map((f, fI) => (
-                    <span key={fI} style={{ fontSize: '0.76rem', padding: '0.25rem 0.65rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-xs)', color: 'var(--text-light-secondary)' }}>
-                      {f}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
+                    <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.96rem', lineHeight: '1.65', marginBottom: '1.5rem' }}>
+                      {svc.overview}
+                    </p>
 
-            {/* Deliverables */}
-            <div>
-              <div style={{ fontSize: '0.76rem', color: 'var(--text-light-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.85rem' }}>
-                Scope & Execution Deliverables:
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.75rem' }}>
-                {currentService.deliverables.map((del, dI) => (
-                  <div key={dI} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', padding: '0.75rem 0.95rem', backgroundColor: 'rgba(7, 13, 20, 0.6)', borderRadius: 'var(--radius-xs)', border: '1px solid rgba(255, 255, 255, 0.04)' }}>
-                    <CheckCircle2 size={15} color="var(--brand-lime)" style={{ flexShrink: 0, marginTop: '0.2rem' }} />
-                    <span style={{ fontSize: '0.86rem', color: 'var(--text-light-secondary)', lineHeight: '1.45' }}>{del}</span>
+                    {/* Formats & Target Buyers Matrix */}
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                        gap: '1rem',
+                        padding: '1.25rem',
+                        backgroundColor: 'rgba(11, 19, 31, 0.7)',
+                        borderRadius: 'var(--radius-md)',
+                        border: '1px solid rgba(255, 255, 255, 0.04)',
+                        marginBottom: '1.5rem',
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontSize: '0.72rem', color: 'var(--brand-lime)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
+                          Target Platforms & Buyers:
+                        </div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                          {svc.buyers.map((b, bI) => (
+                            <span key={bI} style={{ fontSize: '0.72rem', padding: '0.2rem 0.55rem', backgroundColor: 'rgba(0, 157, 165, 0.1)', border: '1px solid rgba(0, 157, 165, 0.25)', borderRadius: 'var(--radius-xs)', color: '#FFFFFF' }}>
+                              {b}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div style={{ fontSize: '0.72rem', color: 'var(--brand-teal-light)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
+                          Accepted Formats:
+                        </div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                          {svc.formats.map((f, fI) => (
+                            <span key={fI} style={{ fontSize: '0.72rem', padding: '0.2rem 0.55rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-xs)', color: 'var(--text-light-secondary)' }}>
+                              {f}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Deliverables Checklist */}
+                    <div style={{ marginBottom: '1.75rem' }}>
+                      <div style={{ fontSize: '0.74rem', color: 'var(--text-light-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.65rem' }}>
+                        Execution Deliverables:
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '0.5rem' }}>
+                        {svc.deliverables.map((del, dI) => (
+                          <div key={dI} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.82rem', color: 'var(--text-light-secondary)' }}>
+                            <CheckCircle2 size={14} color="var(--brand-lime)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
+                            <span>{del}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
 
+                  {/* Card Bottom CTA Strip */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1.25rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)', flexWrap: 'wrap', gap: '1rem' }}>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)' }}>
+                      Commercial Representation & Rights Mandate
+                    </div>
+                    <button
+                      onClick={() => handleNav(svc.isPitchable ? 'submit-content' : 'contact')}
+                      className={`btn ${svc.isPitchable ? 'btn-lime' : 'btn-secondary-dark'} btn-sm`}
+                    >
+                      <span>{svc.isPitchable ? `PITCH STREAM ${svc.id}` : 'INQUIRE NOW'}</span>
+                      <ArrowUpRight size={14} />
+                    </button>
+                  </div>
+
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Horizontal Progress Track Indicator */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginTop: '1rem' }}>
+            {services.map((_, pIdx) => (
+              <button
+                key={pIdx}
+                onClick={() => scrollToServiceIndex(pIdx)}
+                style={{
+                  width: activeServiceIdx === pIdx ? '32px' : '8px',
+                  height: '6px',
+                  borderRadius: '3px',
+                  backgroundColor: activeServiceIdx === pIdx ? 'var(--brand-lime)' : 'rgba(255, 255, 255, 0.15)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                  transition: 'all 0.3s ease',
+                }}
+                aria-label={`Go to service stream ${pIdx + 1}`}
+              />
+            ))}
           </div>
 
         </div>
