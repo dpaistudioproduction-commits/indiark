@@ -18,10 +18,9 @@ export const Navbar = ({ activePage, setActivePage, onOpenAdmin }) => {
     { id: 'home', label: 'HOME' },
     { id: 'who-we-are', label: 'WHO WE ARE' },
     { id: 'what-we-do', label: 'WHAT WE DO' },
-    { id: 'why-indiark', label: 'WHY INDIARK' },
+    { id: 'why-indiark', label: 'WHY US' },
     { id: 'our-work', label: 'OUR WORK' },
     { id: 'for-platforms', label: 'FOR PLATFORMS' },
-    { id: 'submit-content', label: 'SUBMIT CONTENT' },
     { id: 'contact', label: 'CONTACT' },
   ];
 
@@ -38,10 +37,10 @@ export const Navbar = ({ activePage, setActivePage, onOpenAdmin }) => {
           position: 'sticky',
           top: 0,
           zIndex: 100,
-          backgroundColor: isScrolled ? 'rgba(7, 13, 20, 0.92)' : 'transparent',
-          backdropFilter: isScrolled ? 'blur(16px)' : 'none',
-          WebkitBackdropFilter: isScrolled ? 'blur(16px)' : 'none',
-          borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.07)' : '1px solid transparent',
+          backgroundColor: isScrolled ? 'rgba(7, 13, 20, 0.94)' : 'rgba(7, 13, 20, 0.4)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid rgba(255, 255, 255, 0.03)',
           boxShadow: isScrolled ? '0 10px 30px -10px rgba(0, 0, 0, 0.5)' : 'none',
           transition: 'background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, height 0.3s ease',
         }}
@@ -52,34 +51,32 @@ export const Navbar = ({ activePage, setActivePage, onOpenAdmin }) => {
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'space-between', 
-            height: isScrolled ? '70px' : '82px',
+            height: isScrolled ? '68px' : '78px',
             transition: 'height 0.3s ease'
           }}
         >
           
-          {/* Brand Logo & Commercial Descriptor */}
+          {/* Single Clean Brand Logo */}
           <div 
             onClick={() => handleNavClick('home')}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', cursor: 'pointer' }}
+            style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+            title="Indiark Entertainments"
           >
             <img
               src="/indiark-logo.png"
-              alt="Indiark Entertainments Logo"
-              style={{ height: isScrolled ? '38px' : '44px', width: 'auto', objectFit: 'contain', transition: 'height 0.3s ease' }}
-              onError={(e) => { e.target.style.display = 'none'; }}
+              alt="Indiark Entertainments"
+              style={{ 
+                height: isScrolled ? '40px' : '46px', 
+                width: 'auto', 
+                objectFit: 'contain', 
+                transition: 'height 0.3s ease',
+                display: 'block'
+              }}
             />
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: isScrolled ? '1.18rem' : '1.28rem', letterSpacing: '-0.02em', color: '#FFFFFF', lineHeight: 1.1, transition: 'font-size 0.3s ease' }}>
-                INDIARK
-              </span>
-              <span style={{ fontSize: '0.62rem', letterSpacing: '0.12em', color: 'var(--brand-teal-light)', textTransform: 'uppercase', fontWeight: 700 }}>
-                ENTERTAINMENTS
-              </span>
-            </div>
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav style={{ display: 'none', alignItems: 'center', gap: '1.4rem' }} className="desktop-nav-links">
+          <nav style={{ display: 'none', alignItems: 'center', gap: '1.6rem' }} className="desktop-nav-links">
             {navLinks.map((link) => {
               const isActive = activePage === link.id;
               return (
