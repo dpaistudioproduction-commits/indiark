@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   ArrowUpRight, ArrowRight, Sparkles, CheckCircle2, Tv, Film, 
   Layers, Music, Globe2, Video, Sliders, ChevronRight, ChevronLeft, Briefcase, 
-  ShieldCheck, Clock, TrendingUp, Users, Building, Eye, Award
+  ShieldCheck, Clock, TrendingUp, Users, Building, Eye, Award,
+  Mail, Phone, MapPin, Send
 } from 'lucide-react';
 import { ASSOCIATED_ORGANIZATION, CONTACT_INFO } from '../services/dataService';
 
@@ -14,6 +15,26 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
   const [activePillarIdx, setActivePillarIdx] = useState(0);
   const [hoveredPath, setHoveredPath] = useState(null);
   const serviceScrollRef = useRef(null);
+
+  // Section 12 Home Contact Form State
+  const [homeContactForm, setHomeContactForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: 'Producer / Slate Representation',
+    message: ''
+  });
+  const [homeContactSubmitted, setHomeContactSubmitted] = useState(false);
+  const [homeContactSubmitting, setHomeContactSubmitting] = useState(false);
+
+  const handleHomeContactSubmit = (e) => {
+    e.preventDefault();
+    setHomeContactSubmitting(true);
+    setTimeout(() => {
+      setHomeContactSubmitting(false);
+      setHomeContactSubmitted(true);
+    }, 500);
+  };
 
   const scrollServiceTrack = (direction) => {
     if (serviceScrollRef.current) {
@@ -1744,49 +1765,212 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
       {/* =====================================================================
           SECTION 12 — CONTACT (Let's Talk Content)
           ===================================================================== */}
-      <section className="section section-secondary">
-        <div className="container">
+      <section className="section section-secondary" style={{ width: '100%' }}>
+        <div className="container" style={{ width: '100%' }}>
           
-          <div
-            style={{
-              textAlign: 'center',
-              maxWidth: '820px',
-              margin: '0 auto',
-            }}
-          >
-            <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Direct Commercial Dialogue</span>
-            <h2 className="display-statement" style={{ marginBottom: '1rem' }}>
-              LET'S TALK CONTENT
-            </h2>
-            <p className="text-editorial-body" style={{ marginBottom: '2.5rem' }}>
-              Whether you are a producer with a finished project or an OTT platform seeking specific content slates, our team is ready to assist your commercial mandate.
-            </p>
+          <div className="split-editorial" style={{ alignItems: 'flex-start' }}>
+            
+            {/* Left Column: Direct Corporate Overview & Touchpoints */}
+            <div>
+              <span className="badge badge-teal" style={{ marginBottom: '1rem' }}>
+                Direct Commercial Dialogue
+              </span>
+              <h2 className="display-statement" style={{ marginBottom: '1.25rem' }}>
+                LET'S TALK CONTENT
+              </h2>
+              <p className="text-editorial-body" style={{ marginBottom: '2rem' }}>
+                Whether you are a creator seeking representation to license a finished project or an acquisition head sourcing curated content slates, our executive team is ready to assist your commercial mandate.
+              </p>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
-              <button
-                onClick={() => handleNav('submit-content')}
-                className="btn btn-lime btn-lg"
-              >
-                <span>PITCH YOUR CONTENT</span>
-                <ArrowUpRight size={18} />
-              </button>
+              {/* Touchpoint Cards */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2rem' }}>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                  <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(0, 157, 165, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-teal-light)', flexShrink: 0 }}>
+                    <Mail size={18} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.74rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
+                      Official Inquiries Email
+                    </div>
+                    <div style={{ color: '#FFFFFF', fontSize: '0.96rem', fontWeight: 600, marginTop: '0.15rem' }}>
+                      {CONTACT_INFO.emailPlaceholder}
+                    </div>
+                  </div>
+                </div>
 
-              <button
-                onClick={() => handleNav('for-platforms')}
-                className="btn btn-outline-teal btn-lg"
-              >
-                <span>BUYER REQUIREMENTS</span>
-                <Briefcase size={18} />
-              </button>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                  <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(148, 200, 32, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-lime)', flexShrink: 0 }}>
+                    <Phone size={18} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.74rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
+                      Telephone / WhatsApp
+                    </div>
+                    <div style={{ color: '#FFFFFF', fontSize: '0.96rem', fontWeight: 600, marginTop: '0.15rem' }}>
+                      {CONTACT_INFO.mobilePlaceholder}
+                    </div>
+                  </div>
+                </div>
 
-              <button
-                onClick={() => handleNav('contact')}
-                className="btn btn-secondary-dark btn-lg"
-              >
-                <span>CONTACT DETAILS</span>
-                <ArrowRight size={16} />
-              </button>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                  <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(255, 255, 255, 0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', flexShrink: 0 }}>
+                    <MapPin size={18} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.74rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
+                      Principal Operating Office
+                    </div>
+                    <div style={{ color: '#FFFFFF', fontSize: '0.96rem', fontWeight: 600, marginTop: '0.15rem' }}>
+                      {CONTACT_INFO.addressPlaceholder}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Direct Fast Routes */}
+              <div style={{ padding: '1.25rem', backgroundColor: 'rgba(7, 13, 20, 0.7)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-md)', display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                <button
+                  onClick={() => handleNav('submit-content')}
+                  className="btn btn-lime btn-sm"
+                  style={{ flex: '1 1 200px', justifyContent: 'center' }}
+                >
+                  <span>PITCH YOUR CONTENT</span>
+                  <ArrowUpRight size={15} />
+                </button>
+                <button
+                  onClick={() => handleNav('for-platforms')}
+                  className="btn btn-secondary-dark btn-sm"
+                  style={{ flex: '1 1 200px', justifyContent: 'center' }}
+                >
+                  <span>BUYER REQUIREMENTS</span>
+                  <Briefcase size={15} />
+                </button>
+              </div>
             </div>
+
+            {/* Right Column: Beautiful Dark Glassmorphic Inquiry Form */}
+            <div
+              style={{
+                backgroundColor: 'rgba(7, 13, 20, 0.9)',
+                border: '1px solid var(--border-teal-subtle)',
+                borderRadius: 'var(--radius-lg)',
+                padding: 'clamp(1.75rem, 3.5vw, 2.75rem)',
+                boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.7)',
+                position: 'relative',
+              }}
+            >
+              {homeContactSubmitted ? (
+                <div style={{ textAlign: 'center', padding: '2.5rem 1rem' }}>
+                  <div style={{ width: '56px', height: '56px', borderRadius: '50%', backgroundColor: 'rgba(148, 200, 32, 0.15)', border: '1px solid var(--brand-lime)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem auto', color: 'var(--brand-lime)' }}>
+                    <CheckCircle2 size={32} />
+                  </div>
+                  <h3 style={{ fontSize: '1.45rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.6rem' }}>
+                    INQUIRY TRANSMITTED
+                  </h3>
+                  <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.94rem', marginBottom: '1.75rem', lineHeight: '1.6' }}>
+                    Thank you for reaching out. Our business team has received your message and will respond to your corporate email shortly.
+                  </p>
+                  <button onClick={() => setHomeContactSubmitted(false)} className="btn btn-secondary-dark btn-sm">
+                    <span>SEND ANOTHER MESSAGE</span>
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleHomeContactSubmit}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-dark)', paddingBottom: '0.75rem' }}>
+                    <div>
+                      <span style={{ fontSize: '0.74rem', color: 'var(--brand-lime)', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                        Direct Executive Channel
+                      </span>
+                      <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#FFFFFF', margin: '0.2rem 0 0 0' }}>
+                        Send a Consultation Message
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div className="form-group" style={{ marginBottom: '1.15rem' }}>
+                    <label className="form-label">Full Name *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Your full name"
+                      value={homeContactForm.name}
+                      onChange={(e) => setHomeContactForm({ ...homeContactForm, name: e.target.value })}
+                      className="form-control"
+                    />
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.15rem' }}>
+                    <div className="form-group" style={{ marginBottom: 0 }}>
+                      <label className="form-label">Corporate Email *</label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="name@company.com"
+                        value={homeContactForm.email}
+                        onChange={(e) => setHomeContactForm({ ...homeContactForm, email: e.target.value })}
+                        className="form-control"
+                      />
+                    </div>
+
+                    <div className="form-group" style={{ marginBottom: 0 }}>
+                      <label className="form-label">Phone / WhatsApp</label>
+                      <input
+                        type="tel"
+                        placeholder="+91 / International"
+                        value={homeContactForm.phone}
+                        onChange={(e) => setHomeContactForm({ ...homeContactForm, phone: e.target.value })}
+                        className="form-control"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group" style={{ marginBottom: '1.15rem' }}>
+                    <label className="form-label">Nature of Inquiry *</label>
+                    <select
+                      value={homeContactForm.subject}
+                      onChange={(e) => setHomeContactForm({ ...homeContactForm, subject: e.target.value })}
+                      className="form-control"
+                    >
+                      <option value="Producer / Slate Representation">Producer / Slate Pitching Representation</option>
+                      <option value="OTT / Broadcaster Requirement">OTT Platform / Broadcaster Content Requirement</option>
+                      <option value="Rights & Catalogue Licensing">Content Rights & Catalogue Licensing</option>
+                      <option value="Music & Sync Licensing">Music Business & Audio Sync</option>
+                      <option value="General Corporate Consultation">General Corporate Consultation</option>
+                    </select>
+                  </div>
+
+                  <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                    <label className="form-label">Your Message / Requirement *</label>
+                    <textarea
+                      rows={4}
+                      required
+                      placeholder="Briefly describe your project or procurement mandate..."
+                      value={homeContactForm.message}
+                      onChange={(e) => setHomeContactForm({ ...homeContactForm, message: e.target.value })}
+                      className="form-control"
+                      style={{ resize: 'vertical' }}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={homeContactSubmitting}
+                    className="btn btn-lime btn-lg"
+                    style={{ width: '100%', justifyContent: 'center' }}
+                  >
+                    {homeContactSubmitting ? (
+                      <span>TRANSMITTING MESSAGE...</span>
+                    ) : (
+                      <>
+                        <span>SEND EXECUTIVE MESSAGE</span>
+                        <Send size={16} />
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
+            </div>
+
           </div>
 
         </div>

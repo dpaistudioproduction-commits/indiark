@@ -557,19 +557,38 @@ h1, h2, h3, h4, h5, h6 {
 
 .form-control {
   width: 100%;
-  padding: 0.85rem 1.15rem;
-  background-color: rgba(7, 13, 20, 0.75);
-  border: 1px solid var(--border-dark);
+  padding: 0.9rem 1.15rem;
+  background-color: rgba(7, 13, 20, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-sm);
   color: #FFFFFF;
   font-size: 0.95rem;
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  font-family: var(--font-body);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-control::placeholder {
+  color: #64748B;
+  opacity: 0.85;
 }
 
 .form-control:focus {
   border-color: var(--brand-teal-light);
-  background-color: rgba(7, 13, 20, 0.95);
-  box-shadow: 0 0 0 3px rgba(0, 157, 165, 0.15);
+  background-color: rgba(7, 13, 20, 0.98);
+  box-shadow: 0 0 0 3px rgba(0, 157, 165, 0.2);
+  color: #FFFFFF;
+}
+
+select.form-control {
+  background-color: #070D14;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+select.form-control option {
+  background-color: #070D14;
+  color: #FFFFFF;
+  padding: 0.5rem;
 }
 
 /* ==========================================================================
