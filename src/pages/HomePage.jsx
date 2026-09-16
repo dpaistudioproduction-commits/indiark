@@ -8,6 +8,7 @@ import { ASSOCIATED_ORGANIZATION, CONTACT_INFO } from '../services/dataService';
 
 export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
   const [activeServiceIdx, setActiveServiceIdx] = useState(0);
+  const [serviceViewMode, setServiceViewMode] = useState('horizontal');
   const [activeProcessStep, setActiveProcessStep] = useState(0);
   const [activeProjectIdx, setActiveProjectIdx] = useState(0);
   const [activePillarIdx, setActivePillarIdx] = useState(0);
@@ -628,77 +629,119 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
 
 
       {/* =====================================================================
-          SECTION 04 — WHAT WE DO (Scroll-Based Right-to-Left Horizontal Showcase)
+          SECTION 04 — WHAT WE DO (Scroll-Based: Horizontal Track & Top-Down Stack)
           ===================================================================== */}
-      <section className="section section-secondary" style={{ position: 'relative', overflow: 'hidden' }}>
-        <div className="container">
+      <section className="section section-secondary" style={{ position: 'relative', overflow: 'hidden', width: '100%' }}>
+        <div className="container" style={{ width: '100%' }}>
           
-          {/* Header & Controls */}
+          {/* Header & Mode Controls */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2rem' }}>
             <div>
               <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Seven Specialized Business Streams</span>
               <h2 className="display-statement">WHAT WE DO</h2>
               <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.95rem', margin: '0.4rem 0 0 0' }}>
-                Scroll or swipe horizontally through our end-to-end entertainment representation services.
+                Explore our full suite of media representation, rights structuring, and content distribution streams.
               </p>
             </div>
 
-            {/* Carousel Navigation Controls */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--brand-lime)', marginRight: '0.5rem', fontFamily: 'var(--font-heading)' }}>
-                <span>0{activeServiceIdx + 1}</span>
-                <span style={{ color: 'var(--text-light-subtle)', margin: '0 0.3rem' }}>/</span>
-                <span style={{ color: 'var(--text-light-muted)' }}>07</span>
+            {/* Navigation & View Mode Controls */}
+            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+              
+              {/* View Mode Toggle */}
+              <div style={{ display: 'flex', backgroundColor: 'rgba(255, 255, 255, 0.05)', borderRadius: 'var(--radius-sm)', padding: '0.2rem', border: '1px solid var(--border-dark)' }}>
+                <button
+                  onClick={() => setServiceViewMode('horizontal')}
+                  style={{
+                    padding: '0.45rem 0.85rem',
+                    borderRadius: 'var(--radius-xs)',
+                    border: 'none',
+                    backgroundColor: serviceViewMode === 'horizontal' ? 'var(--brand-teal)' : 'transparent',
+                    color: serviceViewMode === 'horizontal' ? '#FFFFFF' : 'var(--text-light-secondary)',
+                    fontFamily: 'var(--font-heading)',
+                    fontSize: '0.76rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  ⇆ Horizontal Track
+                </button>
+                <button
+                  onClick={() => setServiceViewMode('vertical')}
+                  style={{
+                    padding: '0.45rem 0.85rem',
+                    borderRadius: 'var(--radius-xs)',
+                    border: 'none',
+                    backgroundColor: serviceViewMode === 'vertical' ? 'var(--brand-teal)' : 'transparent',
+                    color: serviceViewMode === 'vertical' ? '#FFFFFF' : 'var(--text-light-secondary)',
+                    fontFamily: 'var(--font-heading)',
+                    fontSize: '0.76rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  ⇅ Top-Down Stack
+                </button>
               </div>
 
-              <button
-                onClick={() => scrollServiceTrack('left')}
-                style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '50%',
-                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid var(--border-dark)',
-                  color: '#FFFFFF',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                }}
-                aria-label="Previous Service Stream"
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--brand-teal)'; e.currentTarget.style.borderColor = 'var(--brand-teal)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; e.currentTarget.style.borderColor = 'var(--border-dark)'; }}
-              >
-                <ChevronLeft size={20} />
-              </button>
+              {serviceViewMode === 'horizontal' && (
+                <>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--brand-lime)', margin: '0 0.35rem', fontFamily: 'var(--font-heading)' }}>
+                    <span>0{activeServiceIdx + 1}</span>
+                    <span style={{ color: 'var(--text-light-subtle)', margin: '0 0.3rem' }}>/</span>
+                    <span style={{ color: 'var(--text-light-muted)' }}>07</span>
+                  </div>
 
-              <button
-                onClick={() => scrollServiceTrack('right')}
-                style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '50%',
-                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid var(--border-dark)',
-                  color: '#FFFFFF',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                }}
-                aria-label="Next Service Stream"
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--brand-teal)'; e.currentTarget.style.borderColor = 'var(--brand-teal)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; e.currentTarget.style.borderColor = 'var(--border-dark)'; }}
-              >
-                <ChevronRight size={20} />
-              </button>
+                  <button
+                    onClick={() => scrollServiceTrack('left')}
+                    style={{
+                      width: '38px',
+                      height: '38px',
+                      borderRadius: '50%',
+                      backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid var(--border-dark)',
+                      color: '#FFFFFF',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                    }}
+                    aria-label="Previous Stream"
+                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--brand-teal)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; }}
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+
+                  <button
+                    onClick={() => scrollServiceTrack('right')}
+                    style={{
+                      width: '38px',
+                      height: '38px',
+                      borderRadius: '50%',
+                      backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid var(--border-dark)',
+                      color: '#FFFFFF',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                    }}
+                    aria-label="Next Stream"
+                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--brand-teal)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; }}
+                  >
+                    <ChevronRight size={18} />
+                  </button>
+                </>
+              )}
 
               <button
                 onClick={() => handleNav('what-we-do')}
                 className="btn btn-secondary-dark btn-sm"
-                style={{ marginLeft: '0.5rem' }}
               >
                 <span>Full Atlas</span>
                 <ArrowRight size={14} />
@@ -715,6 +758,7 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
               paddingBottom: '0.75rem', 
               marginBottom: '1.75rem',
               scrollbarWidth: 'none',
+              width: '100%',
             }}
           >
             {services.map((svc, idx) => {
@@ -722,15 +766,23 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
               return (
                 <button
                   key={svc.id}
-                  onClick={() => scrollToServiceIndex(idx)}
+                  onClick={() => {
+                    if (serviceViewMode === 'horizontal') {
+                      scrollToServiceIndex(idx);
+                    } else {
+                      const el = document.getElementById(`service-vertical-${svc.id}`);
+                      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      setActiveServiceIdx(idx);
+                    }
+                  }}
                   style={{
-                    padding: '0.65rem 1.15rem',
+                    padding: '0.6rem 1.1rem',
                     borderRadius: 'var(--radius-sm)',
                     backgroundColor: isSelected ? 'var(--brand-teal)' : 'rgba(255, 255, 255, 0.04)',
                     color: isSelected ? '#FFFFFF' : 'var(--text-light-secondary)',
                     border: isSelected ? '1px solid var(--brand-teal)' : '1px solid transparent',
                     fontFamily: 'var(--font-heading)',
-                    fontSize: '0.82rem',
+                    fontSize: '0.8rem',
                     fontWeight: isSelected ? 800 : 600,
                     cursor: 'pointer',
                     whiteSpace: 'nowrap',
@@ -747,78 +799,236 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
             })}
           </div>
 
-          {/* Right-to-Left Scroll-Based Track Container */}
-          <div
-            ref={serviceScrollRef}
-            onScroll={handleServiceScroll}
-            style={{
-              display: 'flex',
-              gap: '1.5rem',
-              overflowX: 'auto',
-              scrollSnapType: 'x mandatory',
-              scrollBehavior: 'smooth',
-              padding: '0.5rem 0.25rem 1.5rem 0.25rem',
-              scrollbarWidth: 'thin',
-              scrollbarColor: 'var(--brand-teal) rgba(255, 255, 255, 0.05)',
-              WebkitOverflowScrolling: 'touch',
-            }}
-          >
-            {services.map((svc, idx) => {
-              const SvcIcon = svc.icon;
-              const isActive = activeServiceIdx === idx;
-              return (
-                <div
-                  key={svc.id}
-                  className="service-scroll-card"
-                  style={{
-                    flex: '0 0 clamp(310px, 82vw, 840px)',
-                    scrollSnapAlign: 'start',
-                    backgroundColor: 'rgba(7, 13, 20, 0.92)',
-                    border: isActive ? '1px solid var(--border-teal-subtle)' : '1px solid var(--border-dark)',
-                    borderRadius: 'var(--radius-lg)',
-                    padding: 'clamp(1.75rem, 3.5vw, 2.75rem)',
-                    boxShadow: isActive ? '0 20px 50px -10px rgba(0, 157, 165, 0.15)' : '0 15px 40px rgba(0, 0, 0, 0.4)',
-                    transition: 'all 0.3s ease',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <div>
-                    {/* Card Top Strip */}
+          {/* 1. HORIZONTAL SCROLL TRACK MODE */}
+          {serviceViewMode === 'horizontal' ? (
+            <>
+              <div
+                ref={serviceScrollRef}
+                onScroll={handleServiceScroll}
+                style={{
+                  display: 'flex',
+                  gap: '1.5rem',
+                  overflowX: 'auto',
+                  scrollSnapType: 'x mandatory',
+                  scrollBehavior: 'smooth',
+                  padding: '0.5rem 0.25rem 1.5rem 0.25rem',
+                  scrollbarWidth: 'thin',
+                  scrollbarColor: 'var(--brand-teal) rgba(255, 255, 255, 0.05)',
+                  WebkitOverflowScrolling: 'touch',
+                  width: '100%',
+                }}
+              >
+                {services.map((svc, idx) => {
+                  const SvcIcon = svc.icon;
+                  const isActive = activeServiceIdx === idx;
+                  return (
+                    <div
+                      key={svc.id}
+                      className="service-scroll-card"
+                      style={{
+                        flex: '0 0 clamp(310px, 82vw, 840px)',
+                        width: 'clamp(310px, 82vw, 840px)',
+                        maxWidth: '100%',
+                        scrollSnapAlign: 'start',
+                        backgroundColor: 'rgba(7, 13, 20, 0.92)',
+                        border: isActive ? '1px solid var(--border-teal-subtle)' : '1px solid var(--border-dark)',
+                        borderRadius: 'var(--radius-lg)',
+                        padding: 'clamp(1.75rem, 3.5vw, 2.75rem)',
+                        boxShadow: isActive ? '0 20px 50px -10px rgba(0, 157, 165, 0.15)' : '0 15px 40px rgba(0, 0, 0, 0.4)',
+                        transition: 'all 0.3s ease',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <div>
+                        {/* Card Top Strip */}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                            <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(0, 157, 165, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-teal-light)' }}>
+                              <SvcIcon size={22} />
+                            </div>
+                            <div>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--brand-lime)', letterSpacing: '0.08em' }}>STREAM {svc.id}</span>
+                                <span style={{ fontSize: '0.72rem', color: 'var(--text-light-subtle)' }}>•</span>
+                                <span style={{ fontSize: '0.72rem', color: 'var(--brand-teal-light)', fontWeight: 700 }}>{svc.code}</span>
+                              </div>
+                              <h3 style={{ fontSize: 'clamp(1.35rem, 2.2vw, 1.85rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em', margin: '0.2rem 0 0 0' }}>
+                                {svc.title}
+                              </h3>
+                            </div>
+                          </div>
+
+                          {svc.isPitchable ? (
+                            <span style={{ fontSize: '0.68rem', fontWeight: 800, padding: '0.2rem 0.65rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(148, 200, 32, 0.15)', color: 'var(--brand-lime-light)', border: '1px solid rgba(148, 200, 32, 0.35)' }}>
+                              OPEN FOR PITCHING
+                            </span>
+                          ) : (
+                            <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '0.2rem 0.65rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-light-secondary)', border: '1px solid var(--border-dark)' }}>
+                              STUDIO SERVICE
+                            </span>
+                          )}
+                        </div>
+
+                        <p style={{ color: 'var(--brand-teal-light)', fontSize: '0.92rem', fontWeight: 600, marginBottom: '0.85rem' }}>
+                          {svc.subtitle}
+                        </p>
+
+                        <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.96rem', lineHeight: '1.65', marginBottom: '1.5rem' }}>
+                          {svc.overview}
+                        </p>
+
+                        {/* Formats & Target Buyers Matrix */}
+                        <div
+                          style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                            gap: '1rem',
+                            padding: '1.25rem',
+                            backgroundColor: 'rgba(11, 19, 31, 0.7)',
+                            borderRadius: 'var(--radius-md)',
+                            border: '1px solid rgba(255, 255, 255, 0.04)',
+                            marginBottom: '1.5rem',
+                          }}
+                        >
+                          <div>
+                            <div style={{ fontSize: '0.72rem', color: 'var(--brand-lime)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
+                              Target Platforms & Buyers:
+                            </div>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                              {svc.buyers.map((b, bI) => (
+                                <span key={bI} style={{ fontSize: '0.72rem', padding: '0.2rem 0.55rem', backgroundColor: 'rgba(0, 157, 165, 0.1)', border: '1px solid rgba(0, 157, 165, 0.25)', borderRadius: 'var(--radius-xs)', color: '#FFFFFF' }}>
+                                  {b}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div>
+                            <div style={{ fontSize: '0.72rem', color: 'var(--brand-teal-light)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
+                              Accepted Formats:
+                            </div>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                              {svc.formats.map((f, fI) => (
+                                <span key={fI} style={{ fontSize: '0.72rem', padding: '0.2rem 0.55rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-xs)', color: 'var(--text-light-secondary)' }}>
+                                  {f}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Deliverables Checklist */}
+                        <div style={{ marginBottom: '1.75rem' }}>
+                          <div style={{ fontSize: '0.74rem', color: 'var(--text-light-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.65rem' }}>
+                            Execution Deliverables:
+                          </div>
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '0.5rem' }}>
+                            {svc.deliverables.map((del, dI) => (
+                              <div key={dI} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.82rem', color: 'var(--text-light-secondary)' }}>
+                                <CheckCircle2 size={14} color="var(--brand-lime)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
+                                <span>{del}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Card Bottom CTA Strip */}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1.25rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)', flexWrap: 'wrap', gap: '1rem' }}>
+                        <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)' }}>
+                          Commercial Representation & Rights Mandate
+                        </div>
+                        <button
+                          onClick={() => handleNav(svc.isPitchable ? 'submit-content' : 'contact')}
+                          className={`btn ${svc.isPitchable ? 'btn-lime' : 'btn-secondary-dark'} btn-sm`}
+                        >
+                          <span>{svc.isPitchable ? `PITCH STREAM ${svc.id}` : 'INQUIRE NOW'}</span>
+                          <ArrowUpRight size={14} />
+                        </button>
+                      </div>
+
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Horizontal Progress Track Indicator */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginTop: '1rem' }}>
+                {services.map((_, pIdx) => (
+                  <button
+                    key={pIdx}
+                    onClick={() => scrollToServiceIndex(pIdx)}
+                    style={{
+                      width: activeServiceIdx === pIdx ? '32px' : '8px',
+                      height: '6px',
+                      borderRadius: '3px',
+                      backgroundColor: activeServiceIdx === pIdx ? 'var(--brand-lime)' : 'rgba(255, 255, 255, 0.15)',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0,
+                      transition: 'all 0.3s ease',
+                    }}
+                    aria-label={`Go to service stream ${pIdx + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          ) : (
+            /* 2. TOP-DOWN FULL STACK SCROLL MODE */
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
+              {services.map((svc) => {
+                const SvcIcon = svc.icon;
+                return (
+                  <div
+                    key={svc.id}
+                    id={`service-vertical-${svc.id}`}
+                    style={{
+                      width: '100%',
+                      backgroundColor: 'rgba(7, 13, 20, 0.92)',
+                      border: '1px solid var(--border-dark)',
+                      borderRadius: 'var(--radius-lg)',
+                      padding: 'clamp(1.75rem, 3.5vw, 2.5rem)',
+                      boxShadow: '0 15px 40px rgba(0, 0, 0, 0.35)',
+                      transition: 'border-color 0.25s ease',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--brand-teal)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border-dark)')}
+                  >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                        <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(0, 157, 165, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-teal-light)' }}>
-                          <SvcIcon size={22} />
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+                        <div style={{ width: '46px', height: '46px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(0, 157, 165, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-teal-light)' }}>
+                          <SvcIcon size={24} />
                         </div>
                         <div>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--brand-lime)', letterSpacing: '0.08em' }}>STREAM {svc.id}</span>
-                            <span style={{ fontSize: '0.72rem', color: 'var(--text-light-subtle)' }}>•</span>
-                            <span style={{ fontSize: '0.72rem', color: 'var(--brand-teal-light)', fontWeight: 700 }}>{svc.code}</span>
+                            <span style={{ fontSize: '0.74rem', fontWeight: 800, color: 'var(--brand-lime)', letterSpacing: '0.08em' }}>STREAM {svc.id}</span>
+                            <span style={{ fontSize: '0.74rem', color: 'var(--text-light-subtle)' }}>•</span>
+                            <span style={{ fontSize: '0.74rem', color: 'var(--brand-teal-light)', fontWeight: 700 }}>{svc.code}</span>
                           </div>
-                          <h3 style={{ fontSize: 'clamp(1.35rem, 2.2vw, 1.85rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em', margin: '0.2rem 0 0 0' }}>
+                          <h3 style={{ fontSize: 'clamp(1.4rem, 2.4vw, 2rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em', margin: '0.25rem 0 0 0' }}>
                             {svc.title}
                           </h3>
                         </div>
                       </div>
 
                       {svc.isPitchable ? (
-                        <span style={{ fontSize: '0.68rem', fontWeight: 800, padding: '0.2rem 0.65rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(148, 200, 32, 0.15)', color: 'var(--brand-lime-light)', border: '1px solid rgba(148, 200, 32, 0.35)' }}>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 800, padding: '0.25rem 0.75rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(148, 200, 32, 0.15)', color: 'var(--brand-lime-light)', border: '1px solid rgba(148, 200, 32, 0.35)' }}>
                           OPEN FOR PITCHING
                         </span>
                       ) : (
-                        <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '0.2rem 0.65rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-light-secondary)', border: '1px solid var(--border-dark)' }}>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 700, padding: '0.25rem 0.75rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-light-secondary)', border: '1px solid var(--border-dark)' }}>
                           STUDIO SERVICE
                         </span>
                       )}
                     </div>
 
-                    <p style={{ color: 'var(--brand-teal-light)', fontSize: '0.92rem', fontWeight: 600, marginBottom: '0.85rem' }}>
+                    <p style={{ color: 'var(--brand-teal-light)', fontSize: '0.96rem', fontWeight: 600, marginBottom: '0.75rem' }}>
                       {svc.subtitle}
                     </p>
 
-                    <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.96rem', lineHeight: '1.65', marginBottom: '1.5rem' }}>
+                    <p style={{ color: 'var(--text-light-secondary)', fontSize: '1rem', lineHeight: '1.65', marginBottom: '1.5rem', maxWidth: '1000px' }}>
                       {svc.overview}
                     </p>
 
@@ -826,8 +1036,8 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
                     <div
                       style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-                        gap: '1rem',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                        gap: '1.25rem',
                         padding: '1.25rem',
                         backgroundColor: 'rgba(11, 19, 31, 0.7)',
                         borderRadius: 'var(--radius-md)',
@@ -836,12 +1046,12 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
                       }}
                     >
                       <div>
-                        <div style={{ fontSize: '0.72rem', color: 'var(--brand-lime)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
+                        <div style={{ fontSize: '0.74rem', color: 'var(--brand-lime)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
                           Target Platforms & Buyers:
                         </div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
                           {svc.buyers.map((b, bI) => (
-                            <span key={bI} style={{ fontSize: '0.72rem', padding: '0.2rem 0.55rem', backgroundColor: 'rgba(0, 157, 165, 0.1)', border: '1px solid rgba(0, 157, 165, 0.25)', borderRadius: 'var(--radius-xs)', color: '#FFFFFF' }}>
+                            <span key={bI} style={{ fontSize: '0.76rem', padding: '0.25rem 0.65rem', backgroundColor: 'rgba(0, 157, 165, 0.1)', border: '1px solid rgba(0, 157, 165, 0.25)', borderRadius: 'var(--radius-xs)', color: '#FFFFFF' }}>
                               {b}
                             </span>
                           ))}
@@ -849,12 +1059,12 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
                       </div>
 
                       <div>
-                        <div style={{ fontSize: '0.72rem', color: 'var(--brand-teal-light)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
+                        <div style={{ fontSize: '0.74rem', color: 'var(--brand-teal-light)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
                           Accepted Formats:
                         </div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
                           {svc.formats.map((f, fI) => (
-                            <span key={fI} style={{ fontSize: '0.72rem', padding: '0.2rem 0.55rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-xs)', color: 'var(--text-light-secondary)' }}>
+                            <span key={fI} style={{ fontSize: '0.76rem', padding: '0.25rem 0.65rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-xs)', color: 'var(--text-light-secondary)' }}>
                               {f}
                             </span>
                           ))}
@@ -864,59 +1074,38 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
 
                     {/* Deliverables Checklist */}
                     <div style={{ marginBottom: '1.75rem' }}>
-                      <div style={{ fontSize: '0.74rem', color: 'var(--text-light-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.65rem' }}>
+                      <div style={{ fontSize: '0.76rem', color: 'var(--text-light-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.65rem' }}>
                         Execution Deliverables:
                       </div>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '0.5rem' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.6rem' }}>
                         {svc.deliverables.map((del, dI) => (
-                          <div key={dI} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.82rem', color: 'var(--text-light-secondary)' }}>
-                            <CheckCircle2 size={14} color="var(--brand-lime)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
+                          <div key={dI} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', fontSize: '0.86rem', color: 'var(--text-light-secondary)' }}>
+                            <CheckCircle2 size={15} color="var(--brand-lime)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
                             <span>{del}</span>
                           </div>
                         ))}
                       </div>
                     </div>
-                  </div>
 
-                  {/* Card Bottom CTA Strip */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1.25rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)', flexWrap: 'wrap', gap: '1rem' }}>
-                    <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)' }}>
-                      Commercial Representation & Rights Mandate
+                    {/* Card Bottom CTA Strip */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1.25rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)', flexWrap: 'wrap', gap: '1rem' }}>
+                      <div style={{ fontSize: '0.82rem', color: 'var(--text-light-muted)' }}>
+                        Commercial Representation & Rights Mandate
+                      </div>
+                      <button
+                        onClick={() => handleNav(svc.isPitchable ? 'submit-content' : 'contact')}
+                        className={`btn ${svc.isPitchable ? 'btn-lime' : 'btn-secondary-dark'} btn-sm`}
+                      >
+                        <span>{svc.isPitchable ? `PITCH STREAM ${svc.id}` : 'INQUIRE NOW'}</span>
+                        <ArrowUpRight size={14} />
+                      </button>
                     </div>
-                    <button
-                      onClick={() => handleNav(svc.isPitchable ? 'submit-content' : 'contact')}
-                      className={`btn ${svc.isPitchable ? 'btn-lime' : 'btn-secondary-dark'} btn-sm`}
-                    >
-                      <span>{svc.isPitchable ? `PITCH STREAM ${svc.id}` : 'INQUIRE NOW'}</span>
-                      <ArrowUpRight size={14} />
-                    </button>
+
                   </div>
-
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Horizontal Progress Track Indicator */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginTop: '1rem' }}>
-            {services.map((_, pIdx) => (
-              <button
-                key={pIdx}
-                onClick={() => scrollToServiceIndex(pIdx)}
-                style={{
-                  width: activeServiceIdx === pIdx ? '32px' : '8px',
-                  height: '6px',
-                  borderRadius: '3px',
-                  backgroundColor: activeServiceIdx === pIdx ? 'var(--brand-lime)' : 'rgba(255, 255, 255, 0.15)',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                  transition: 'all 0.3s ease',
-                }}
-                aria-label={`Go to service stream ${pIdx + 1}`}
-              />
-            ))}
-          </div>
+                );
+              })}
+            </div>
+          )}
 
         </div>
       </section>

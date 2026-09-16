@@ -53,9 +53,9 @@
   --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-  /* Containers */
-  --container-max-w: 1280px;
-  --container-wide-w: 1400px;
+  /* Containers Unified Alignment */
+  --container-max-w: 1320px;
+  --container-wide-w: 1320px;
 
   /* Radii */
   --radius-xs: 4px;
@@ -87,14 +87,20 @@ html {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
   background-color: var(--bg-dark-950);
   color: var(--text-light-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  position: relative;
 }
 
 a {
