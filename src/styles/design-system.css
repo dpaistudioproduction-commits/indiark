@@ -257,22 +257,15 @@ h1, h2, h3, h4, h5, h6 {
 /* ==========================================================================
    Layout Containers & Section Variations
    ========================================================================== */
-.container {
+.container,
+.container-wide {
   width: 100%;
   max-width: var(--container-max-w);
   margin-left: auto;
   margin-right: auto;
   padding-left: clamp(1.25rem, 4vw, 2.5rem);
   padding-right: clamp(1.25rem, 4vw, 2.5rem);
-}
-
-.container-wide {
-  width: 100%;
-  max-width: var(--container-wide-w);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: clamp(1.25rem, 4vw, 2.5rem);
-  padding-right: clamp(1.25rem, 4vw, 2.5rem);
+  box-sizing: border-box;
 }
 
 .section {

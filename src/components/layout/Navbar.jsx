@@ -46,7 +46,7 @@ export const Navbar = ({ activePage, setActivePage, onOpenAdmin }) => {
         }}
       >
         <div 
-          className="container-wide" 
+          className="container" 
           style={{ 
             display: 'flex', 
             alignItems: 'center', 

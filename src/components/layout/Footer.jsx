@@ -18,7 +18,7 @@ export const Footer = ({ setActivePage, onOpenLegal }) => {
         paddingBottom: '2.5rem',
       }}
     >
-      <div className="container-wide">
+      <div className="container">
         
         {/* Main 4-Column Directory Grid */}
         <div
