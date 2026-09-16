@@ -59,20 +59,12 @@ export const Loader = ({ onFinish }) => {
           src="/indiark-logo.png"
           alt="Indiark Entertainments"
           style={{
-            height: '56px',
+            height: '64px',
             width: 'auto',
             objectFit: 'contain',
+            marginBottom: '0.5rem',
           }}
         />
-
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.35rem', letterSpacing: '0.04em', color: '#FFFFFF' }}>
-            INDIARK
-          </div>
-          <div style={{ fontSize: '0.68rem', letterSpacing: '0.14em', color: 'var(--brand-teal-light)', textTransform: 'uppercase', fontWeight: 700 }}>
-            ENTERTAINMENTS
-          </div>
-        </div>
 
         {/* Progress Bar */}
         <div
