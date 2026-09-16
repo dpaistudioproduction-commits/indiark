@@ -1,54 +1,32 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, ArrowUpRight, SlidersHorizontal, Film, Briefcase, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Menu, X, ArrowUpRight, ChevronRight } from 'lucide-react';
 
 export const Navbar = ({ activePage, setActivePage, onOpenAdmin }) => {
-  const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const lastScrollYRef = useRef(0);
-  const rafIdRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (rafIdRef.current) return;
-
-      rafIdRef.current = requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY;
-        
-        setIsScrolled(currentScrollY > 20);
-
-        if (currentScrollY > 80 && currentScrollY > lastScrollYRef.current) {
-          if (!mobileMenuOpen) {
-            setIsVisible(false);
-          }
-        } else {
-          setIsVisible(true);
-        }
-
-        lastScrollYRef.current = currentScrollY;
-        rafIdRef.current = null;
-      });
+      setIsScrolled(window.scrollY > 40);
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
-    };
-  }, [mobileMenuOpen]);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-  const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'who-we-are', label: 'Who We Are' },
-    { id: 'what-we-do', label: 'What We Do' },
-    { id: 'why-indiark', label: 'Why Indiark' },
-    { id: 'our-work', label: 'Our Work' },
-    { id: 'for-platforms', label: 'For Platforms' },
-    { id: 'contact', label: 'Contact' }
+  const navLinks = [
+    { id: 'home', label: 'HOME' },
+    { id: 'who-we-are', label: 'WHO WE ARE' },
+    { id: 'what-we-do', label: 'WHAT WE DO' },
+    { id: 'why-indiark', label: 'WHY INDIARK' },
+    { id: 'our-work', label: 'OUR WORK' },
+    { id: 'for-platforms', label: 'FOR PLATFORMS' },
+    { id: 'submit-content', label: 'SUBMIT CONTENT' },
+    { id: 'contact', label: 'CONTACT' },
   ];
 
-  const handleNavClick = (id) => {
-    setActivePage(id);
+  const handleNavClick = (pageId) => {
+    setActivePage(pageId);
     setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -57,310 +35,208 @@ export const Navbar = ({ activePage, setActivePage, onOpenAdmin }) => {
     <>
       <header
         style={{
-          position: 'fixed',
+          position: 'sticky',
           top: 0,
-          left: 0,
-          right: 0,
           zIndex: 100,
-          padding: isScrolled ? '0.65rem 0' : '1rem 0',
-          transition: 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease, background-color 0.3s ease',
-          transform: isVisible ? 'translateY(0)' : 'translateY(-100%)',
-          backgroundColor: isScrolled ? 'rgba(7, 13, 20, 0.92)' : 'rgba(7, 13, 20, 0.4)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          border: 'none',
-          boxShadow: isScrolled ? '0 10px 30px rgba(0, 0, 0, 0.35)' : 'none'
+          backgroundColor: isScrolled ? 'rgba(7, 13, 20, 0.92)' : 'transparent',
+          backdropFilter: isScrolled ? 'blur(16px)' : 'none',
+          WebkitBackdropFilter: isScrolled ? 'blur(16px)' : 'none',
+          borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.07)' : '1px solid transparent',
+          boxShadow: isScrolled ? '0 10px 30px -10px rgba(0, 0, 0, 0.5)' : 'none',
+          transition: 'background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, height 0.3s ease',
         }}
       >
-        <div
-          className="container"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '1rem',
-            width: '100%'
+        <div 
+          className="container-wide" 
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between', 
+            height: isScrolled ? '70px' : '82px',
+            transition: 'height 0.3s ease'
           }}
         >
-          {/* Brand Logo with Smooth Hover */}
-          <button
+          
+          {/* Brand Logo & Commercial Descriptor */}
+          <div 
             onClick={() => handleNavClick('home')}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              padding: '0.2rem 0',
-              outline: 'none',
-              transition: 'opacity 0.2s ease, transform 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = '0.9';
-              e.currentTarget.style.transform = 'scale(1.02)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = '1';
-              e.currentTarget.style.transform = 'scale(1)';
-            }}
-            aria-label="Indiark Entertainments Home"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', cursor: 'pointer' }}
           >
             <img
               src="/indiark-logo.png"
-              alt="INDIARK ENTERTAINMENTS"
-              style={{
-                height: '44px',
-                width: 'auto',
-                objectFit: 'contain',
-                display: 'block'
-              }}
+              alt="Indiark Entertainments Logo"
+              style={{ height: isScrolled ? '38px' : '44px', width: 'auto', objectFit: 'contain', transition: 'height 0.3s ease' }}
+              onError={(e) => { e.target.style.display = 'none'; }}
             />
-          </button>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: isScrolled ? '1.18rem' : '1.28rem', letterSpacing: '-0.02em', color: '#FFFFFF', lineHeight: 1.1, transition: 'font-size 0.3s ease' }}>
+                INDIARK
+              </span>
+              <span style={{ fontSize: '0.62rem', letterSpacing: '0.12em', color: 'var(--brand-teal-light)', textTransform: 'uppercase', fontWeight: 700 }}>
+                ENTERTAINMENTS
+              </span>
+            </div>
+          </div>
 
-          {/* Center Clean Plain Navigation Island */}
-          <nav
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.35rem',
-              backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.03)' : 'transparent',
-              padding: '0.3rem 0.5rem',
-              borderRadius: 'var(--radius-full)',
-              border: 'none'
-            }}
-            className="desktop-nav-island"
-          >
-            {navItems.map((item) => {
-              const isActive = activePage === item.id;
+          {/* Desktop Navigation Links */}
+          <nav style={{ display: 'none', alignItems: 'center', gap: '1.4rem' }} className="desktop-nav-links">
+            {navLinks.map((link) => {
+              const isActive = activePage === link.id;
               return (
                 <button
-                  key={item.id}
-                  onClick={() => handleNavClick(item.id)}
+                  key={link.id}
+                  onClick={() => handleNavClick(link.id)}
                   style={{
-                    background: isActive ? 'rgba(0, 157, 165, 0.15)' : 'transparent',
+                    background: 'transparent',
                     border: 'none',
-                    color: isActive ? 'var(--brand-teal-light)' : 'var(--text-light-secondary)',
-                    fontWeight: isActive ? 700 : 500,
-                    fontSize: '0.88rem',
+                    fontFamily: 'var(--font-heading)',
+                    fontSize: '0.82rem',
+                    fontWeight: isActive ? 700 : 600,
+                    letterSpacing: '0.04em',
+                    color: isActive ? '#FFFFFF' : 'var(--text-light-secondary)',
                     cursor: 'pointer',
-                    padding: '0.5rem 0.95rem',
-                    borderRadius: 'var(--radius-full)',
-                    transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
-                    letterSpacing: '0.01em',
-                    position: 'relative'
+                    padding: '0.4rem 0.1rem',
+                    position: 'relative',
+                    transition: 'color 0.2s ease',
                   }}
-                  onMouseEnter={(e) => {
-                    if (!isActive) {
-                      e.currentTarget.style.color = '#FFFFFF';
-                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.06)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isActive) {
-                      e.currentTarget.style.color = 'var(--text-light-secondary)';
-                      e.currentTarget.style.backgroundColor = 'transparent';
-                    }
-                  }}
+                  onMouseEnter={(e) => (e.target.style.color = '#FFFFFF')}
+                  onMouseLeave={(e) => (e.target.style.color = isActive ? '#FFFFFF' : 'var(--text-light-secondary)')}
                 >
-                  {item.label}
+                  {link.label}
+                  {isActive && (
+                    <span
+                      style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        height: '2px',
+                        backgroundColor: 'var(--brand-lime)',
+                        borderRadius: '2px',
+                      }}
+                    />
+                  )}
                 </button>
               );
             })}
           </nav>
 
-          {/* Right Action Hub */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-            
-            {/* Primary Action Button */}
+          {/* Desktop Primary CTA Button */}
+          <div style={{ display: 'none', alignItems: 'center', gap: '0.85rem' }} className="desktop-nav-cta">
             <button
               onClick={() => handleNavClick('submit-content')}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.45rem',
-                padding: '0.55rem 1.25rem',
-                borderRadius: 'var(--radius-full)',
-                background: 'linear-gradient(135deg, #94C820 0%, #A7DC28 100%)',
-                color: '#070D14',
-                fontWeight: 700,
-                fontSize: '0.84rem',
-                letterSpacing: '0.02em',
-                border: 'none',
-                cursor: 'pointer',
-                boxShadow: '0 0 16px rgba(148, 200, 32, 0.25), 0 2px 6px rgba(0, 0, 0, 0.2)',
-                transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-                e.currentTarget.style.boxShadow = '0 0 24px rgba(148, 200, 32, 0.4), 0 4px 10px rgba(0, 0, 0, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                e.currentTarget.style.boxShadow = '0 0 16px rgba(148, 200, 32, 0.25), 0 2px 6px rgba(0, 0, 0, 0.2)';
-              }}
+              className="btn btn-lime btn-sm"
+              style={{ fontWeight: 800, letterSpacing: '0.04em' }}
             >
-              <span>Pitch Content</span>
-              <ArrowUpRight size={15} strokeWidth={2.5} />
+              <span>PITCH YOUR CONTENT</span>
+              <ArrowUpRight size={15} />
             </button>
+          </div>
 
-            {/* Studio Pill */}
+          {/* Mobile Menu Toggle Button */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }} className="mobile-menu-toggle">
             <button
-              onClick={onOpenAdmin}
-              title="Content Studio / Management"
-              aria-label="Open Studio Console"
-              style={{
-                background: 'rgba(255, 255, 255, 0.04)',
-                border: 'none',
-                color: 'var(--text-light-muted)',
-                padding: '0.55rem',
-                borderRadius: 'var(--radius-full)',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'var(--brand-teal-light)';
-                e.currentTarget.style.backgroundColor = 'rgba(0, 157, 165, 0.12)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'var(--text-light-muted)';
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.04)';
-              }}
+              onClick={() => handleNavClick('submit-content')}
+              className="btn btn-lime btn-sm"
+              style={{ padding: '0.45rem 0.8rem', fontSize: '0.74rem' }}
             >
-              <SlidersHorizontal size={15} />
+              <span>PITCH</span>
+              <ArrowUpRight size={13} />
             </button>
-
-            {/* Mobile Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="mobile-toggle"
-              aria-label="Toggle navigation menu"
               style={{
-                background: 'rgba(255, 255, 255, 0.04)',
-                border: 'none',
-                color: '#FFFFFF',
+                background: 'rgba(255, 255, 255, 0.06)',
+                border: '1px solid var(--border-dark)',
+                borderRadius: 'var(--radius-sm)',
                 padding: '0.5rem',
-                borderRadius: 'var(--radius-full)',
+                color: '#FFFFFF',
                 cursor: 'pointer',
-                display: 'none',
+                display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
               }}
+              aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
 
         </div>
       </header>
 
-      {/* Smooth Mobile Drawer */}
+      {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
         <div
           style={{
             position: 'fixed',
-            top: '64px',
-            left: 0,
-            right: 0,
-            bottom: 0,
+            inset: 0,
+            top: '70px',
             backgroundColor: 'rgba(7, 13, 20, 0.98)',
             backdropFilter: 'blur(20px)',
             zIndex: 99,
-            padding: '1.5rem',
             display: 'flex',
             flexDirection: 'column',
-            gap: '1rem',
+            padding: '1.5rem',
             overflowY: 'auto',
-            animation: 'fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1)'
           }}
         >
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.5rem' }}>
-            <button
-              onClick={() => handleNavClick('submit-content')}
-              className="card-dark"
-              style={{
-                padding: '1rem',
-                textAlign: 'left',
-                border: 'none',
-                backgroundColor: 'rgba(148, 200, 32, 0.08)'
-              }}
-            >
-              <Film size={18} color="var(--brand-lime)" style={{ marginBottom: '0.35rem' }} />
-              <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#FFFFFF' }}>Content Owners</div>
-              <div style={{ fontSize: '0.72rem', color: 'var(--brand-lime)' }}>Pitch Projects &rarr;</div>
-            </button>
-
-            <button
-              onClick={() => handleNavClick('for-platforms')}
-              className="card-dark"
-              style={{
-                padding: '1rem',
-                textAlign: 'left',
-                border: 'none',
-                backgroundColor: 'rgba(0, 157, 165, 0.08)'
-              }}
-            >
-              <Briefcase size={18} color="var(--brand-teal)" style={{ marginBottom: '0.35rem' }} />
-              <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#FFFFFF' }}>Platforms & Buyers</div>
-              <div style={{ fontSize: '0.72rem', color: 'var(--brand-teal-light)' }}>Request Slate &rarr;</div>
-            </button>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-            {[
-              ...navItems,
-              { id: 'submit-content', label: 'Submit Content (Producers)' }
-            ].map((item) => {
-              const isActive = activePage === item.id;
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '2rem' }}>
+            {navLinks.map((link) => {
+              const isActive = activePage === link.id;
               return (
                 <button
-                  key={item.id}
-                  onClick={() => handleNavClick(item.id)}
+                  key={link.id}
+                  onClick={() => handleNavClick(link.id)}
                   style={{
-                    textAlign: 'left',
-                    background: isActive ? 'rgba(0, 157, 165, 0.12)' : 'transparent',
-                    border: 'none',
-                    borderLeft: isActive ? '3px solid var(--brand-teal)' : '3px solid transparent',
-                    color: isActive ? 'var(--brand-teal-light)' : '#FFFFFF',
-                    padding: '0.85rem 1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '1rem 1.25rem',
+                    borderRadius: 'var(--radius-md)',
+                    background: isActive ? 'rgba(0, 157, 165, 0.15)' : 'rgba(255, 255, 255, 0.02)',
+                    border: isActive ? '1px solid var(--brand-teal)' : '1px solid transparent',
+                    color: isActive ? '#FFFFFF' : 'var(--text-light-secondary)',
+                    fontFamily: 'var(--font-heading)',
                     fontSize: '1rem',
                     fontWeight: isActive ? 700 : 500,
-                    borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
-                    cursor: 'pointer'
+                    textAlign: 'left',
+                    cursor: 'pointer',
                   }}
                 >
-                  {item.label}
+                  <span>{link.label}</span>
+                  <ChevronRight size={18} color={isActive ? 'var(--brand-lime)' : 'var(--text-light-subtle)'} />
                 </button>
               );
             })}
           </div>
 
-          <div style={{ marginTop: 'auto', paddingTop: '1.25rem', borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
+          <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenAdmin();
-              }}
-              className="btn btn-secondary-dark"
-              style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+              onClick={() => handleNavClick('submit-content')}
+              className="btn btn-lime btn-lg"
+              style={{ width: '100%', justifyContent: 'center' }}
             >
-              <SlidersHorizontal size={15} />
-              <span>Indiark Content Studio</span>
+              <span>PITCH YOUR CONTENT</span>
+              <ArrowUpRight size={18} />
+            </button>
+            <button
+              onClick={() => handleNavClick('for-platforms')}
+              className="btn btn-secondary-dark btn-lg"
+              style={{ width: '100%', justifyContent: 'center' }}
+            >
+              <span>BUYER REQUIREMENTS</span>
             </button>
           </div>
         </div>
       )}
 
+      {/* Navigation Responsive Styles */}
       <style>{`
-        @media (max-width: 1040px) {
-          .desktop-nav-island {
-            display: none !important;
-          }
-          .mobile-toggle {
-            display: inline-flex !important;
-          }
+        @media (min-width: 960px) {
+          .desktop-nav-links { display: flex !important; }
+          .desktop-nav-cta { display: flex !important; }
+          .mobile-menu-toggle { display: none !important; }
         }
       `}</style>
     </>

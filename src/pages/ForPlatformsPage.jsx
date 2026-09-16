@@ -1,102 +1,115 @@
 import React from 'react';
-import { Briefcase, Film, Globe2, ShieldCheck, CheckCircle2, ArrowRight, Layers, Radio, Sparkles } from 'lucide-react';
 import { BuyerRequirementForm } from '../components/forms/BuyerRequirementForm';
+import { ShieldCheck, Film, Tv, Layers, Globe, Clock, CheckCircle2 } from 'lucide-react';
 
 export const ForPlatformsPage = () => {
-  const contentPillars = [
-    { title: 'Feature Films', desc: 'Direct-to-digital premieres, post-theatrical windowing, and curated catalogue packages.' },
-    { title: 'Original Web Series', desc: 'Episodic drama, crime, thriller, and regional multi-part narrative properties.' },
-    { title: 'Regional Content', desc: 'Authentic Malayalam, Tamil, Telugu, Hindi, and Kannada cinematic stories.' },
-    { title: 'Dubbed & Multilingual', desc: 'High-production value cinema cleared and ready for multilingual localization.' },
-    { title: 'Music & Audio Catalogues', desc: 'Original film soundtracks, independent audio IP, and background score syncs.' },
-    { title: 'Library Aggregations', desc: 'Pre-cleared volume libraries for rapid streaming catalog expansion.' }
-  ];
-
   return (
-    <div style={{ backgroundColor: 'var(--bg-dark-950)', minHeight: '80vh' }}>
+    <div style={{ backgroundColor: 'var(--bg-dark-950)' }}>
       
-      {/* Editorial B2B Header */}
-      <section
-        className="section section-navy-glow"
+      {/* Page Header */}
+      <section 
+        className="section section-dark"
         style={{
-          paddingTop: 'clamp(4.5rem, 8vw, 6.5rem)',
-          paddingBottom: '4rem',
-          borderBottom: '1px solid rgba(0, 157, 165, 0.2)'
+          paddingTop: 'clamp(3rem, 6vw, 5rem)',
+          paddingBottom: 'clamp(3rem, 6vw, 4.5rem)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
         }}
       >
         <div className="container">
-          <span className="badge badge-teal" style={{ marginBottom: '1.25rem' }}>
-            Institutional Content Procurement
-          </span>
-          <h1 className="display-hero" style={{ color: '#FFFFFF', marginBottom: '1.25rem' }}>
-            LOOKING <br />
-            <span style={{ color: 'var(--brand-teal-light)' }}>FOR CONTENT?</span>
-          </h1>
-          <p style={{ color: 'var(--text-light-secondary)', fontSize: '1.15rem', maxWidth: '820px', lineHeight: '1.7', marginBottom: '2rem' }}>
-            Indiark Entertainments serves as an institutional bridge for OTT platforms, satellite broadcasters, theatrical distributors, and international buyers seeking verified, cleared Indian entertainment content.
-          </p>
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
-            {['Movies', 'Web Series', 'Regional Cinema', 'Dubbed Titles', 'Music Rights', 'Library Packages'].map((tag, i) => (
-              <span key={i} className="badge badge-dark">
-                {tag}
-              </span>
-            ))}
+          <div style={{ maxWidth: '900px' }}>
+            <span className="badge badge-teal" style={{ marginBottom: '1rem' }}>
+              Platform Acquisition & Content Procurement
+            </span>
+            <h1 className="display-statement" style={{ marginBottom: '1.25rem' }}>
+              LOOKING FOR CURATED CONTENT?
+            </h1>
+            <p className="text-editorial-body">
+              Indiark Entertainments serves as an institutional supply partner for OTT streaming platforms, satellite broadcasters, airline networks, and international distributors seeking verified, high-quality content slates.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Acquisition Matrix Scope */}
+      {/* Platform Value Pillars */}
+      <section style={{ backgroundColor: '#0B131F', padding: '2.5rem 0', borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}>
+        <div className="container">
+          <div className="highlight-strip" style={{ backgroundColor: 'transparent', border: 'none', padding: 0 }}>
+            <div className="highlight-stat-box highlight-lime">
+              <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF' }}>100% CHAIN OF TITLE</div>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', marginTop: '0.2rem' }}>Verified legal provenance & clear documentation</div>
+            </div>
+            <div className="highlight-stat-box">
+              <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF' }}>MANDATE-MATCHED SLATES</div>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', marginTop: '0.2rem' }}>Tailored to your specific programming brief</div>
+            </div>
+            <div className="highlight-stat-box">
+              <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF' }}>RAPID TRANSACTION CLOSING</div>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', marginTop: '0.2rem' }}>Structured term sheets & technical QC support</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Content Formats Covered */}
       <section className="section section-dark">
         <div className="container">
-          
-          <div style={{ maxWidth: '750px', marginBottom: '3rem' }}>
-            <span className="eyebrow-label" style={{ marginBottom: '0.5rem' }}>Acquisition Scope</span>
-            <h2 style={{ color: '#FFFFFF', fontSize: 'clamp(1.6rem, 3vw, 2.4rem)' }}>
-              Curated Slates for Global & Domestic Buyers
+          <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 3rem auto' }}>
+            <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Available Catalogue Types</span>
+            <h2 className="display-sub" style={{ marginBottom: '0.5rem', color: '#FFFFFF' }}>
+              CATEGORIES AVAILABLE FOR PROCUREMENT
             </h2>
-            <p style={{ color: 'var(--text-light-secondary)', fontSize: '1rem', marginTop: '0.35rem' }}>
-              We pre-evaluate titles, audit chain-of-title rights, and structure presentations directly aligned with your commissioning and acquisition briefs.
+            <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.95rem' }}>
+              Direct access to finished and in-production titles across diverse genres and languages.
             </p>
           </div>
 
-          <div className="grid-3" style={{ gap: '1.5rem', marginBottom: '4rem' }}>
-            {contentPillars.map((item, idx) => (
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+              gap: '1.25rem',
+              marginBottom: '4rem',
+            }}
+          >
+            {[
+              { title: 'FEATURE MOVIES', desc: 'Theatrical, Direct-to-Digital, and Festival Award-winning cinema.' },
+              { title: 'ORIGINAL WEB SERIES', desc: 'Episodic miniseries, crime thrillers, drama, and comedy slates.' },
+              { title: 'REGIONAL SLATES', desc: 'Malayalam, Tamil, Telugu, Kannada, Hindi, and multilingual packages.' },
+              { title: 'DUBBED & MULTILINGUAL', desc: 'Multi-audio dubbed assets ready for pan-India and international release.' },
+              { title: 'MUSIC & MASTER SYNC', desc: 'Soundtrack masters, background scores, and synch licensing catalogues.' },
+              { title: 'ARCHIVAL LIBRARIES', desc: 'High-volume catalogue packages for AVOD and linear television.' }
+            ].map((item, idx) => (
               <div
                 key={idx}
-                className="card-dark"
                 style={{
-                  padding: '1.75rem',
-                  backgroundColor: 'rgba(7, 13, 20, 0.75)',
-                  border: '1px solid var(--border-dark)'
+                  padding: '1.5rem',
+                  backgroundColor: 'rgba(11, 19, 31, 0.75)',
+                  border: '1px solid var(--border-dark)',
+                  borderRadius: 'var(--radius-md)',
                 }}
               >
-                <div style={{ color: 'var(--brand-teal-light)', fontWeight: 700, fontSize: '0.78rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-                  Category 0{idx + 1}
-                </div>
-                <h3 style={{ color: '#FFFFFF', fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem' }}>
+                <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.4rem', letterSpacing: '0.02em' }}>
                   {item.title}
-                </h3>
-                <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.88rem', lineHeight: '1.6' }}>
+                </div>
+                <div style={{ fontSize: '0.82rem', color: 'var(--text-light-secondary)', lineHeight: '1.5' }}>
                   {item.desc}
-                </p>
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Form Briefing Header */}
-          <div id="buyer-requirement-form" style={{ marginBottom: '2.5rem' }}>
-            <span className="badge badge-teal" style={{ marginBottom: '0.75rem' }}>B2B Procurement Briefing</span>
-            <h2 className="display-statement" style={{ color: '#FFFFFF', marginBottom: '0.75rem' }}>
-              TELL US YOUR CONTENT REQUIREMENTS
-            </h2>
-            <p style={{ color: 'var(--text-light-secondary)', fontSize: '1rem', maxWidth: '700px' }}>
-              Define your acquisition criteria, target language, genre preferences, territory rights, and programming timeline.
-            </p>
-          </div>
+          {/* Embedded Multi-Section Buyer Requirement Form */}
+          <div style={{ maxWidth: '960px', margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+              <span className="badge badge-lime" style={{ marginBottom: '0.6rem' }}>Direct Acquisition Form</span>
+              <h2 className="display-statement" style={{ color: '#FFFFFF' }}>
+                REGISTER YOUR BUYER REQUIREMENT
+              </h2>
+              <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.95rem', marginTop: '0.5rem' }}>
+                Complete this formal acquisition brief to receive curated screeners and commercial term sheets.
+              </p>
+            </div>
 
-          {/* Embedded Buyer Requirement Form (Full Width Alignment) */}
-          <div style={{ width: '100%' }}>
             <BuyerRequirementForm />
           </div>
 

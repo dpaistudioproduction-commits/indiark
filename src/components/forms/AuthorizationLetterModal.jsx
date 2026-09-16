@@ -1,188 +1,148 @@
 import React from 'react';
-import { X, Download, Printer, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { X, ShieldAlert, FileText, CheckCircle2, Download, Printer } from 'lucide-react';
 
-export const AuthorizationLetterModal = ({ isOpen, onClose, applicantName = '', projectName = '', companyName = '' }) => {
+export const AuthorizationLetterModal = ({ isOpen, onClose, projectTitle, submitterName }) => {
   if (!isOpen) return null;
 
-  const handlePrint = () => {
-    window.print();
-  };
+  const today = new Date().toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(7, 13, 20, 0.88)',
-        backdropFilter: 'blur(8px)',
-        zIndex: 1200,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '1.5rem'
-      }}
-      onClick={onClose}
-    >
-      <div
-        className="card-dark"
-        style={{
-          width: '100%',
-          maxWidth: '820px',
-          maxHeight: '92vh',
-          display: 'flex',
-          flexDirection: 'column',
-          padding: 0,
-          border: '1px solid var(--brand-teal)',
-          backgroundColor: '#FFFFFF',
-          color: '#0F172A',
-          overflow: 'hidden'
-        }}
+    <div className="modal-overlay" onClick={onClose}>
+      <div 
+        className="modal-container"
+        style={{ maxWidth: '820px' }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header Bar */}
+        {/* Modal Header */}
         <div
           style={{
-            padding: '1.25rem 2rem',
-            backgroundColor: 'var(--bg-dark-950)',
-            color: '#FFFFFF',
+            padding: '1.25rem 1.75rem',
+            borderBottom: '1px solid var(--border-dark)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            borderBottom: '1px solid var(--border-dark)'
+            backgroundColor: 'rgba(7, 13, 20, 0.95)',
           }}
         >
-          <div>
-            <div className="badge badge-teal" style={{ marginBottom: '0.2rem' }}>
-              Official Document Template
-            </div>
-            <h3 style={{ color: '#FFFFFF', fontSize: '1.15rem' }}>
-              Content Representation Authorization Letter
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+            <FileText size={20} color="var(--brand-teal-light)" />
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
+              CONTENT REPRESENTATION & PITCHING AUTHORIZATION
             </h3>
           </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <button
-              onClick={handlePrint}
-              className="btn btn-lime btn-sm"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
-            >
-              <Printer size={15} />
-              <span>Print / Save PDF</span>
-            </button>
-            <button
-              onClick={onClose}
-              aria-label="Close"
-              style={{
-                background: 'none',
-                border: '1px solid var(--border-dark)',
-                color: 'var(--text-light-muted)',
-                padding: '0.4rem',
-                borderRadius: 'var(--radius-sm)',
-                cursor: 'pointer'
-              }}
-            >
-              <X size={18} />
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            style={{ background: 'none', border: 'none', color: 'var(--text-light-muted)', cursor: 'pointer' }}
+          >
+            <X size={20} />
+          </button>
         </div>
 
-        {/* Legal Advisory Warning */}
+        {/* Legal Disclaimer Alert */}
         <div
           style={{
-            padding: '0.85rem 2rem',
-            backgroundColor: '#FEF3C7',
-            borderBottom: '1px solid #FCD34D',
-            color: '#92400E',
-            fontSize: '0.8rem',
+            padding: '1rem 1.75rem',
+            backgroundColor: 'rgba(0, 157, 165, 0.08)',
+            borderBottom: '1px solid rgba(0, 157, 165, 0.2)',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.6rem'
+            gap: '0.75rem',
+            fontSize: '0.82rem',
+            color: 'var(--text-light-secondary)',
           }}
         >
-          <ShieldAlert size={18} style={{ flexShrink: 0 }} />
-          <div>
-            <strong>Legal Review Notice:</strong> This authorization document format is provided as an initial evaluation instrument. Official legal wording must be reviewed and signed off by the company’s legal counsel prior to binding distribution agreements.
+          <ShieldAlert size={18} color="var(--brand-teal-light)" style={{ flexShrink: 0 }} />
+          <span>
+            <strong>Legal Notice:</strong> This authorization letter template is for standard submission evaluation purposes. Formal representation mandates are subject to official bilateral agreement review.
+          </span>
+        </div>
+
+        {/* Letter Body */}
+        <div
+          style={{
+            padding: '2rem 1.75rem',
+            color: 'var(--text-light-primary)',
+            fontSize: '0.9rem',
+            lineHeight: '1.7',
+            fontFamily: 'var(--font-body)',
+            backgroundColor: 'rgba(11, 19, 31, 0.65)',
+          }}
+        >
+          <div style={{ marginBottom: '1.5rem', textAlign: 'right', color: 'var(--text-light-muted)', fontSize: '0.84rem' }}>
+            Date: {today}
+          </div>
+
+          <div style={{ marginBottom: '1.5rem' }}>
+            <strong>TO:</strong><br />
+            INDIARK ENTERTAINMENTS<br />
+            Media Rights & Representation Division<br />
+            Subject: Authorization for Content Evaluation & Platform Representation
+          </div>
+
+          <p style={{ marginBottom: '1.25rem' }}>
+            I/We, <strong>{submitterName || '[Name of Submitter / Rights Holder]'}</strong>, hereby represent and warrant that I/We hold the legitimate intellectual property rights, copyright, or verified authorized representation mandate for the media project titled <strong>"{projectTitle || '[Title of Content / Project]'}"</strong> (hereinafter referred to as the "Content").
+          </p>
+
+          <p style={{ marginBottom: '1.25rem' }}>
+            I/We hereby authorize <strong>INDIARK ENTERTAINMENTS</strong> to review, evaluate, create B2B pitch materials, and present the Content on a non-exclusive evaluation basis to streaming platforms (OTT), satellite broadcasters, digital networks, and content acquisition executives for the purpose of exploring commercial licensing and distribution opportunities.
+          </p>
+
+          <div style={{ padding: '1rem 1.25rem', backgroundColor: 'rgba(7, 13, 20, 0.8)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-sm)', marginBottom: '1.5rem' }}>
+            <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--brand-lime)', marginBottom: '0.4rem', textTransform: 'uppercase' }}>
+              Representations & Undertakings:
+            </div>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.4rem', fontSize: '0.84rem', color: 'var(--text-light-secondary)' }}>
+              <li>1. The Content does not infringe upon the intellectual property, copyright, or moral rights of any third party.</li>
+              <li>2. Indiark Entertainments is authorized to screen the screener link provided strictly to verified acquisition executives.</li>
+              <li>3. No commercial agreement or binding contract shall be finalized without the express written consent and signature of the Rights Holder.</li>
+            </ul>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-dark)' }}>
+            <div>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', marginBottom: '0.5rem' }}>Authorized Submitter:</div>
+              <div style={{ fontWeight: 700, color: '#FFFFFF' }}>{submitterName || 'Authorized Signatory'}</div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-light-subtle)' }}>Producer / Rights Holder</div>
+            </div>
+
+            <div>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', marginBottom: '0.5rem' }}>Representation Agency:</div>
+              <div style={{ fontWeight: 700, color: '#FFFFFF' }}>INDIARK ENTERTAINMENTS</div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-light-subtle)' }}>Media Rights Division</div>
+            </div>
           </div>
         </div>
 
-        {/* Printable Document Body */}
+        {/* Modal Footer */}
         <div
-          id="printable-auth-doc"
           style={{
-            padding: '2.5rem',
-            overflowY: 'auto',
-            fontFamily: 'Georgia, serif',
-            fontSize: '0.95rem',
-            lineHeight: '1.7',
-            color: '#1E293B',
-            backgroundColor: '#FFFFFF'
+            padding: '1.25rem 1.75rem',
+            borderTop: '1px solid var(--border-dark)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            backgroundColor: 'rgba(7, 13, 20, 0.95)',
           }}
         >
-          <div style={{ textAlign: 'center', marginBottom: '2rem', borderBottom: '2px solid #009DA5', paddingBottom: '1rem' }}>
-            <h2 style={{ fontFamily: 'var(--font-heading)', color: '#0B131F', fontSize: '1.4rem', letterSpacing: '0.04em' }}>
-              INDIARK ENTERTAINMENTS
-            </h2>
-            <div style={{ fontSize: '0.85rem', color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-              Content Submission & Representation Mandate Form
-            </div>
-          </div>
+          <button
+            onClick={() => window.print()}
+            className="btn btn-secondary-dark btn-sm"
+          >
+            <Printer size={14} />
+            <span>PRINT / SAVE AS PDF</span>
+          </button>
 
-          <p style={{ marginBottom: '1.5rem' }}>
-            <strong>Date:</strong> {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-          </p>
-
-          <p style={{ marginBottom: '1.5rem' }}>
-            <strong>To:</strong><br />
-            Indiark Entertainments<br />
-            Media Rights Representation Division
-          </p>
-
-          <p style={{ marginBottom: '1.5rem' }}>
-            <strong>SUBJECT:</strong> Authorization for Content Evaluation and Representation Discussions for the Project titled <em>"{projectName || '____________________'}"</em>.
-          </p>
-
-          <p style={{ marginBottom: '1.25rem' }}>
-            Dear Indiark Entertainments Team,
-          </p>
-
-          <p style={{ marginBottom: '1.25rem' }}>
-            I/We, <strong>{applicantName || '________________________________________'}</strong> representing <strong>{companyName || '________________________________________'}</strong> (hereinafter referred to as the "Content Owner/Authorized Representative"), hereby confirm that:
-          </p>
-
-          <ol style={{ paddingLeft: '1.5rem', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <li>
-              I/We hold the legitimate authority and rights to submit the material pertaining to the project <strong>"{projectName || '____________________'}"</strong> for professional evaluation.
-            </li>
-            <li>
-              I/We authorize <strong>Indiark Entertainments</strong> to review the submitted screener, synopsis, and metadata to explore potential pitching, distribution, media rights licensing, and commercial representation opportunities across OTT, broadcast, digital, and international platforms.
-            </li>
-            <li>
-              I/We understand that this initial submission does not constitute an exclusive assignment of rights until a formal commercial representation agreement is mutually negotiated and legally executed.
-            </li>
-            <li>
-              All information and chain-of-title representations provided in the accompanying submission form are accurate to the best of my/our knowledge.
-            </li>
-          </ol>
-
-          <div style={{ marginTop: '3rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
-            <div>
-              <div style={{ borderBottom: '1px solid #94A3B8', height: '45px', marginBottom: '0.5rem' }}></div>
-              <div><strong>Authorized Signatory</strong></div>
-              <div style={{ fontSize: '0.85rem', color: '#64748B' }}>Name: {applicantName || '________________________'}</div>
-              <div style={{ fontSize: '0.85rem', color: '#64748B' }}>Designation: ________________________</div>
-            </div>
-
-            <div>
-              <div style={{ borderBottom: '1px solid #94A3B8', height: '45px', marginBottom: '0.5rem' }}></div>
-              <div><strong>Company / Entity Seal</strong></div>
-              <div style={{ fontSize: '0.85rem', color: '#64748B' }}>Entity: {companyName || '________________________'}</div>
-              <div style={{ fontSize: '0.85rem', color: '#64748B' }}>Date: ________________________</div>
-            </div>
-          </div>
-
+          <button
+            onClick={onClose}
+            className="btn btn-lime btn-sm"
+          >
+            <CheckCircle2 size={14} />
+            <span>ACKNOWLEDGE & CLOSE</span>
+          </button>
         </div>
 
       </div>

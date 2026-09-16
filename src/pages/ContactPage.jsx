@@ -1,364 +1,241 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle, Upload, ShieldCheck } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle2, ArrowUpRight, Briefcase } from 'lucide-react';
 import { CONTACT_INFO } from '../services/dataService';
 
 export const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: '',
-    company: '',
-    designation: '',
     email: '',
-    mobile: '',
-    enquiryType: 'Content Representation',
-    message: '',
-    fileName: ''
+    phone: '',
+    subject: 'General Business Consultation',
+    message: ''
   });
 
-  const [errors, setErrors] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const validate = () => {
-    const errs = {};
-    if (!formData.name.trim()) errs.name = 'Your name is required';
-    if (!formData.email.trim()) {
-      errs.email = 'Email address is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errs.email = 'Please enter a valid email address';
-    }
-    if (!formData.message.trim()) errs.message = 'Please enter your message';
-
-    setErrors(errs);
-    return Object.keys(errs).length === 0;
-  };
-
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (file.size > 10 * 1024 * 1024) {
-        setErrors({ ...errors, file: 'File must be under 10MB' });
-        return;
-      }
-      setFormData({ ...formData, fileName: file.name });
-      setErrors({ ...errors, file: null });
-    }
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validate()) return;
-
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
-      setIsSuccess(true);
-    }, 800);
+      setIsSubmitted(true);
+    }, 500);
   };
 
   return (
-    <div style={{ backgroundColor: 'var(--bg-dark-950)', minHeight: '80vh' }}>
+    <div style={{ backgroundColor: 'var(--bg-dark-950)' }}>
       
-      {/* Header */}
-      <section
-        className="section section-navy-glow"
+      {/* Page Header */}
+      <section 
+        className="section section-dark"
         style={{
-          paddingTop: 'clamp(4rem, 7vw, 6rem)',
-          paddingBottom: '3.5rem',
-          borderBottom: '1px solid rgba(0, 157, 165, 0.2)'
+          paddingTop: 'clamp(3rem, 6vw, 5rem)',
+          paddingBottom: 'clamp(3rem, 6vw, 4.5rem)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
         }}
       >
         <div className="container">
-          <span className="badge badge-teal" style={{ marginBottom: '1rem' }}>
-            Direct Communications
-          </span>
-          <h1 style={{ color: '#FFFFFF', marginBottom: '1rem' }}>
-            LET'S TALK CONTENT.
-          </h1>
-          <p style={{ color: 'var(--text-light-secondary)', fontSize: '1.15rem', maxWidth: '820px', lineHeight: '1.7' }}>
-            Whether you are a producer, production house, filmmaker, independent artist, OTT platform, broadcaster, distributor or content buyer, let's discuss the opportunity.
-          </p>
+          <div style={{ maxWidth: '880px' }}>
+            <span className="badge badge-teal" style={{ marginBottom: '1rem' }}>
+              Corporate Inquiries & Representation
+            </span>
+            <h1 className="display-statement" style={{ marginBottom: '1.25rem' }}>
+              LET'S TALK CONTENT
+            </h1>
+            <p className="text-editorial-body">
+              Whether you are an independent creator seeking platform pitching representation or an acquisition executive looking for curated content slates, we look forward to connecting.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Main Content: Info & Contact Form */}
-      <section className="section section-teal-tinted">
+      {/* Main Contact Grid */}
+      <section className="section section-secondary">
         <div className="container">
           
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'minmax(280px, 1fr) minmax(320px, 1.6fr)',
-              gap: '3.5rem',
-              alignItems: 'flex-start'
-            }}
-            className="contact-layout"
-          >
-            {/* Left Info Column */}
+          <div className="split-editorial" style={{ alignItems: 'flex-start' }}>
+            
+            {/* Left: Contact Info & Routing */}
             <div>
-              <h3 style={{ color: '#FFFFFF', fontSize: '1.35rem', marginBottom: '1.5rem' }}>
-                Corporate Contact
-              </h3>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '1.25rem' }}>
+                INDIARK ENTERTAINMENTS
+              </h2>
+              <p style={{ color: 'var(--brand-teal-light)', fontSize: '0.95rem', fontWeight: 600, marginBottom: '2rem' }}>
+                {CONTACT_INFO.tagline}
+              </p>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2.5rem' }}>
-                
-                <div className="card-dark" style={{ padding: '1.25rem', backgroundColor: 'rgba(7, 13, 20, 0.75)' }}>
-                  <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                    <Mail size={20} color="var(--brand-teal)" style={{ marginTop: '0.2rem', flexShrink: 0 }} />
-                    <div>
-                      <div style={{ color: '#FFFFFF', fontWeight: 600, fontSize: '0.95rem' }}>Official Email</div>
-                      <div style={{ color: 'var(--text-light-muted)', fontSize: '0.85rem', fontStyle: 'italic', marginTop: '0.2rem' }}>
-                        {CONTACT_INFO.emailPlaceholder}
-                      </div>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                  <div style={{ width: '40px', height: '40px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(0, 157, 165, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-teal-light)', flexShrink: 0 }}>
+                    <Mail size={18} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 700 }}>
+                      Official Inquiries Email
+                    </div>
+                    <div style={{ color: '#FFFFFF', fontSize: '0.95rem', fontWeight: 600, marginTop: '0.2rem' }}>
+                      {CONTACT_INFO.emailPlaceholder}
                     </div>
                   </div>
                 </div>
 
-                <div className="card-dark" style={{ padding: '1.25rem', backgroundColor: 'rgba(7, 13, 20, 0.75)' }}>
-                  <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                    <Phone size={20} color="var(--brand-lime)" style={{ marginTop: '0.2rem', flexShrink: 0 }} />
-                    <div>
-                      <div style={{ color: '#FFFFFF', fontWeight: 600, fontSize: '0.95rem' }}>Direct Line</div>
-                      <div style={{ color: 'var(--text-light-muted)', fontSize: '0.85rem', fontStyle: 'italic', marginTop: '0.2rem' }}>
-                        {CONTACT_INFO.mobilePlaceholder}
-                      </div>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                  <div style={{ width: '40px', height: '40px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(148, 200, 32, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-lime)', flexShrink: 0 }}>
+                    <Phone size={18} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 700 }}>
+                      Telephone / WhatsApp
+                    </div>
+                    <div style={{ color: '#FFFFFF', fontSize: '0.95rem', fontWeight: 600, marginTop: '0.2rem' }}>
+                      {CONTACT_INFO.mobilePlaceholder}
                     </div>
                   </div>
                 </div>
 
-                <div className="card-dark" style={{ padding: '1.25rem', backgroundColor: 'rgba(7, 13, 20, 0.75)' }}>
-                  <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                    <MapPin size={20} color="var(--brand-teal)" style={{ marginTop: '0.2rem', flexShrink: 0 }} />
-                    <div>
-                      <div style={{ color: '#FFFFFF', fontWeight: 600, fontSize: '0.95rem' }}>Office Address</div>
-                      <div style={{ color: 'var(--text-light-muted)', fontSize: '0.85rem', fontStyle: 'italic', marginTop: '0.2rem' }}>
-                        {CONTACT_INFO.addressPlaceholder}
-                      </div>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                  <div style={{ width: '40px', height: '40px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(255, 255, 255, 0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', flexShrink: 0 }}>
+                    <MapPin size={18} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 700 }}>
+                      Principal Operating Office
+                    </div>
+                    <div style={{ color: '#FFFFFF', fontSize: '0.95rem', fontWeight: 600, marginTop: '0.2rem' }}>
+                      {CONTACT_INFO.addressPlaceholder}
                     </div>
                   </div>
                 </div>
-
               </div>
 
-              <div
-                style={{
-                  padding: '1.25rem',
-                  backgroundColor: 'rgba(0, 157, 165, 0.08)',
-                  border: '1px solid rgba(0, 157, 165, 0.25)',
-                  borderRadius: 'var(--radius-md)',
-                  fontSize: '0.85rem',
-                  color: 'var(--text-light-secondary)',
-                  lineHeight: '1.5'
-                }}
-              >
-                <strong style={{ color: '#FFFFFF' }}>Privacy Assurance:</strong> All creative pitches, screeners, and business communications are handled under strict NDA protocols.
+              {/* Direct Fast Routes */}
+              <div style={{ padding: '1.5rem', backgroundColor: 'rgba(7, 13, 20, 0.75)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-md)' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                  Fast Action Channels:
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                  <a href="/#/submit-content" onClick={(e) => { e.preventDefault(); window.location.hash = ''; window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 1rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderRadius: 'var(--radius-sm)', color: 'var(--brand-lime-light)', fontSize: '0.85rem', fontWeight: 700 }}>
+                    <span>Pitch Your Finished Content / Slate</span>
+                    <ArrowUpRight size={14} />
+                  </a>
+                  <a href="/#/for-platforms" onClick={(e) => { e.preventDefault(); window.location.hash = ''; window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 1rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', borderRadius: 'var(--radius-sm)', color: 'var(--brand-teal-light)', fontSize: '0.85rem', fontWeight: 700 }}>
+                    <span>Register Platform Acquisition Brief</span>
+                    <Briefcase size={14} />
+                  </a>
+                </div>
               </div>
             </div>
 
-            {/* Right Form Column */}
-            <div>
-              {isSuccess ? (
-                <div
-                  className="card-dark"
-                  style={{
-                    padding: '3.5rem 2rem',
-                    textAlign: 'center',
-                    border: '1px solid var(--brand-teal)',
-                    backgroundColor: 'rgba(7, 13, 20, 0.95)'
-                  }}
-                >
-                  <div
-                    style={{
-                      width: '60px',
-                      height: '60px',
-                      borderRadius: '50%',
-                      backgroundColor: 'rgba(0, 157, 165, 0.15)',
-                      border: '1px solid var(--brand-teal)',
-                      color: 'var(--brand-teal)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      margin: '0 auto 1.5rem auto'
-                    }}
-                  >
-                    <CheckCircle2 size={32} />
-                  </div>
-
-                  <h3 style={{ color: '#FFFFFF', fontSize: '1.5rem', marginBottom: '0.75rem' }}>
-                    Enquiry Received
+            {/* Right: Direct Corporate Message Form */}
+            <div
+              style={{
+                backgroundColor: 'rgba(7, 13, 20, 0.85)',
+                border: '1px solid var(--border-dark)',
+                borderRadius: 'var(--radius-lg)',
+                padding: 'clamp(1.75rem, 3.5vw, 2.75rem)',
+                boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
+              }}
+            >
+              {isSubmitted ? (
+                <div style={{ textAlign: 'center', padding: '2rem 1rem' }}>
+                  <CheckCircle2 size={42} color="var(--brand-lime)" style={{ margin: '0 auto 1rem auto' }} />
+                  <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
+                    MESSAGE TRANSMITTED
                   </h3>
-
-                  <p style={{ color: 'var(--text-light-secondary)', maxWidth: '480px', margin: '0 auto 1.75rem auto', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                    Thank you for reaching out to Indiark Entertainments. Our team will review your message and connect with you shortly.
+                  <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.92rem', marginBottom: '1.5rem' }}>
+                    Thank you for reaching out. Our business management team will respond to your message promptly.
                   </p>
-
-                  <button
-                    onClick={() => {
-                      setIsSuccess(false);
-                      setFormData({
-                        name: '',
-                        company: '',
-                        designation: '',
-                        email: '',
-                        mobile: '',
-                        enquiryType: 'Content Representation',
-                        message: '',
-                        fileName: ''
-                      });
-                    }}
-                    className="btn btn-secondary-dark btn-sm"
-                  >
-                    Send Another Message
+                  <button onClick={() => setIsSubmitted(false)} className="btn btn-secondary-dark btn-sm">
+                    <span>SEND ANOTHER MESSAGE</span>
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="card-dark" style={{ border: '1px solid var(--border-dark)', padding: '2.5rem' }}>
-                  <h3 style={{ color: '#FFFFFF', fontSize: '1.35rem', marginBottom: '1.5rem' }}>
-                    Send an Official Enquiry
+                <form onSubmit={handleSubmit}>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '1.5rem' }}>
+                    Send an Executive Inquiry
                   </h3>
 
-                  <div className="grid-2">
-                    <div className="form-group">
-                      <label className="form-label">Full Name <span className="form-required">*</span></label>
-                      <input
-                        type="text"
-                        className={`form-input ${errors.name ? 'is-invalid' : ''}`}
-                        placeholder="Your Name"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      />
-                      {errors.name && <span className="form-error-msg"><AlertCircle size={13} /> {errors.name}</span>}
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Company / Entity</label>
-                      <input
-                        type="text"
-                        className="form-input"
-                        placeholder="Organization Name"
-                        value={formData.company}
-                        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      />
-                    </div>
+                  <div className="form-group">
+                    <label className="form-label">Your Full Name *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Your name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="form-control"
+                    />
                   </div>
 
-                  <div className="grid-3">
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                     <div className="form-group">
-                      <label className="form-label">Designation</label>
-                      <input
-                        type="text"
-                        className="form-input"
-                        placeholder="e.g. Producer / Buyer"
-                        value={formData.designation}
-                        onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Email Address <span className="form-required">*</span></label>
+                      <label className="form-label">Corporate Email *</label>
                       <input
                         type="email"
-                        className={`form-input ${errors.email ? 'is-invalid' : ''}`}
-                        placeholder="name@domain.com"
+                        required
+                        placeholder="name@company.com"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="form-control"
                       />
-                      {errors.email && <span className="form-error-msg"><AlertCircle size={13} /> {errors.email}</span>}
                     </div>
 
                     <div className="form-group">
-                      <label className="form-label">Mobile Number</label>
+                      <label className="form-label">Phone / WhatsApp</label>
                       <input
                         type="tel"
-                        className="form-input"
-                        placeholder="+91 / Mobile"
-                        value={formData.mobile}
-                        onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                        placeholder="+91 / Int."
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className="form-control"
                       />
                     </div>
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">Enquiry Nature / Classification</label>
+                    <label className="form-label">Subject / Inquiry Scope *</label>
                     <select
-                      className="form-select"
-                      value={formData.enquiryType}
-                      onChange={(e) => setFormData({ ...formData, enquiryType: e.target.value })}
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      className="form-control"
                     >
-                      <option value="Content Representation">Content Representation & OTT Pitching</option>
-                      <option value="Platform Content Sourcing">Platform Content Acquisition / Sourcing</option>
-                      <option value="Media Rights & Licensing">Media Rights & Territory Licensing</option>
-                      <option value="Music Business">Music Business & Audio Rights</option>
-                      <option value="Video Production">Professional Video Production</option>
-                      <option value="Post Production">Post-Production & Colour Grading</option>
-                      <option value="General Business">General Business Discussion</option>
+                      <option value="General Business Consultation">General Business Consultation</option>
+                      <option value="Producer Representation Inquiry">Producer Representation Inquiry</option>
+                      <option value="OTT / Platform Procurement">OTT / Platform Procurement</option>
+                      <option value="Rights & Catalogue Licensing">Rights & Catalogue Licensing</option>
+                      <option value="Media Edge Academic Partnership">Media Edge Academic Partnership</option>
                     </select>
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label">Message / Requirement Details <span className="form-required">*</span></label>
+                    <label className="form-label">Your Message *</label>
                     <textarea
-                      className={`form-textarea ${errors.message ? 'is-invalid' : ''}`}
                       rows={4}
-                      placeholder="Please outline your requirement or project context..."
+                      required
+                      placeholder="Please outline the nature of your inquiry..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className="form-control"
+                      style={{ resize: 'vertical' }}
                     />
-                    {errors.message && <span className="form-error-msg"><AlertCircle size={13} /> {errors.message}</span>}
-                  </div>
-
-                  {/* File Attachment */}
-                  <div className="form-group" style={{ marginBottom: '2rem' }}>
-                    <label className="form-label">Attachment / One-Pager / Pitch Deck (Optional, Max 10MB)</label>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                      <label
-                        className="btn btn-secondary-dark btn-sm"
-                        style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
-                      >
-                        <Upload size={14} />
-                        <span>Choose File</span>
-                        <input
-                          type="file"
-                          accept=".pdf,.doc,.docx,.png,.jpg"
-                          onChange={handleFileUpload}
-                          style={{ display: 'none' }}
-                        />
-                      </label>
-                      <span style={{ fontSize: '0.82rem', color: formData.fileName ? 'var(--brand-teal-light)' : 'var(--text-light-muted)' }}>
-                        {formData.fileName || 'No file selected'}
-                      </span>
-                    </div>
-                    {errors.file && <span className="form-error-msg"><AlertCircle size={13} /> {errors.file}</span>}
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="btn btn-primary btn-lg"
-                    style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+                    className="btn btn-lime"
+                    style={{ width: '100%', justifyContent: 'center' }}
                   >
-                    {isSubmitting ? (
-                      <span>Sending Enquiry...</span>
-                    ) : (
-                      <>
-                        <span>SEND ENQUIRY</span>
-                        <Send size={16} />
-                      </>
-                    )}
+                    {isSubmitting ? <span>SENDING INQUIRY...</span> : <><span>SEND MESSAGE</span><Send size={15} /></>}
                   </button>
                 </form>
               )}
             </div>
+
           </div>
 
         </div>
-
-        <style>{`
-          @media (max-width: 860px) {
-            .contact-layout {
-              grid-template-columns: 1fr !important;
-            }
-          }
-        `}</style>
       </section>
 
     </div>

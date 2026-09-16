@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
+import { Loader } from './components/layout/Loader';
 import { HomePage } from './pages/HomePage';
 import { WhoWeArePage } from './pages/WhoWeArePage';
 import { WhatWeDoPage } from './pages/WhatWeDoPage';
@@ -15,6 +16,7 @@ import { LegalModal } from './components/legal/LegalModal';
 import { dataService } from './services/dataService';
 
 export const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [activePage, setActivePage] = useState('home');
   const [projects, setProjects] = useState([]);
   const [team, setTeam] = useState([]);
@@ -40,6 +42,8 @@ export const App = () => {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* Short Branded Loader */}
+      {isLoading && <Loader onFinish={() => setIsLoading(false)} />}
       
       {/* Global Navigation Header */}
       <Navbar
@@ -49,7 +53,7 @@ export const App = () => {
       />
 
       {/* Main Page Body */}
-      <main style={{ flexGrow: 1 }}>
+      <main style={{ flexGrow: 1 }} className="page-transition-wrapper">
         {activePage === 'home' && (
           <HomePage
             setActivePage={setActivePage}

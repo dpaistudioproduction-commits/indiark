@@ -38,7 +38,6 @@ export const AdminCMSModal = ({ isOpen, onClose, onDataChange }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Default studio access key
     if (accessCode.trim().toLowerCase() === 'indiark' || accessCode.trim() === '2025' || accessCode.trim() === 'admin') {
       setIsAuthenticated(true);
       setAuthError('');
@@ -46,7 +45,6 @@ export const AdminCMSModal = ({ isOpen, onClose, onDataChange }) => {
       setAuthError('Invalid studio access key. (Default development key: indiark)');
     }
   };
-
 
   const loadData = () => {
     setProjects(dataService.getProjects());
@@ -105,7 +103,7 @@ export const AdminCMSModal = ({ isOpen, onClose, onDataChange }) => {
       showToast(`Updated project "${projectForm.title}"`);
     } else {
       dataService.createProject(projectForm);
-      showToast(`Created new project "${projectForm.title}"`);
+      showToast(`Added new project "${projectForm.title}"`);
     }
 
     handleResetProjectForm();
@@ -114,551 +112,397 @@ export const AdminCMSModal = ({ isOpen, onClose, onDataChange }) => {
   };
 
   const handleDeleteProject = (id, title) => {
-    if (window.confirm(`Are you sure you want to delete "${title}"?`)) {
+    if (window.confirm(`Are you sure you want to remove "${title}" from the active representation catalogue?`)) {
       dataService.deleteProject(id);
+      showToast(`Removed "${title}" from catalogue`);
       loadData();
-      showToast(`Deleted "${title}"`);
       if (onDataChange) onDataChange();
     }
   };
 
   const handleResetDefaults = () => {
-    if (window.confirm('Reset catalogue back to initial verified titles (Bheeshmar & Secret of Kalinga)?')) {
+    if (window.confirm('Reset catalogue and team metadata to official source-of-truth defaults?')) {
       dataService.resetProjectsToDefault();
+      showToast('Reset catalogue to defaults');
       loadData();
-      showToast('Reset to default verified projects.');
       if (onDataChange) onDataChange();
     }
   };
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(7, 13, 20, 0.9)',
-        backdropFilter: 'blur(10px)',
-        zIndex: 1100,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '1.5rem'
-      }}
-      onClick={onClose}
-    >
+    <div className="modal-overlay" onClick={onClose}>
       <div
-        className="card-dark"
-        style={{
-          width: '100%',
-          maxWidth: isAuthenticated ? '960px' : '480px',
-          maxHeight: '90vh',
-          display: 'flex',
-          flexDirection: 'column',
-          padding: 0,
-          border: '1px solid var(--brand-teal)',
-          overflow: 'hidden',
-          transition: 'max-width 0.3s ease'
-        }}
+        className="modal-container"
+        style={{ maxWidth: '960px', maxHeight: '92vh', display: 'flex', flexDirection: 'column' }}
         onClick={(e) => e.stopPropagation()}
       >
         {!isAuthenticated ? (
-          <div style={{ padding: '2.5rem', backgroundColor: 'rgba(7, 13, 20, 0.98)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                <Lock size={22} color="var(--brand-teal)" />
-                <h3 style={{ color: '#FFFFFF', fontSize: '1.25rem' }}>Indiark Studio Access</h3>
-              </div>
-              <button
-                onClick={onClose}
-                aria-label="Close"
-                style={{
-                  background: 'none',
-                  border: '1px solid var(--border-dark)',
-                  color: 'var(--text-light-muted)',
-                  cursor: 'pointer',
-                  padding: '0.35rem',
-                  borderRadius: 'var(--radius-sm)'
-                }}
-              >
-                <X size={16} />
-              </button>
+          /* Authentication Screen */
+          <div style={{ padding: '3rem 2rem', textAlign: 'center', maxWidth: '480px', margin: '0 auto' }}>
+            <div style={{ width: '56px', height: '56px', borderRadius: '50%', backgroundColor: 'rgba(0, 157, 165, 0.15)', color: 'var(--brand-teal-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem auto' }}>
+              <Lock size={26} />
             </div>
-
-            <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.88rem', lineHeight: '1.5', marginBottom: '1.5rem' }}>
-              Restricted management console for editing represented titles, leadership metadata, and partner affiliations.
+            <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
+              Indiark CMS Studio Access
+            </h3>
+            <p style={{ color: 'var(--text-light-muted)', fontSize: '0.88rem', marginBottom: '2rem' }}>
+              Enter management authentication key to configure catalogue titles and metadata.
             </p>
 
             <form onSubmit={handleLogin}>
-              <div className="form-group" style={{ marginBottom: '1.25rem' }}>
-                <label className="form-label">Studio Access Passcode</label>
-                <div style={{ position: 'relative' }}>
-                  <input
-                    type="password"
-                    className="form-input"
-                    placeholder="Enter access code (e.g. indiark)"
-                    value={accessCode}
-                    onChange={(e) => setAccessCode(e.target.value)}
-                    autoFocus
-                  />
-                </div>
+              <div className="form-group" style={{ textAlign: 'left' }}>
+                <label className="form-label">Studio Access Key</label>
+                <input
+                  type="password"
+                  placeholder="Enter key (e.g. indiark)"
+                  value={accessCode}
+                  onChange={(e) => setAccessCode(e.target.value)}
+                  className="form-control"
+                  autoFocus
+                />
                 {authError && (
-                  <span className="form-error-msg" style={{ marginTop: '0.4rem' }}>
-                    <AlertCircle size={13} /> {authError}
-                  </span>
+                  <div style={{ color: '#ef4444', fontSize: '0.8rem', marginTop: '0.4rem' }}>
+                    {authError}
+                  </div>
                 )}
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1.5rem' }}>
+              <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', marginTop: '1.5rem' }}>
                 <button type="button" onClick={onClose} className="btn btn-secondary-dark btn-sm">
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary btn-sm">
-                  <KeyRound size={15} />
+                <button type="submit" className="btn btn-lime btn-sm">
+                  <KeyRound size={14} />
                   <span>Authenticate</span>
                 </button>
               </div>
             </form>
-
-            <div style={{ marginTop: '2rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border-dark)', fontSize: '0.75rem', color: 'var(--text-light-subtle)' }}>
-              <strong>Architecture Notice:</strong> Client preview environment uses a decoupled DataService layer. In production, this binds to your authenticated REST/GraphQL database.
-            </div>
           </div>
         ) : (
+          /* Authenticated Management Panel */
           <>
-            {/* Top Header */}
+            {/* Header */}
             <div
               style={{
-                padding: '1.25rem 2rem',
+                padding: '1.25rem 1.75rem',
                 borderBottom: '1px solid var(--border-dark)',
                 backgroundColor: 'rgba(7, 13, 20, 0.98)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                gap: '1rem'
               }}
             >
-          <div>
-            <div className="badge badge-teal" style={{ marginBottom: '0.25rem' }}>
-              Management Console
+              <div>
+                <span className="badge badge-teal" style={{ fontSize: '0.7rem' }}>Management Console</span>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF', margin: '0.2rem 0 0 0' }}>
+                  Indiark Content & Catalogue Studio
+                </h3>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <button onClick={handleResetDefaults} className="btn btn-secondary-dark btn-sm" title="Reset defaults">
+                  <RefreshCw size={13} />
+                  <span>Reset Defaults</span>
+                </button>
+                <button onClick={onClose} style={{ background: 'none', border: '1px solid var(--border-dark)', color: 'var(--text-light-muted)', cursor: 'pointer', padding: '0.4rem', borderRadius: 'var(--radius-sm)' }}>
+                  <X size={18} />
+                </button>
+              </div>
             </div>
-            <h3 style={{ color: '#FFFFFF', fontSize: '1.25rem' }}>
-              Indiark Content & Catalogue Studio
-            </h3>
-          </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <button
-              onClick={handleResetDefaults}
-              className="btn btn-secondary-dark btn-sm"
-              title="Reset data to initial state"
-            >
-              <RefreshCw size={14} />
-              <span>Reset Defaults</span>
-            </button>
-
-            <button
-              onClick={onClose}
-              aria-label="Close Studio"
+            {/* Sub-Header Tabs */}
+            <div
               style={{
-                background: 'none',
-                border: '1px solid var(--border-dark)',
-                color: 'var(--text-light-muted)',
-                cursor: 'pointer',
-                padding: '0.45rem',
-                borderRadius: 'var(--radius-sm)'
-              }}
-            >
-              <X size={18} />
-            </button>
-          </div>
-        </div>
-
-        {/* Tab Navigation & Architecture Notice */}
-        <div
-          style={{
-            padding: '0.75rem 2rem',
-            backgroundColor: 'rgba(11, 19, 31, 0.95)',
-            borderBottom: '1px solid var(--border-dark)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '1rem'
-          }}
-        >
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button
-              onClick={() => setActiveTab('projects')}
-              style={{
-                background: activeTab === 'projects' ? 'var(--brand-teal)' : 'transparent',
-                color: activeTab === 'projects' ? '#FFFFFF' : 'var(--text-light-secondary)',
-                border: 'none',
-                padding: '0.5rem 1rem',
-                borderRadius: 'var(--radius-sm)',
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                display: 'inline-flex',
+                padding: '0.75rem 1.75rem',
+                backgroundColor: 'rgba(11, 19, 31, 0.95)',
+                borderBottom: '1px solid var(--border-dark)',
+                display: 'flex',
                 alignItems: 'center',
-                gap: '0.4rem'
+                justifyContent: 'space-between',
               }}
             >
-              <Layers size={15} />
-              <span>Projects Catalogue ({projects.length})</span>
-            </button>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button
+                  onClick={() => setActiveTab('projects')}
+                  className={`btn ${activeTab === 'projects' ? 'btn-lime' : 'btn-secondary-dark'} btn-sm`}
+                >
+                  <Layers size={14} />
+                  <span>Projects & Catalogue ({projects.length})</span>
+                </button>
+                <button
+                  onClick={() => setActiveTab('team')}
+                  className={`btn ${activeTab === 'team' ? 'btn-lime' : 'btn-secondary-dark'} btn-sm`}
+                >
+                  <Users size={14} />
+                  <span>Team ({team.length})</span>
+                </button>
+                <button
+                  onClick={() => setActiveTab('partners')}
+                  className={`btn ${activeTab === 'partners' ? 'btn-lime' : 'btn-secondary-dark'} btn-sm`}
+                >
+                  <Handshake size={14} />
+                  <span>Partners ({partners.length})</span>
+                </button>
+              </div>
+            </div>
 
-            <button
-              onClick={() => setActiveTab('team')}
-              style={{
-                background: activeTab === 'team' ? 'var(--brand-teal)' : 'transparent',
-                color: activeTab === 'team' ? '#FFFFFF' : 'var(--text-light-secondary)',
-                border: 'none',
-                padding: '0.5rem 1rem',
-                borderRadius: 'var(--radius-sm)',
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.4rem'
-              }}
-            >
-              <Users size={15} />
-              <span>Leadership Roster ({team.length})</span>
-            </button>
+            {/* Notification Alert */}
+            {notification && (
+              <div style={{ padding: '0.6rem 1.75rem', backgroundColor: notification.type === 'error' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(148, 200, 32, 0.2)', borderBottom: '1px solid var(--border-dark)', color: '#FFFFFF', fontSize: '0.84rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <AlertCircle size={14} />
+                <span>{notification.msg}</span>
+              </div>
+            )}
 
-            <button
-              onClick={() => setActiveTab('partners')}
-              style={{
-                background: activeTab === 'partners' ? 'var(--brand-teal)' : 'transparent',
-                color: activeTab === 'partners' ? '#FFFFFF' : 'var(--text-light-secondary)',
-                border: 'none',
-                padding: '0.5rem 1rem',
-                borderRadius: 'var(--radius-sm)',
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.4rem'
-              }}
-            >
-              <Handshake size={15} />
-              <span>Channel Partners ({partners.length})</span>
-            </button>
-          </div>
+            {/* Modal Body */}
+            <div style={{ padding: '1.75rem', overflowY: 'auto', flexGrow: 1 }}>
+              {activeTab === 'projects' && (
+                <div>
+                  {/* Form Box */}
+                  <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-md)', padding: '1.5rem', marginBottom: '2rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                      <h4 style={{ color: '#FFFFFF', fontSize: '1rem', margin: 0 }}>
+                        {editingProjectId ? 'Edit Project Metadata' : 'Add New Represented Project'}
+                      </h4>
+                      {editingProjectId && (
+                        <button onClick={handleResetProjectForm} className="btn btn-secondary-dark btn-sm">
+                          Cancel Editing
+                        </button>
+                      )}
+                    </div>
 
-          <div style={{ fontSize: '0.75rem', color: 'var(--brand-lime)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-            <CheckCircle size={14} />
-            <span>Persistent Data Layer Ready</span>
-          </div>
-        </div>
+                    <form onSubmit={handleSaveProject}>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
+                        <div className="form-group">
+                          <label className="form-label">Project Title *</label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. BHEESHMAR"
+                            value={projectForm.title}
+                            onChange={(e) => setProjectForm({ ...projectForm, title: e.target.value })}
+                            className="form-control"
+                          />
+                        </div>
 
-        {/* Notification Alert */}
-        {notification && (
-          <div
-            style={{
-              padding: '0.6rem 2rem',
-              backgroundColor: notification.type === 'error' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(0, 157, 165, 0.2)',
-              borderBottom: '1px solid var(--border-dark)',
-              fontSize: '0.85rem',
-              color: '#FFFFFF',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem'
-            }}
-          >
-            <AlertCircle size={15} />
-            <span>{notification.msg}</span>
-          </div>
-        )}
+                        <div className="form-group">
+                          <label className="form-label">Category</label>
+                          <select
+                            value={projectForm.category}
+                            onChange={(e) => setProjectForm({ ...projectForm, category: e.target.value })}
+                            className="form-control"
+                          >
+                            <option value="Films">Films</option>
+                            <option value="Web Series">Web Series</option>
+                            <option value="Digital">Digital</option>
+                            <option value="Music">Music</option>
+                          </select>
+                        </div>
 
-        {/* Modal Scrollable Content */}
-        <div style={{ padding: '2rem', overflowY: 'auto', flexGrow: 1 }}>
-          
-          {/* TAB 1: PROJECTS */}
-          {activeTab === 'projects' && (
-            <div>
-              {/* Add / Edit Form */}
-              <div
-                style={{
-                  padding: '1.5rem',
-                  backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                  border: '1px solid var(--border-dark)',
-                  borderRadius: 'var(--radius-md)',
-                  marginBottom: '2rem'
-                }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <h4 style={{ color: '#FFFFFF', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    {editingProjectId ? <Edit3 size={16} color="var(--brand-teal)" /> : <Plus size={16} color="var(--brand-lime)" />}
-                    <span>{editingProjectId ? 'Edit Project Metadata' : 'Add New Represented Project'}</span>
+                        <div className="form-group">
+                          <label className="form-label">Project Type</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Feature Film"
+                            value={projectForm.projectType}
+                            onChange={(e) => setProjectForm({ ...projectForm, projectType: e.target.value })}
+                            className="form-control"
+                          />
+                        </div>
+
+                        <div className="form-group">
+                          <label className="form-label">Language</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Malayalam"
+                            value={projectForm.language}
+                            onChange={(e) => setProjectForm({ ...projectForm, language: e.target.value })}
+                            className="form-control"
+                          />
+                        </div>
+
+                        <div className="form-group">
+                          <label className="form-label">Genre</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Historical / Mystery"
+                            value={projectForm.genre}
+                            onChange={(e) => setProjectForm({ ...projectForm, genre: e.target.value })}
+                            className="form-control"
+                          />
+                        </div>
+
+                        <div className="form-group">
+                          <label className="form-label">Year / Status</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. 2024–2025"
+                            value={projectForm.year}
+                            onChange={(e) => setProjectForm({ ...projectForm, year: e.target.value })}
+                            className="form-control"
+                          />
+                        </div>
+
+                        <div className="form-group">
+                          <label className="form-label">Indiark Role</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Pitching & Representation"
+                            value={projectForm.indiarkRole}
+                            onChange={(e) => setProjectForm({ ...projectForm, indiarkRole: e.target.value })}
+                            className="form-control"
+                          />
+                        </div>
+
+                        <div className="form-group">
+                          <label className="form-label">Status</label>
+                          <select
+                            value={projectForm.status}
+                            onChange={(e) => setProjectForm({ ...projectForm, status: e.target.value })}
+                            className="form-control"
+                          >
+                            <option value="In Representation">In Representation</option>
+                            <option value="Pitching Active">Pitching Active</option>
+                            <option value="Rights Licensed">Rights Licensed</option>
+                          </select>
+                        </div>
+
+                        <div className="form-group">
+                          <label className="form-label">Poster Image Path</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. /secret of kalinga.jpg"
+                            value={projectForm.posterUrl}
+                            onChange={(e) => setProjectForm({ ...projectForm, posterUrl: e.target.value })}
+                            className="form-control"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Synopsis / Description</label>
+                        <textarea
+                          rows={3}
+                          placeholder="Brief overview of the project content..."
+                          value={projectForm.synopsis}
+                          onChange={(e) => setProjectForm({ ...projectForm, synopsis: e.target.value })}
+                          className="form-control"
+                          style={{ resize: 'vertical' }}
+                        />
+                      </div>
+
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                        <button type="submit" className="btn btn-lime btn-sm">
+                          <Save size={14} />
+                          <span>{editingProjectId ? 'Save Changes' : 'Add to Catalogue'}</span>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                  {/* Projects List */}
+                  <h4 style={{ color: '#FFFFFF', fontSize: '1rem', marginBottom: '1rem' }}>
+                    Active Representation Catalogue ({projects.length})
                   </h4>
 
-                  {editingProjectId && (
-                    <button onClick={handleResetProjectForm} className="btn btn-secondary-dark btn-sm">
-                      Cancel Editing
-                    </button>
-                  )}
-                </div>
-
-                <form onSubmit={handleSaveProject}>
-                  <div className="grid-2">
-                    <div className="form-group">
-                      <label className="form-label">Project Title <span className="form-required">*</span></label>
-                      <input
-                        type="text"
-                        className="form-input"
-                        placeholder="e.g. BHEESHMAR"
-                        value={projectForm.title}
-                        onChange={(e) => setProjectForm({ ...projectForm, title: e.target.value })}
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Category</label>
-                      <select
-                        className="form-select"
-                        value={projectForm.category}
-                        onChange={(e) => setProjectForm({ ...projectForm, category: e.target.value })}
-                      >
-                        <option value="Films">Films</option>
-                        <option value="Web Series">Web Series</option>
-                        <option value="Digital">Digital</option>
-                        <option value="Music">Music</option>
-                        <option value="Production">Production</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="grid-3">
-                    <div className="form-group">
-                      <label className="form-label">Project Type</label>
-                      <input
-                        type="text"
-                        className="form-input"
-                        placeholder="e.g. Feature Film / Series"
-                        value={projectForm.projectType}
-                        onChange={(e) => setProjectForm({ ...projectForm, projectType: e.target.value })}
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Language</label>
-                      <input
-                        type="text"
-                        className="form-input"
-                        placeholder="e.g. Malayalam, Hindi, Tamil"
-                        value={projectForm.language}
-                        onChange={(e) => setProjectForm({ ...projectForm, language: e.target.value })}
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Year / Status</label>
-                      <input
-                        type="text"
-                        className="form-input"
-                        placeholder="e.g. 2024–2025"
-                        value={projectForm.year}
-                        onChange={(e) => setProjectForm({ ...projectForm, year: e.target.value })}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label">Indiark Mandate / Role</label>
-                    <input
-                      type="text"
-                      className="form-input"
-                      placeholder="e.g. OTT Platform Pitching & Rights Representation"
-                      value={projectForm.indiarkRole}
-                      onChange={(e) => setProjectForm({ ...projectForm, indiarkRole: e.target.value })}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label">Synopsis / Description</label>
-                    <textarea
-                      className="form-textarea"
-                      rows={3}
-                      placeholder="Brief overview of the project content and rights positioning..."
-                      value={projectForm.synopsis}
-                      onChange={(e) => setProjectForm({ ...projectForm, synopsis: e.target.value })}
-                    />
-                  </div>
-
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
-                    <button type="submit" className="btn btn-primary btn-sm">
-                      <Save size={15} />
-                      <span>{editingProjectId ? 'Save Changes' : 'Add to Catalogue'}</span>
-                    </button>
-                  </div>
-                </form>
-              </div>
-
-              {/* Current Projects List */}
-              <h4 style={{ color: '#FFFFFF', fontSize: '1rem', marginBottom: '1rem' }}>
-                Current Catalogue Titles ({projects.length})
-              </h4>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {projects.map((proj) => (
-                  <div
-                    key={proj.id}
-                    style={{
-                      padding: '1rem 1.25rem',
-                      backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                      border: '1px solid var(--border-dark)',
-                      borderRadius: 'var(--radius-md)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      flexWrap: 'wrap',
-                      gap: '1rem'
-                    }}
-                  >
-                    <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <strong style={{ color: '#FFFFFF', fontSize: '1rem' }}>{proj.title}</strong>
-                        <span className="badge badge-teal" style={{ fontSize: '0.7rem' }}>{proj.category}</span>
-                      </div>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--text-light-muted)', marginTop: '0.2rem' }}>
-                        {proj.projectType} • {proj.indiarkRole}
-                      </div>
-                    </div>
-
-                    <div style={{ display: 'flex', gap: '0.5rem' }}>
-                      <button
-                        onClick={() => handleEditProject(proj)}
-                        className="btn btn-secondary-dark btn-sm"
-                        style={{ padding: '0.4rem 0.75rem' }}
-                      >
-                        <Edit3 size={14} />
-                        <span>Edit</span>
-                      </button>
-                      <button
-                        onClick={() => handleDeleteProject(proj.id, proj.title)}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    {projects.map((proj) => (
+                      <div
+                        key={proj.id}
                         style={{
-                          background: 'rgba(239, 68, 68, 0.1)',
-                          border: '1px solid rgba(239, 68, 68, 0.3)',
-                          color: '#F87171',
-                          padding: '0.4rem 0.75rem',
-                          borderRadius: 'var(--radius-sm)',
-                          cursor: 'pointer',
-                          display: 'inline-flex',
+                          padding: '1rem 1.25rem',
+                          backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                          border: '1px solid var(--border-dark)',
+                          borderRadius: 'var(--radius-md)',
+                          display: 'flex',
                           alignItems: 'center',
-                          gap: '0.3rem',
-                          fontSize: '0.85rem'
+                          justifyContent: 'space-between',
+                          flexWrap: 'wrap',
+                          gap: '1rem',
                         }}
                       >
-                        <Trash2 size={14} />
-                        <span>Delete</span>
-                      </button>
-                    </div>
+                        <div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <strong style={{ color: '#FFFFFF', fontSize: '1rem' }}>{proj.title}</strong>
+                            <span className="badge badge-teal" style={{ fontSize: '0.7rem' }}>{proj.category}</span>
+                            <span className="badge badge-lime" style={{ fontSize: '0.7rem' }}>{proj.status}</span>
+                          </div>
+                          <div style={{ fontSize: '0.8rem', color: 'var(--text-light-muted)', marginTop: '0.2rem' }}>
+                            {proj.projectType} • {proj.language} • {proj.indiarkRole}
+                          </div>
+                        </div>
+
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <button
+                            onClick={() => handleEditProject(proj)}
+                            className="btn btn-secondary-dark btn-sm"
+                            style={{ padding: '0.4rem 0.75rem' }}
+                          >
+                            <Edit3 size={13} />
+                            <span>Edit</span>
+                          </button>
+                          <button
+                            onClick={() => handleDeleteProject(proj.id, proj.title)}
+                            style={{
+                              background: 'rgba(239, 68, 68, 0.1)',
+                              border: '1px solid rgba(239, 68, 68, 0.3)',
+                              color: '#f87171',
+                              borderRadius: 'var(--radius-sm)',
+                              padding: '0.4rem 0.75rem',
+                              cursor: 'pointer',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '0.35rem',
+                              fontSize: '0.78rem',
+                              fontWeight: 600,
+                            }}
+                          >
+                            <Trash2 size={13} />
+                            <span>Delete</span>
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
+                </div>
+              )}
 
-          {/* TAB 2: TEAM */}
-          {activeTab === 'team' && (
-            <div>
-              <div
-                style={{
-                  padding: '1rem 1.25rem',
-                  backgroundColor: 'rgba(0, 157, 165, 0.08)',
-                  border: '1px solid rgba(0, 157, 165, 0.25)',
-                  borderRadius: 'var(--radius-md)',
-                  marginBottom: '1.5rem',
-                  fontSize: '0.85rem',
-                  color: 'var(--text-light-secondary)'
-                }}
-              >
-                <strong style={{ color: '#FFFFFF' }}>Source-of-Truth Integrity Rule:</strong> Biographies and designations must remain in placeholder state until officially signed off by company leadership.
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {team.map((member) => (
-                  <div
-                    key={member.id}
-                    style={{
-                      padding: '1.25rem',
-                      backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                      border: '1px solid var(--border-dark)',
-                      borderRadius: 'var(--radius-md)'
-                    }}
-                  >
-                    <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: '1.05rem', marginBottom: '0.4rem' }}>
-                      {member.name}
-                    </div>
-                    <div style={{ fontSize: '0.85rem', color: 'var(--brand-teal-light)', marginBottom: '0.3rem' }}>
-                      {member.designation}
-                    </div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-light-muted)', fontStyle: 'italic' }}>
-                      {member.bio}
-                    </div>
+              {activeTab === 'team' && (
+                <div>
+                  <h4 style={{ color: '#FFFFFF', fontSize: '1rem', marginBottom: '1rem' }}>
+                    Verified Leadership Roster ({team.length})
+                  </h4>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
+                    {team.map((m) => (
+                      <div key={m.id} style={{ padding: '1.25rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-md)' }}>
+                        <div style={{ fontWeight: 800, color: '#FFFFFF', fontSize: '1rem' }}>{m.name}</div>
+                        <div style={{ color: 'var(--brand-lime)', fontSize: '0.78rem', marginTop: '0.2rem' }}>{m.designation}</div>
+                        <div style={{ color: 'var(--text-light-muted)', fontSize: '0.8rem', marginTop: '0.4rem' }}>{m.bio}</div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
+                </div>
+              )}
 
-          {/* TAB 3: PARTNERS */}
-          {activeTab === 'partners' && (
-            <div>
-              <div
-                style={{
-                  padding: '1rem 1.25rem',
-                  backgroundColor: 'rgba(148, 200, 32, 0.08)',
-                  border: '1px solid rgba(148, 200, 32, 0.25)',
-                  borderRadius: 'var(--radius-md)',
-                  marginBottom: '1.5rem',
-                  fontSize: '0.85rem',
-                  color: 'var(--text-light-secondary)'
-                }}
-              >
-                <strong style={{ color: '#FFFFFF' }}>Partner Representation Rule:</strong> Partner logos are only displayed following explicit written confirmation. Clean text styling is applied by default.
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {partners.map((partner) => (
-                  <div
-                    key={partner.id}
-                    style={{
-                      padding: '1.25rem',
-                      backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                      border: '1px solid var(--border-dark)',
-                      borderRadius: 'var(--radius-md)',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
-                    }}
-                  >
-                    <div>
-                      <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: '1rem' }}>{partner.name}</div>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--text-light-muted)' }}>{partner.type}</div>
-                    </div>
-                    <span className="badge badge-dark">Verified Name</span>
+              {activeTab === 'partners' && (
+                <div>
+                  <h4 style={{ color: '#FFFFFF', fontSize: '1rem', marginBottom: '1rem' }}>
+                    Channel & Business Partners ({partners.length})
+                  </h4>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
+                    {partners.map((p) => (
+                      <div key={p.id} style={{ padding: '1.25rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-md)' }}>
+                        <div style={{ fontWeight: 800, color: '#FFFFFF', fontSize: '1rem' }}>{p.name}</div>
+                        <div style={{ color: 'var(--brand-teal-light)', fontSize: '0.78rem', marginTop: '0.2rem' }}>{p.type}</div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
             </div>
-          )}
-
-        </div>
           </>
         )}
-
       </div>
     </div>
   );
 };
-

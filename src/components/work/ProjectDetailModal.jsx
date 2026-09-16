@@ -186,9 +186,9 @@ export const ProjectDetailModal = ({ project, onClose, onContactForTitle }) => {
                   onClose();
                   if (onContactForTitle) onContactForTitle(project.title);
                 }}
-                className="btn btn-primary btn-sm"
+                className="btn btn-lime btn-sm"
               >
-                <span>Inquire About This Title</span>
+                <span>INQUIRE ABOUT THIS TITLE</span>
                 <ArrowUpRight size={14} />
               </button>
             </div>
