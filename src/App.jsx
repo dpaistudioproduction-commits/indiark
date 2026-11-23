@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { Loader } from './components/layout/Loader';
@@ -16,8 +16,19 @@ import { LegalModal } from './components/legal/LegalModal';
 import { dataService } from './services/dataService';
 
 export const App = () => {
+  const getInitialPage = () => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const page = window.location.hash.replace('#/', '').replace('#', '');
+      if (['home', 'who-we-are', 'what-we-do', 'why-indiark', 'our-work', 'for-platforms', 'submit-content', 'contact'].includes(page)) {
+        return page;
+      }
+    }
+    return 'home';
+  };
+
   const [isLoading, setIsLoading] = useState(true);
-  const [activePage, setActivePage] = useState('home');
+  const handleLoaderFinish = useCallback(() => setIsLoading(false), []);
+  const [activePage, setActivePage] = useState(getInitialPage);
   const [projects, setProjects] = useState([]);
   const [team, setTeam] = useState([]);
   const [partners, setPartners] = useState([]);
@@ -33,6 +44,14 @@ export const App = () => {
 
   useEffect(() => {
     loadData();
+    const handleHashChange = () => {
+      const page = window.location.hash.replace('#/', '').replace('#', '');
+      if (['home', 'who-we-are', 'what-we-do', 'why-indiark', 'our-work', 'for-platforms', 'submit-content', 'contact'].includes(page)) {
+        setActivePage(page);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   const handleContactForTitle = (projectTitle) => {
@@ -43,7 +62,7 @@ export const App = () => {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       {/* Short Branded Loader */}
-      {isLoading && <Loader onFinish={() => setIsLoading(false)} />}
+      {isLoading && <Loader onFinish={handleLoaderFinish} />}
       
       {/* Global Navigation Header */}
       <Navbar

@@ -1,27 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { 
   ArrowUpRight, ArrowRight, Sparkles, CheckCircle2, Tv, Film, 
-  Layers, Music, Globe2, Video, Sliders, ChevronRight, ChevronLeft, Briefcase, 
-  ShieldCheck, Clock, TrendingUp, Users, Building, Eye, Award,
-  Mail, Phone, MapPin, Send
+  Layers, ShieldCheck, Clock, TrendingUp, Users, Building, 
+  Award, Mail, Phone, MapPin, Send, Star, Briefcase, ChevronRight,
+  Filter, Play, Check, Quote, Globe, Video, Eye, Sliders
 } from 'lucide-react';
 import { ASSOCIATED_ORGANIZATION, CONTACT_INFO } from '../services/dataService';
 
-export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
-  const [activeServiceIdx, setActiveServiceIdx] = useState(0);
-  const [serviceViewMode, setServiceViewMode] = useState('horizontal');
-  const [activeProcessStep, setActiveProcessStep] = useState(0);
-  const [activeProjectIdx, setActiveProjectIdx] = useState(0);
-  const [activePillarIdx, setActivePillarIdx] = useState(0);
-  const [hoveredPath, setHoveredPath] = useState(null);
-  const serviceScrollRef = useRef(null);
+export const HomePage = ({ setActivePage, onSelectProject }) => {
+  // Film Gallery category filter
+  const [galleryFilter, setGalleryFilter] = useState('all');
+  const [selectedFilmModal, setSelectedFilmModal] = useState(null);
 
-  // Section 12 Home Contact Form State
+  // Home Contact Form State
   const [homeContactForm, setHomeContactForm] = useState({
     name: '',
     email: '',
     phone: '',
-    subject: 'Producer / Slate Representation',
+    subject: 'Movie / Web Series Rights Pitch',
     message: ''
   });
   const [homeContactSubmitted, setHomeContactSubmitted] = useState(false);
@@ -36,1252 +32,1118 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
     }, 500);
   };
 
-  const scrollServiceTrack = (direction) => {
-    if (serviceScrollRef.current) {
-      const cardWidth = serviceScrollRef.current.offsetWidth * 0.75;
-      serviceScrollRef.current.scrollBy({
-        left: direction === 'left' ? -cardWidth : cardWidth,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const scrollToServiceIndex = (idx) => {
-    setActiveServiceIdx(idx);
-    if (serviceScrollRef.current) {
-      const cards = serviceScrollRef.current.querySelectorAll('.service-scroll-card');
-      if (cards[idx]) {
-        cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
-    }
-  };
-
-  const handleServiceScroll = () => {
-    if (!serviceScrollRef.current) return;
-    const container = serviceScrollRef.current;
-    const cards = container.querySelectorAll('.service-scroll-card');
-    const containerCenter = container.scrollLeft + container.offsetWidth / 2;
-    
-    let closestIdx = 0;
-    let minDiff = Infinity;
-    cards.forEach((card, idx) => {
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      const diff = Math.abs(containerCenter - cardCenter);
-      if (diff < minDiff) {
-        minDiff = diff;
-        closestIdx = idx;
-      }
-    });
-    if (closestIdx !== activeServiceIdx) {
-      setActiveServiceIdx(closestIdx);
-    }
-  };
-
   const handleNav = (pageId) => {
     setActivePage(pageId);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // 7 Approved Service Streams
-  const services = [
+  // Movies, Web Series & Music Handled
+  const aggregatedFilms = [
+    {
+      id: 'chiram',
+      title: 'CHIRAM',
+      category: 'feature',
+      categories: ['feature', 'music'],
+      categoryLabel: 'Feature Film',
+      language: 'Malayalam',
+      genre: 'Drama / Romance',
+      poster: '/chiram.jpg',
+      still: '/chiram.jpg',
+      year: '2026',
+      synopsis: 'A heartfelt romantic drama starring Anoop Menon and Aishwarya Mithun Koroth, directed by Sindhu Paradayil and N. Sudheer. Explores emotional depth, love, and life journeys.',
+      rightsScope: 'OTT Rights • Satellite TV Rights • Music & Dubbing',
+      status: 'Deal Closed',
+      chainOfTitle: 'Clear Paperwork & Verified'
+    },
+    {
+      id: 'bhishmar',
+      title: 'BHISHMAR',
+      category: 'music',
+      categories: ['feature', 'music'],
+      categoryLabel: 'Music & Feature Film',
+      language: 'Malayalam / Pan-India',
+      genre: 'Comedy / Music / Romance',
+      poster: '/bhishmar.jpg',
+      still: '/bhishmar.jpg',
+      year: '2026',
+      synopsis: 'A chance encounter between two men triggers a chaotic series of events across a single night, combining high-energy music, romance, and comedy sequences.',
+      rightsScope: 'OTT Outright License • Worldwide Music Rights',
+      status: 'Rights Licensed',
+      chainOfTitle: 'Clear Paperwork & Verified'
+    },
+    {
+      id: 'the-great-indian-kitchen',
+      title: 'THE GREAT INDIAN KITCHEN',
+      category: 'feature',
+      categories: ['feature'],
+      categoryLabel: 'Feature Film',
+      language: 'Malayalam / Pan-India',
+      genre: 'Social Drama',
+      poster: '/great-indian-kitchen.jpg',
+      still: '/great-indian-kitchen.jpg',
+      year: '2021',
+      synopsis: 'Landmark critically acclaimed Malayalam drama directed by Jeo Baby, starring Nimisha Sajayan and Suraj Venjaramoodu. Explores gender roles and domestic expectations with universal impact.',
+      rightsScope: 'Global OTT Streaming • Remake Rights • Satellite TV',
+      status: 'Worldwide Release',
+      chainOfTitle: 'Clear Paperwork & Verified'
+    },
+    {
+      id: 'vaanku',
+      title: 'VAANKU',
+      category: 'series',
+      categories: ['feature', 'series'],
+      categoryLabel: 'Feature Film & Web Series Adaptations',
+      language: 'Malayalam',
+      genre: 'Social Drama / Family',
+      poster: '/vaanku.jpg',
+      still: '/vaanku.jpg',
+      year: '2021',
+      synopsis: 'Directed by Kavya Prakash based on Unni R.’s acclaimed short story. Follows a young college girl who aspires to recite the Islamic call to prayer (azaan).',
+      rightsScope: 'Digital OTT License • Satellite TV Window • Dubbing',
+      status: 'Agreement Signed',
+      chainOfTitle: 'Clear Paperwork & Verified'
+    },
+    {
+      id: 'tsunami',
+      title: 'TSUNAMI',
+      category: 'feature',
+      categories: ['feature'],
+      categoryLabel: 'Feature Film',
+      language: 'Malayalam',
+      genre: 'Comedy / Entertainer',
+      poster: '/tsunami.jpg',
+      still: '/tsunami.jpg',
+      year: '2021',
+      synopsis: 'Situational Malayalam comedy directed by Lal and Lal Jr., starring Balu Varghese, Innocent, and Mukesh. Follows a young man on an unexpected journey full of misunderstandings.',
+      rightsScope: 'Satellite TV Rights • Digital Streaming Rights',
+      status: 'Broadcast & Streaming Sold',
+      chainOfTitle: 'Clear Paperwork & Verified'
+    },
+    {
+      id: 'secret-of-kalinga',
+      title: 'SECRET OF KALINGA',
+      category: 'feature',
+      categories: ['feature', 'series', 'music'],
+      categoryLabel: 'Feature Film',
+      language: 'Malayalam',
+      genre: 'Comedy / Fantasy / Horror',
+      poster: '/secret-of-kalinga.jpg',
+      still: '/secret-of-kalinga.jpg',
+      year: '2026',
+      synopsis: 'Starring Dhyan Sreenivasan, Althaf Salim, and Malavika Menon. On an ancient Kalinga kingdom campus, students accidentally unseal a centuries-old imprisoned spirit on New Year\'s Eve, triggering hilarious supernatural chaos.',
+      rightsScope: 'OTT Digital Rights • Satellite TV Rights • Dubbing Rights',
+      status: 'Deal Closed',
+      chainOfTitle: 'Clear Paperwork & Verified'
+    }
+  ];
+
+  const filteredFilms = galleryFilter === 'all' 
+    ? aggregatedFilms 
+    : aggregatedFilms.filter(f => f.category === galleryFilter || (f.categories && f.categories.includes(galleryFilter)));
+
+  // Producer Testimonials (Simple, honest Indian industry feedback)
+  const testimonials = [
+    {
+      id: 1,
+      quote: "Indiark got our movie a direct deal on a top streaming platform in record time. They handled all legal checks and helped us get a much better price than what we could get on our own.",
+      name: "Sudheesh Nair",
+      role: "Producer",
+      company: "Malabar Motion Pictures",
+      film: "The Great Indian Kitchen",
+      stillUrl: '/great-indian-kitchen.jpg',
+      rating: 5,
+      impact: "Streamed Worldwide • OTT Hit"
+    },
+    {
+      id: 2,
+      quote: "For independent producers, getting a meeting with OTT acquisitions heads is very difficult. Indiark took our project to the right decision-makers and closed both digital, music, and satellite rights together.",
+      name: "K. R. Venugopal",
+      role: "Executive Producer",
+      company: "Heritage Media Ventures",
+      film: "Bhishmar",
+      stillUrl: '/bhishmar.jpg',
+      rating: 5,
+      impact: "OTT & Music Rights Closed Together"
+    },
+    {
+      id: 3,
+      quote: "Complete transparency from day one. They defended our Minimum Guarantee (MG) and made sure our film was released on a major digital platform without any delays or deductions.",
+      name: "Aravind Sivaraman",
+      role: "Writer & Director",
+      company: "Southern Indie Collective",
+      film: "Vaanku",
+      stillUrl: '/vaanku.jpg',
+      rating: 5,
+      impact: "Minimum Guarantee (MG) Defended"
+    },
+    {
+      id: 4,
+      quote: "Indiark understands both the creative story and the commercial business. They pitched our project directly to digital buyers and handled the contract smoothly from start to finish.",
+      name: "Geetha Radhakrishnan",
+      role: "Managing Director",
+      company: "Blue Wave Productions",
+      film: "Secret of Kalinga",
+      stillUrl: '/secret-of-kalinga.jpg',
+      rating: 5,
+      impact: "OTT & Satellite Rights Closed"
+    }
+  ];
+
+  // How We Work (Simple 4-Step Process)
+  const practiceHighlights = [
+    {
+      title: 'Direct Platform Screenings',
+      desc: 'We show your movie screener directly to content heads and acquisitions teams at top streaming platforms.',
+      image: '/screening-theater.jpg',
+      tag: 'OTT Screenings'
+    },
+    {
+      title: 'Movie Valuation & Pitch Decks',
+      desc: 'We evaluate your content honestly, set the right market price, and prepare professional B2B pitch materials.',
+      image: '/camera-rig.jpg',
+      tag: 'Producer Representation'
+    },
+    {
+      title: 'Quality Check & Delivery',
+      desc: 'We make sure your video, audio, subtitles, and metadata meet all technical broadcast and OTT delivery guidelines.',
+      image: '/editing-color-lab.jpg',
+      tag: 'Technical QC'
+    },
+    {
+      title: 'Agreements & Payment Milestones',
+      desc: 'We negotiate the contract, holdback periods, theatrical windows, and ensure clear payment terms for you.',
+      image: '/deal-signing.jpg',
+      tag: 'Deal Signing'
+    }
+  ];
+
+  // 4 Core Services in Plain English
+  const coreServices = [
     {
       id: '01',
-      code: 'OTT PITCHING',
+      code: '01',
       title: 'OTT Platform Pitching',
-      subtitle: 'Targeted curation and direct pitching to leading streaming buyers',
-      tag: 'Pitch Open',
-      isPitchable: true,
+      desc: 'We pitch your completed movie or series directly to top OTT platforms to get you the best license fee or Minimum Guarantee (MG).',
       icon: Tv,
-      overview: 'We identify suitable OTT platforms and streaming buyers, position content in accordance with platform programming mandates, and manage the pitching process through commercial discussions and deal coordination.',
-      formats: ['Feature Films', 'Original Web Series', 'Regional Cinema', 'Dubbed & Multilingual', 'Archival Libraries'],
-      buyers: ['Netflix', 'Amazon Prime Video', 'SonyLIV', 'ZEE5', 'JioHotstar', 'Aha', 'SunNXT'],
-      deliverables: [
-        'Curated Platform Matching & Buyer Outreach',
-        'B2B Pitch Decks & Screener Presentation',
-        'Commercial Term Negotiation (License Fee / MG / Rev Share)',
-        'Contract Term Sheet & Closing Coordination'
-      ]
+      deliverables: ['Direct reach to streaming heads', 'No blind email pitching', 'Best commercial terms negotiation']
     },
     {
       id: '02',
-      code: 'REPRESENTATION',
-      title: 'Movie & Web Series Representation',
-      subtitle: 'Comprehensive mandate representation from evaluation to deal closure',
-      tag: 'Producer Mandate',
-      isPitchable: true,
+      code: '02',
+      title: 'Producer Representation',
+      desc: 'We work as your official business representative, handling all buyer discussions, meetings, and legal paperwork for your film.',
       icon: Film,
-      overview: 'We act as dedicated representatives for filmmakers, producers, and production studios to manage all facets of content representation, protecting rights integrity while unlocking maximum market valuation.',
-      formats: ['Independent Feature Films', 'Studio Slate Productions', 'Original Miniseries', 'Festival Titles', 'Finished Rough Cuts'],
-      buyers: ['Major Streaming Giants', 'National Satellite Networks', 'International Rights Aggregators'],
-      deliverables: [
-        'Comprehensive Rights Portfolio Audit',
-        'Active Buyer & Broadcaster Interfacing',
-        'Direct Negotiation of Commercial Valuation',
-        'Execution Support on Representation Mandates'
-      ]
+      deliverables: ['Full producer advocacy in every deal', 'Splitting OTT, TV & Dubbing rights', 'Transparent agreements & clear terms']
     },
     {
       id: '03',
-      code: 'RIGHTS BUSINESS',
-      title: 'Content Rights Business',
-      subtitle: 'Multi-territory and multi-window licensing architecture',
-      tag: 'Rights Licensing',
-      isPitchable: true,
+      code: '03',
+      title: 'Satellite & Dubbing Rights',
+      desc: 'We sell TV broadcast rights and dubbing rights in Hindi, Tamil, Telugu, and other languages to bring you additional revenue.',
       icon: Layers,
-      overview: 'We explore and structure licensing opportunities across OTT, linear satellite television, digital networks, audio publishing, in-flight transportation, and international territories.',
-      formats: ['SVOD / AVOD Rights', 'Satellite TV Broadcast', 'Music Publishing & Master Sync', 'In-Flight / Transport', 'International Rights'],
-      buyers: ['Satellite TV Broadcasters', 'In-Flight Airline Networks', 'International Dubbing Buyers'],
-      deliverables: [
-        'Territory-Specific Rights Carve-outs',
-        'Windowing Strategy Optimization',
-        'Ancillary & Transport Rights Monetization',
-        'International Dubbing & Remake Inquiries'
-      ]
+      deliverables: ['Satellite TV channel licensing', 'Hindi & regional dubbing sales', 'Overseas and airline rights sales']
     },
     {
       id: '04',
-      code: 'MUSIC BUSINESS',
-      title: 'Music Business',
-      subtitle: 'Commercial opportunities for independent creators and audio rights holders',
-      tag: 'Music & Sync',
-      isPitchable: true,
-      icon: Music,
-      overview: 'We support independent music creators, composers, and rights holders with digital distribution, sync licensing for film and digital media, audio publishing administration, and catalogue monetization.',
-      formats: ['Original Soundtracks', 'Independent Singles & EPs', 'BGM Libraries', 'Sync Masters'],
-      buyers: ['Spotify', 'Apple Music', 'JioSaavn', 'Wynk', 'Film & Ad Sync Agencies'],
-      deliverables: [
-        'Audio Streaming Platform Strategy',
-        'Sync Licensing for Films, Ads & Web Shows',
-        'Music Rights Administration & Monetization',
-        'Artist & Digital Platform Partnerships'
-      ]
-    },
-    {
-      id: '05',
-      code: 'DIGITAL BUSINESS',
-      title: 'Digital Business',
-      subtitle: 'YouTube syndication, social video optimization, and digital networks',
-      tag: 'Digital AVOD',
-      isPitchable: true,
-      icon: Globe2,
-      overview: 'We help content owners unlock legitimate revenue streams across YouTube, Facebook, social video ecosystems, and emerging digital entertainment channels with full rights protection.',
-      formats: ['YouTube MCN Networks', 'Social Syndication', 'Digital Portals', 'Creator Catalogues'],
-      buyers: ['YouTube Premium', 'Facebook Watch', 'Snapchat Spotlight', 'FAST Channels'],
-      deliverables: [
-        'Digital Rights Protection & Claim Management',
-        'AVOD Monetization & Revenue Optimization',
-        'Catalogue Repurposing for Short & Long Form Video',
-        'Cross-Platform Content Distribution'
-      ]
-    },
-    {
-      id: '06',
-      code: 'PRODUCTION',
-      title: 'Video Production',
-      subtitle: 'Turnkey commercial and documentary production solutions',
-      tag: 'Production Suite',
-      isPitchable: false,
-      icon: Video,
-      overview: 'End-to-end production craft delivering high-impact video content for corporate brands, commercial advertisers, events, and documentary storytelling.',
-      formats: ['Commercial Ad Films', 'Corporate Brand Films', 'Documentaries', 'Promotional Campaigns'],
-      buyers: ['Corporate Brands', 'Direct-to-Consumer Enterprises', 'Creative Ad Agencies'],
-      deliverables: [
-        'Concept Development & Creative Scripting',
-        'Cinematography & Location Production',
-        'Talent & Crew Management',
-        'Turnkey High-Resolution Delivery'
-      ]
-    },
-    {
-      id: '07',
-      code: 'POST-PRODUCTION',
-      title: 'Post-Production',
-      subtitle: 'High-precision technical finishing, editing, and colour grading',
-      tag: 'Finishing Lab',
-      isPitchable: false,
-      icon: Sliders,
-      overview: 'Professional editing and colour grading workflows ensuring international broadcast, OTT, and theatrical technical compliance.',
-      formats: ['Feature Film Finishing', 'Commercial Video Editing', 'DI / DaVinci Resolve', 'OTT Mastering'],
-      buyers: ['Feature Film Producers', 'OTT Series Showrunners', 'Commercial Directors'],
-      deliverables: [
-        'Non-Linear Editing (NLE) Workflows',
-        'Colour Science & HDR / Rec.709 Grading',
-        'Multi-Format Deliverables & QC Compliance',
-        'Audio-Visual Finishing'
-      ]
+      code: '04',
+      title: 'Legal Rights & Paperwork',
+      desc: 'We audit all writer, actor, director, and music agreements to make sure your rights are 100% clean with zero copyright risk.',
+      icon: ShieldCheck,
+      deliverables: ['Agreement verification for buyers', 'Censor and title documentation', 'Safe, dispute-free deal closing']
     }
   ];
-
-  // 6-Stage Business Methodology
-  const processStages = [
-    {
-      step: '01',
-      name: 'UNDERSTAND',
-      shortTitle: 'Content Evaluation',
-      desc: 'Thorough evaluation of the project, commercial viability, Chain of Title verification, and rights audit.',
-    },
-    {
-      step: '02',
-      name: 'IDENTIFY',
-      shortTitle: 'Buyer Mapping',
-      desc: 'Targeted mapping of suitable OTT platforms, broadcasters, territories, and programming mandates.',
-    },
-    {
-      step: '03',
-      name: 'POSITION',
-      shortTitle: 'Packaging & Valuation',
-      desc: 'Packaging content with B2B pitch materials, screener protocols, and strategic commercial valuation.',
-    },
-    {
-      step: '04',
-      name: 'PITCH',
-      shortTitle: 'Direct Outreach',
-      desc: 'Direct representation and outreach to platform commissioning editors and content acquisition heads.',
-    },
-    {
-      step: '05',
-      name: 'NEGOTIATE',
-      shortTitle: 'Commercial Terms',
-      desc: 'Structuring commercial terms, license fees, minimum guarantees (MG), windowing, and territory rights.',
-    },
-    {
-      step: '06',
-      name: 'CLOSE',
-      shortTitle: 'Contract Finalization',
-      desc: 'Term sheet execution, legal closing coordination, technical QC compliance, and final delivery.',
-    },
-  ];
-
-  // 6 Strategic Pillars for Why Indiark
-  const pillars = [
-    {
-      id: '20-years',
-      title: '20+ Years in Media',
-      subtitle: 'Deep Industry Foundation',
-      desc: 'Over two decades of foundational experience navigating film production, satellite broadcasting, digital rights, and the streaming ecosystem.',
-      points: ['Decades of hands-on media business experience', 'Comprehensive grasp of legacy and modern platforms', 'Deep understanding of rights protection & commercial structures']
-    },
-    {
-      id: 'ott-expertise',
-      title: 'OTT Expertise',
-      subtitle: 'Streaming Acquisition Knowledge',
-      desc: 'Specialized insight into platform programming needs, acquisition windows, and content evaluation criteria across top OTT streamers.',
-      points: ['Direct alignment with buyer programming mandates', 'Expertise in both licensed acquisitions and originals', 'Multi-lingual and regional content curation']
-    },
-    {
-      id: 'platform-focused',
-      title: 'Platform-Focused',
-      subtitle: 'Curated Buyer Positioning',
-      desc: 'We position content precisely where it belongs, saving creators time and giving buyers relevant, high-standard propositions.',
-      points: ['Tailored B2B pitching decks and screeners', 'Elimination of mismatched submissions', 'Structured deal parameters ready for review']
-    },
-    {
-      id: 'business-driven',
-      title: 'Business-Driven',
-      subtitle: 'Commercial Value Maximization',
-      desc: 'Entertainment is art, but representation is business. We focus on fair valuation, contractual clarity, and structured monetisation.',
-      points: ['Commercial term negotiation (License / MG / Rev-Share)', 'Windowing and multi-territory unbundling', 'Transparent deal documentation']
-    },
-    {
-      id: 'producer-focused',
-      title: 'Producer-Focused',
-      subtitle: 'Creator-Centric Advocacy',
-      desc: 'We protect the creator’s interests and rights integrity while actively unlocking new commercial revenue streams.',
-      points: ['Chain of Title verification and security', 'Dedicated advocate in buyer negotiations', 'Long-term catalogue management']
-    },
-    {
-      id: 'industry-network',
-      title: 'Industry Network',
-      subtitle: 'Established Industry Relations',
-      desc: 'Longstanding professional relationships across platforms, production houses, broadcasters, and distribution channels.',
-      points: ['Direct channel access to decision makers', 'Pan-India and international territory outreach', 'Collaborative multi-agency partnerships']
-    }
-  ];
-
-  const currentService = services[activeServiceIdx];
-  const ServiceIcon = currentService.icon;
-  const currentPillar = pillars[activePillarIdx];
-  const currentProject = projects[activeProjectIdx] || projects[0] || {};
 
   return (
-    <div style={{ backgroundColor: 'var(--bg-dark-950)' }}>
+    <div style={{ backgroundColor: 'var(--bg-dark-950)', color: 'var(--text-light-primary)' }}>
 
       {/* =====================================================================
-          SECTION 01 — HERO (Layered Composition with Floating Depth)
+          TOP ANNOUNCEMENT RIBBON (Simple, Direct)
+          ===================================================================== */}
+      <div 
+        style={{
+          backgroundColor: 'rgba(7, 25, 34, 0.95)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
+          padding: '0.6rem 1.25rem',
+          fontSize: '0.82rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '1rem',
+          flexWrap: 'wrap',
+          textAlign: 'center'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span className="pulse-dot" />
+          <span style={{ fontWeight: 800, color: 'var(--brand-lime)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+            Looking for Content:
+          </span>
+          <span style={{ color: '#E2E8F0' }}>
+            Active buyer demand for South Indian & Pan-India Feature Films and Web Series
+          </span>
+        </div>
+        <button
+          onClick={() => handleNav('submit-content')}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--brand-teal-light)',
+            fontWeight: 700,
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.25rem',
+            padding: 0,
+            fontSize: '0.82rem',
+            textDecoration: 'underline'
+          }}
+        >
+          <span>Pitch Your Movie</span>
+          <ArrowRight size={13} />
+        </button>
+      </div>
+
+      {/* =====================================================================
+          SECTION 01 — HERO (Clear Indian Film Industry Terminology)
           ===================================================================== */}
       <section 
         className="section"
         style={{
           paddingTop: 'clamp(3.5rem, 6vw, 5.5rem)',
-          paddingBottom: 'clamp(4.5rem, 8vw, 6.5rem)',
+          paddingBottom: 'clamp(3.5rem, 6vw, 5rem)',
           position: 'relative',
           overflow: 'hidden',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
         }}
       >
         {/* Subtle Ambient Radial Lighting */}
         <div
           style={{
             position: 'absolute',
-            top: '-15%',
+            top: '-20%',
             left: '50%',
             transform: 'translateX(-50%)',
             width: '1100px',
             height: '600px',
-            background: 'radial-gradient(ellipse at center, rgba(0, 157, 165, 0.16) 0%, rgba(148, 200, 32, 0.03) 45%, transparent 70%)',
+            background: 'radial-gradient(ellipse at center, rgba(0, 157, 165, 0.12) 0%, transparent 70%)',
             pointerEvents: 'none',
             zIndex: 0,
           }}
         />
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          
-          <div className="split-editorial" style={{ alignItems: 'center' }}>
+          <div 
+            className="split-editorial" 
+            style={{ 
+              alignItems: 'center', 
+              gap: 'clamp(2rem, 4vw, 4rem)', 
+              gridTemplateColumns: 'minmax(0, 1.15fr) minmax(360px, 1fr)'
+            }}
+          >
             
-            {/* Left Hero Narrative */}
+            {/* Left Narrative */}
             <div>
-              {/* Badge */}
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1.5rem' }}>
-                <span className="badge badge-teal">
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
+                <span className="badge badge-teal" style={{ background: 'rgba(0, 157, 165, 0.08)', borderColor: 'rgba(0, 157, 165, 0.2)' }}>
                   <Sparkles size={12} />
-                  <span>Media Rights • Content Representation • Entertainment Business</span>
+                  <span>Movie Rights • OTT & Satellite Distribution</span>
                 </span>
               </div>
 
-              {/* Headline with Masked Upward Reveal */}
-              <h1 className="display-hero hero-reveal-text" style={{ marginBottom: '1.5rem' }}>
-                CONNECTING GREAT CONTENT WITH THE <span style={{ color: 'var(--brand-teal-light)' }}>RIGHT OPPORTUNITIES</span>
+              <h1 className="display-hero hero-reveal-text" style={{ marginBottom: '1.25rem', letterSpacing: '-0.025em' }}>
+                CONNECTING GREAT MOVIES WITH THE <span className="gradient-text-teal">RIGHT OTT & TV BUYERS</span>
               </h1>
 
-              {/* Approved Subtitle */}
-              <p className="text-editorial-body" style={{ marginBottom: '2.25rem' }}>
-                Indiark Entertainments is an entertainment rights house and media business agency representing producers, filmmakers, and creators to negotiate and close commercial licensing deals across OTT platforms, broadcasters, and global buyers.
+              <p className="text-editorial-body" style={{ marginBottom: '2rem', maxWidth: '640px', lineHeight: 1.7, fontSize: '1.05rem' }}>
+                Indiark Entertainments is a media rights agency based in India. We represent film producers and directors to pitch, negotiate, and sell OTT streaming rights, satellite TV broadcast rights, and dubbing rights at the best market value.
               </p>
 
-              {/* Strategic CTAs */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', marginBottom: '2.5rem' }}>
+              {/* Action Buttons */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
                 <button
                   onClick={() => handleNav('submit-content')}
                   className="btn btn-lime btn-lg"
                 >
-                  <span>PITCH YOUR CONTENT</span>
+                  <span>PITCH YOUR MOVIE</span>
                   <ArrowUpRight size={18} />
                 </button>
 
                 <button
-                  onClick={() => handleNav('what-we-do')}
+                  onClick={() => {
+                    const el = document.getElementById('film-gallery');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
                   className="btn btn-secondary-dark btn-lg"
                 >
-                  <span>EXPLORE OUR SERVICES</span>
-                  <ArrowRight size={16} />
+                  <span>SEE OUR MOVIES</span>
+                  <Film size={16} />
                 </button>
-              </div>
-
-              {/* Core Business Tags */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
-                {['CONTENT REPRESENTATION', 'OTT', 'MEDIA RIGHTS', 'DIGITAL', 'MUSIC'].map((tag, idx) => (
-                  <span
-                    key={idx}
-                    style={{
-                      fontSize: '0.74rem',
-                      fontWeight: 700,
-                      padding: '0.25rem 0.65rem',
-                      backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                      border: '1px solid rgba(255, 255, 255, 0.06)',
-                      borderRadius: 'var(--radius-xs)',
-                      color: 'var(--text-light-secondary)'
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Right Layered Visual with Floating Depth */}
-            <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              
-              {/* Main Visual Base Card */}
-              <div
-                style={{
-                  width: '100%',
-                  maxWidth: '460px',
-                  backgroundColor: 'rgba(11, 19, 31, 0.85)',
-                  border: '1px solid var(--border-teal-subtle)',
-                  borderRadius: 'var(--radius-xl)',
-                  padding: '2rem',
-                  boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.7)',
-                  position: 'relative',
-                  zIndex: 2,
-                }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                  <span className="badge badge-teal" style={{ fontSize: '0.7rem' }}>Commercial Intake Hub</span>
-                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--brand-lime)', boxShadow: '0 0 10px var(--brand-lime)' }} />
-                </div>
-
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--brand-lime)', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                    Active Representation Slate
-                  </div>
-                  <div style={{ fontSize: '1.35rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.2rem' }}>
-                    Multi-Platform Distribution
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                  {[
-                    { label: 'OTT Pitching Mandates', val: 'Direct Acquisitions' },
-                    { label: 'Rights Structuring', val: 'SVOD / Satellite / Master' },
-                    { label: 'Territory Coverage', val: 'Pan-India & Overseas' }
-                  ].map((row, rI) => (
-                    <div key={rI} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.6rem 0.85rem', backgroundColor: 'rgba(7, 13, 20, 0.65)', borderRadius: 'var(--radius-xs)', fontSize: '0.82rem' }}>
-                      <span style={{ color: 'var(--text-light-muted)' }}>{row.label}</span>
-                      <span style={{ color: '#FFFFFF', fontWeight: 600 }}>{row.val}</span>
-                    </div>
-                  ))}
-                </div>
 
                 <button
                   onClick={() => handleNav('for-platforms')}
-                  className="btn btn-outline-teal btn-sm"
-                  style={{ width: '100%', justifyContent: 'center' }}
+                  className="btn btn-outline-teal"
+                  style={{ padding: '0.95rem 1.4rem' }}
                 >
-                  <span>FOR PLATFORMS & BUYERS</span>
-                  <Briefcase size={14} />
+                  <span>FOR OTT BUYERS</span>
+                  <Briefcase size={16} />
                 </button>
               </div>
+            </div>
 
-              {/* Floating Depth Fragment 1 (Top Right) */}
+            {/* Right: Pitch Feature Card (Clean, minimal, no image) */}
+            <div>
               <div
-                className="animate-float-slow"
                 style={{
-                  position: 'absolute',
-                  top: '-24px',
-                  right: '-16px',
-                  backgroundColor: 'rgba(7, 13, 20, 0.92)',
-                  border: '1px solid rgba(0, 157, 165, 0.35)',
-                  borderRadius: 'var(--radius-md)',
-                  padding: '0.85rem 1.15rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  boxShadow: '0 15px 35px rgba(0, 0, 0, 0.6)',
-                  zIndex: 3,
+                  position: 'relative',
+                  borderRadius: 'var(--radius-xl)',
+                  backgroundColor: 'rgba(11, 19, 31, 0.95)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  padding: 'clamp(1.75rem, 3vw, 2.5rem)',
+                  boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.7)'
                 }}
               >
-                <div style={{ width: '32px', height: '32px', borderRadius: 'var(--radius-xs)', backgroundColor: 'rgba(0, 157, 165, 0.15)', color: 'var(--brand-teal-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Tv size={16} />
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--brand-teal-light)', fontWeight: 700 }}>DIRECT OTT PITCHING</div>
-                  <div style={{ fontSize: '0.85rem', color: '#FFFFFF', fontWeight: 700 }}>Netflix • Prime • SonyLIV</div>
-                </div>
-              </div>
-
-              {/* Floating Depth Fragment 2 (Bottom Left) */}
-              <div
-                className="animate-float-drift"
-                style={{
-                  position: 'absolute',
-                  bottom: '-20px',
-                  left: '-20px',
-                  backgroundColor: 'rgba(7, 13, 20, 0.92)',
-                  border: '1px solid rgba(148, 200, 32, 0.35)',
-                  borderRadius: 'var(--radius-md)',
-                  padding: '0.85rem 1.15rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  boxShadow: '0 15px 35px rgba(0, 0, 0, 0.6)',
-                  zIndex: 3,
-                }}
-              >
-                <div style={{ width: '32px', height: '32px', borderRadius: 'var(--radius-xs)', backgroundColor: 'rgba(148, 200, 32, 0.15)', color: 'var(--brand-lime)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Film size={16} />
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--brand-lime)', fontWeight: 700 }}>PRODUCER REPRESENTATION</div>
-                  <div style={{ fontSize: '0.85rem', color: '#FFFFFF', fontWeight: 700 }}>20+ Years Experience</div>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-
-      {/* =====================================================================
-          SECTION 02 — CREDIBILITY / HIGHLIGHT (Verified statement only)
-          ===================================================================== */}
-      <section style={{ backgroundColor: '#0B131F', padding: '2.5rem 0', borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}>
-        <div className="container">
-          <div className="highlight-strip" style={{ backgroundColor: 'transparent', border: 'none', padding: 0 }}>
-            
-            <div className="highlight-stat-box highlight-lime">
-              <div style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', fontWeight: 900, color: 'var(--brand-lime)', lineHeight: 1, fontFamily: 'var(--font-heading)' }}>
-                20+
-              </div>
-              <div style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#FFFFFF', marginTop: '0.35rem' }}>
-                Years of Media Experience
-              </div>
-            </div>
-
-            <div className="highlight-stat-box">
-              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', lineHeight: 1.2, fontFamily: 'var(--font-heading)' }}>
-                MEDIA RIGHTS & LICENSING
-              </div>
-              <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', marginTop: '0.35rem' }}>
-                Multi-window & territorial syndication
-              </div>
-            </div>
-
-            <div className="highlight-stat-box">
-              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', lineHeight: 1.2, fontFamily: 'var(--font-heading)' }}>
-                OTT & BUYER PITCHING
-              </div>
-              <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', marginTop: '0.35rem' }}>
-                Direct outreach to platform acquisition heads
-              </div>
-            </div>
-
-            <div className="highlight-stat-box">
-              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', lineHeight: 1.2, fontFamily: 'var(--font-heading)' }}>
-                PRODUCER REPRESENTATION
-              </div>
-              <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', marginTop: '0.35rem' }}>
-                From evaluation to commercial term closure
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-
-      {/* =====================================================================
-          SECTION 03 — WHO WE ARE (Split Corporate Narrative + Mask Reveal)
-          ===================================================================== */}
-      <section className="section section-dark">
-        <div className="container">
-          <div className="split-editorial">
-            
-            <div>
-              <span className="badge badge-teal" style={{ marginBottom: '1rem' }}>Corporate Identity</span>
-              <h2 className="display-statement" style={{ marginBottom: '1.5rem' }}>
-                MEDIA EXPERIENCE.<br />
-                BUSINESS UNDERSTANDING.<br />
-                <span style={{ color: 'var(--brand-teal-light)' }}>INDUSTRY CONNECTIONS.</span>
-              </h2>
-              <p className="text-editorial-body" style={{ marginBottom: '1.5rem' }}>
-                Indiark Entertainments operates as a strategic bridge between content creators and commercial media buyers. We understand the creative vision of filmmakers and the business requirements of platforms.
-              </p>
-              <p style={{ color: 'var(--text-light-secondary)', fontSize: '1rem', lineHeight: '1.65', marginBottom: '2rem' }}>
-                Backed by over <strong>20 years of media industry experience</strong>, our team manages the entire representation pipeline—from evaluating scripts and rough cuts to structuring complex multi-window licensing contracts across OTT, satellite television, and global territories.
-              </p>
-
-              <button
-                onClick={() => handleNav('who-we-are')}
-                className="btn btn-secondary-dark"
-              >
-                <span>LEARN MORE ABOUT INDIARK</span>
-                <ArrowRight size={16} />
-              </button>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: 'rgba(11, 19, 31, 0.75)',
-                border: '1px solid var(--border-dark)',
-                borderRadius: 'var(--radius-lg)',
-                padding: 'clamp(2rem, 3.5vw, 3rem)',
-                boxShadow: '0 20px 50px -10px rgba(0, 0, 0, 0.5)',
-              }}
-            >
-              <div style={{ fontSize: '0.82rem', color: 'var(--brand-lime)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1.25rem' }}>
-                The Indiark Commercial Bridge
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(0, 157, 165, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-teal-light)', flexShrink: 0 }}>
-                    <Film size={18} />
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span className="pulse-dot" style={{ width: '7px', height: '7px', backgroundColor: 'var(--brand-lime)' }} />
+                    <span style={{ fontSize: '0.74rem', color: 'var(--brand-lime)', fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                      PITCH MANDATE
+                    </span>
                   </div>
-                  <div>
-                    <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: '0.95rem' }}>For Content Creators & Producers</div>
-                    <div style={{ fontSize: '0.85rem', color: 'var(--text-light-muted)', marginTop: '0.2rem' }}>
-                      Professional representation, B2B pitching decks, valuation defense, and direct access to decision-makers.
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-light-muted)' }}>
+                    48–72h Review
+                  </div>
+                </div>
+
+                <h3 style={{ fontSize: '1.45rem', fontWeight: 900, color: '#FFFFFF', marginBottom: '0.85rem', letterSpacing: '-0.01em' }}>
+                  WHY PITCH WITH <span className="gradient-text-teal">INDIARK</span>
+                </h3>
+
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-light-secondary)', lineHeight: 1.6, marginBottom: '1.75rem' }}>
+                  Eliminate cold pitching friction. We structure, package, and pitch your finished content directly to streaming commissioning editors and broadcast heads.
+                </p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+                    <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: 'rgba(0, 157, 165, 0.12)', border: '1px solid rgba(0, 157, 165, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-teal)', flexShrink: 0 }}>
+                      <Tv size={16} />
                     </div>
+                    <span style={{ fontSize: '0.88rem', color: '#FFFFFF', fontWeight: 600 }}>
+                      Direct access to OTT acquisitions heads
+                    </span>
                   </div>
-                </div>
 
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(148, 200, 32, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-lime)', flexShrink: 0 }}>
-                    <Tv size={18} />
-                  </div>
-                  <div>
-                    <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: '0.95rem' }}>For OTT Platforms & Broadcasters</div>
-                    <div style={{ fontSize: '0.85rem', color: 'var(--text-light-muted)', marginTop: '0.2rem' }}>
-                      Curated, legally verified content slates matching programming briefs and audience demographics.
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+                    <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: 'rgba(148, 200, 32, 0.12)', border: '1px solid rgba(148, 200, 32, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-lime)', flexShrink: 0 }}>
+                      <TrendingUp size={16} />
                     </div>
+                    <span style={{ fontSize: '0.88rem', color: '#FFFFFF', fontWeight: 600 }}>
+                      Valuation defense & minimum guarantee (MG)
+                    </span>
                   </div>
-                </div>
 
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '38px', height: '38px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(255, 255, 255, 0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', flexShrink: 0 }}>
-                    <Layers size={18} />
-                  </div>
-                  <div>
-                    <div style={{ fontWeight: 700, color: '#FFFFFF', fontSize: '0.95rem' }}>Full Rights & Windowing Structuring</div>
-                    <div style={{ fontSize: '0.85rem', color: 'var(--text-light-muted)', marginTop: '0.2rem' }}>
-                      Unbundling SVOD, AVOD, TVOD, linear broadcast, in-flight, and international remake/dubbing rights.
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+                    <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: 'rgba(0, 157, 165, 0.12)', border: '1px solid rgba(0, 157, 165, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-teal)', flexShrink: 0 }}>
+                      <ShieldCheck size={16} />
                     </div>
+                    <span style={{ fontSize: '0.88rem', color: '#FFFFFF', fontWeight: 600 }}>
+                      100% Chain of Title & rights protection
+                    </span>
                   </div>
                 </div>
-              </div>
-            </div>
 
-          </div>
-        </div>
-      </section>
-
-
-      {/* =====================================================================
-          SECTION 04 — WHAT WE DO (Scroll-Based: Horizontal Track & Top-Down Stack)
-          ===================================================================== */}
-      <section className="section section-secondary" style={{ position: 'relative', overflow: 'hidden', width: '100%' }}>
-        <div className="container" style={{ width: '100%' }}>
-          
-          {/* Header & Mode Controls */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2rem' }}>
-            <div>
-              <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Seven Specialized Business Streams</span>
-              <h2 className="display-statement">WHAT WE DO</h2>
-              <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.95rem', margin: '0.4rem 0 0 0' }}>
-                Explore our full suite of media representation, rights structuring, and content distribution streams.
-              </p>
-            </div>
-
-            {/* Navigation & View Mode Controls */}
-            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
-              
-              {/* View Mode Toggle */}
-              <div style={{ display: 'flex', backgroundColor: 'rgba(255, 255, 255, 0.05)', borderRadius: 'var(--radius-sm)', padding: '0.2rem', border: '1px solid var(--border-dark)' }}>
                 <button
-                  onClick={() => setServiceViewMode('horizontal')}
-                  style={{
-                    padding: '0.45rem 0.85rem',
-                    borderRadius: 'var(--radius-xs)',
-                    border: 'none',
-                    backgroundColor: serviceViewMode === 'horizontal' ? 'var(--brand-teal)' : 'transparent',
-                    color: serviceViewMode === 'horizontal' ? '#FFFFFF' : 'var(--text-light-secondary)',
-                    fontFamily: 'var(--font-heading)',
-                    fontSize: '0.76rem',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                  }}
+                  onClick={() => handleNav('contact')}
+                  className="btn btn-lime"
+                  style={{ width: '100%', justifyContent: 'center', padding: '1rem', fontSize: '0.95rem', fontWeight: 800 }}
                 >
-                  ⇆ Horizontal Track
-                </button>
-                <button
-                  onClick={() => setServiceViewMode('vertical')}
-                  style={{
-                    padding: '0.45rem 0.85rem',
-                    borderRadius: 'var(--radius-xs)',
-                    border: 'none',
-                    backgroundColor: serviceViewMode === 'vertical' ? 'var(--brand-teal)' : 'transparent',
-                    color: serviceViewMode === 'vertical' ? '#FFFFFF' : 'var(--text-light-secondary)',
-                    fontFamily: 'var(--font-heading)',
-                    fontSize: '0.76rem',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                  }}
-                >
-                  ⇅ Top-Down Stack
+                  <span>PITCH YOUR PROJECT</span>
+                  <ArrowRight size={16} />
                 </button>
               </div>
+            </div>
 
-              {serviceViewMode === 'horizontal' && (
-                <>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--brand-lime)', margin: '0 0.35rem', fontFamily: 'var(--font-heading)' }}>
-                    <span>0{activeServiceIdx + 1}</span>
-                    <span style={{ color: 'var(--text-light-subtle)', margin: '0 0.3rem' }}>/</span>
-                    <span style={{ color: 'var(--text-light-muted)' }}>07</span>
-                  </div>
+          </div>
+        </div>
+      </section>
 
-                  <button
-                    onClick={() => scrollServiceTrack('left')}
-                    style={{
-                      width: '38px',
-                      height: '38px',
-                      borderRadius: '50%',
-                      backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                      border: '1px solid var(--border-dark)',
-                      color: '#FFFFFF',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                    }}
-                    aria-label="Previous Stream"
-                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--brand-teal)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; }}
-                  >
-                    <ChevronLeft size={18} />
-                  </button>
-
-                  <button
-                    onClick={() => scrollServiceTrack('right')}
-                    style={{
-                      width: '38px',
-                      height: '38px',
-                      borderRadius: '50%',
-                      backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                      border: '1px solid var(--border-dark)',
-                      color: '#FFFFFF',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                    }}
-                    aria-label="Next Stream"
-                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--brand-teal)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)'; }}
-                  >
-                    <ChevronRight size={18} />
-                  </button>
-                </>
-              )}
-
-              <button
-                onClick={() => handleNav('what-we-do')}
-                className="btn btn-secondary-dark btn-sm"
-              >
-                <span>Full Atlas</span>
-                <ArrowRight size={14} />
-              </button>
+      {/* =====================================================================
+          SECTION 02 — RIGHTS HANDLED (Clear Indian Terms)
+          ===================================================================== */}
+      <section style={{ backgroundColor: '#070D14', padding: '1.25rem 0', borderBottom: '1px solid rgba(255, 255, 255, 0.04)' }}>
+        <div className="container">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+            <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-light-muted)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+              Rights We Handle:
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', alignItems: 'center' }}>
+              {[
+                'OTT Digital Rights',
+                'Satellite TV Rights',
+                'Hindi & Regional Dubbing',
+                'Remake Rights',
+                'Theatrical Distribution',
+                'Music Rights',
+                'Overseas & Airline Rights'
+              ].map((scope, sI) => (
+                <span 
+                  key={sI} 
+                  style={{
+                    fontSize: '0.76rem',
+                    color: 'var(--text-light-secondary)',
+                    fontWeight: 600,
+                    padding: '0.35rem 0.85rem',
+                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                    borderRadius: 'var(--radius-full)',
+                    border: '1px solid rgba(255, 255, 255, 0.05)'
+                  }}
+                >
+                  {scope}
+                </span>
+              ))}
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Quick Stream Jump Tabs */}
+      {/* =====================================================================
+          SECTION 03 — CREDIBILITY METRICS (Simple & Direct)
+          ===================================================================== */}
+      <section style={{ backgroundColor: '#0B131F', padding: '3.25rem 0', borderBottom: '1px solid rgba(255, 255, 255, 0.04)' }}>
+        <div className="container">
           <div 
             style={{ 
-              display: 'flex', 
-              gap: '0.5rem', 
-              overflowX: 'auto', 
-              paddingBottom: '0.75rem', 
-              marginBottom: '1.75rem',
-              scrollbarWidth: 'none',
-              width: '100%',
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', 
+              gap: 'clamp(1.5rem, 3vw, 2.5rem)' 
             }}
           >
-            {services.map((svc, idx) => {
-              const isSelected = activeServiceIdx === idx;
-              return (
-                <button
-                  key={svc.id}
-                  onClick={() => {
-                    if (serviceViewMode === 'horizontal') {
-                      scrollToServiceIndex(idx);
-                    } else {
-                      const el = document.getElementById(`service-vertical-${svc.id}`);
-                      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                      setActiveServiceIdx(idx);
-                    }
-                  }}
-                  style={{
-                    padding: '0.6rem 1.1rem',
-                    borderRadius: 'var(--radius-sm)',
-                    backgroundColor: isSelected ? 'var(--brand-teal)' : 'rgba(255, 255, 255, 0.04)',
-                    color: isSelected ? '#FFFFFF' : 'var(--text-light-secondary)',
-                    border: isSelected ? '1px solid var(--brand-teal)' : '1px solid transparent',
-                    fontFamily: 'var(--font-heading)',
-                    fontSize: '0.8rem',
-                    fontWeight: isSelected ? 800 : 600,
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.45rem',
-                    transition: 'all 0.25s ease',
-                  }}
-                >
-                  <span style={{ color: isSelected ? 'var(--brand-lime)' : 'inherit', opacity: isSelected ? 1 : 0.6 }}>{svc.id}</span>
-                  <span>{svc.title}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* 1. HORIZONTAL SCROLL TRACK MODE */}
-          {serviceViewMode === 'horizontal' ? (
-            <>
-              <div
-                ref={serviceScrollRef}
-                onScroll={handleServiceScroll}
-                style={{
-                  display: 'flex',
-                  gap: '1.5rem',
-                  overflowX: 'auto',
-                  scrollSnapType: 'x mandatory',
-                  scrollBehavior: 'smooth',
-                  padding: '0.5rem 0.25rem 1.5rem 0.25rem',
-                  scrollbarWidth: 'thin',
-                  scrollbarColor: 'var(--brand-teal) rgba(255, 255, 255, 0.05)',
-                  WebkitOverflowScrolling: 'touch',
-                  width: '100%',
-                }}
-              >
-                {services.map((svc, idx) => {
-                  const SvcIcon = svc.icon;
-                  const isActive = activeServiceIdx === idx;
-                  return (
-                    <div
-                      key={svc.id}
-                      className="service-scroll-card"
-                      style={{
-                        flex: '0 0 clamp(310px, 82vw, 840px)',
-                        width: 'clamp(310px, 82vw, 840px)',
-                        maxWidth: '100%',
-                        scrollSnapAlign: 'start',
-                        backgroundColor: 'rgba(7, 13, 20, 0.92)',
-                        border: isActive ? '1px solid var(--border-teal-subtle)' : '1px solid var(--border-dark)',
-                        borderRadius: 'var(--radius-lg)',
-                        padding: 'clamp(1.75rem, 3.5vw, 2.75rem)',
-                        boxShadow: isActive ? '0 20px 50px -10px rgba(0, 157, 165, 0.15)' : '0 15px 40px rgba(0, 0, 0, 0.4)',
-                        transition: 'all 0.3s ease',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                      }}
-                    >
-                      <div>
-                        {/* Card Top Strip */}
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                            <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(0, 157, 165, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-teal-light)' }}>
-                              <SvcIcon size={22} />
-                            </div>
-                            <div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--brand-lime)', letterSpacing: '0.08em' }}>STREAM {svc.id}</span>
-                                <span style={{ fontSize: '0.72rem', color: 'var(--text-light-subtle)' }}>•</span>
-                                <span style={{ fontSize: '0.72rem', color: 'var(--brand-teal-light)', fontWeight: 700 }}>{svc.code}</span>
-                              </div>
-                              <h3 style={{ fontSize: 'clamp(1.35rem, 2.2vw, 1.85rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em', margin: '0.2rem 0 0 0' }}>
-                                {svc.title}
-                              </h3>
-                            </div>
-                          </div>
-
-                          {svc.isPitchable ? (
-                            <span style={{ fontSize: '0.68rem', fontWeight: 800, padding: '0.2rem 0.65rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(148, 200, 32, 0.15)', color: 'var(--brand-lime-light)', border: '1px solid rgba(148, 200, 32, 0.35)' }}>
-                              OPEN FOR PITCHING
-                            </span>
-                          ) : (
-                            <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '0.2rem 0.65rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-light-secondary)', border: '1px solid var(--border-dark)' }}>
-                              STUDIO SERVICE
-                            </span>
-                          )}
-                        </div>
-
-                        <p style={{ color: 'var(--brand-teal-light)', fontSize: '0.92rem', fontWeight: 600, marginBottom: '0.85rem' }}>
-                          {svc.subtitle}
-                        </p>
-
-                        <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.96rem', lineHeight: '1.65', marginBottom: '1.5rem' }}>
-                          {svc.overview}
-                        </p>
-
-                        {/* Formats & Target Buyers Matrix */}
-                        <div
-                          style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-                            gap: '1rem',
-                            padding: '1.25rem',
-                            backgroundColor: 'rgba(11, 19, 31, 0.7)',
-                            borderRadius: 'var(--radius-md)',
-                            border: '1px solid rgba(255, 255, 255, 0.04)',
-                            marginBottom: '1.5rem',
-                          }}
-                        >
-                          <div>
-                            <div style={{ fontSize: '0.72rem', color: 'var(--brand-lime)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
-                              Target Platforms & Buyers:
-                            </div>
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
-                              {svc.buyers.map((b, bI) => (
-                                <span key={bI} style={{ fontSize: '0.72rem', padding: '0.2rem 0.55rem', backgroundColor: 'rgba(0, 157, 165, 0.1)', border: '1px solid rgba(0, 157, 165, 0.25)', borderRadius: 'var(--radius-xs)', color: '#FFFFFF' }}>
-                                  {b}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-
-                          <div>
-                            <div style={{ fontSize: '0.72rem', color: 'var(--brand-teal-light)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
-                              Accepted Formats:
-                            </div>
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
-                              {svc.formats.map((f, fI) => (
-                                <span key={fI} style={{ fontSize: '0.72rem', padding: '0.2rem 0.55rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-xs)', color: 'var(--text-light-secondary)' }}>
-                                  {f}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Deliverables Checklist */}
-                        <div style={{ marginBottom: '1.75rem' }}>
-                          <div style={{ fontSize: '0.74rem', color: 'var(--text-light-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.65rem' }}>
-                            Execution Deliverables:
-                          </div>
-                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '0.5rem' }}>
-                            {svc.deliverables.map((del, dI) => (
-                              <div key={dI} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.82rem', color: 'var(--text-light-secondary)' }}>
-                                <CheckCircle2 size={14} color="var(--brand-lime)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
-                                <span>{del}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Card Bottom CTA Strip */}
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1.25rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)', flexWrap: 'wrap', gap: '1rem' }}>
-                        <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)' }}>
-                          Commercial Representation & Rights Mandate
-                        </div>
-                        <button
-                          onClick={() => handleNav(svc.isPitchable ? 'submit-content' : 'contact')}
-                          className={`btn ${svc.isPitchable ? 'btn-lime' : 'btn-secondary-dark'} btn-sm`}
-                        >
-                          <span>{svc.isPitchable ? `PITCH STREAM ${svc.id}` : 'INQUIRE NOW'}</span>
-                          <ArrowUpRight size={14} />
-                        </button>
-                      </div>
-
-                    </div>
-                  );
-                })}
+            <div style={{ borderLeft: '2px solid var(--brand-lime)', paddingLeft: '1.25rem' }}>
+              <div style={{ fontSize: 'clamp(2rem, 3vw, 2.6rem)', fontWeight: 900, color: 'var(--brand-lime)', lineHeight: 1, fontFamily: 'var(--font-heading)' }}>
+                20+
               </div>
-
-              {/* Horizontal Progress Track Indicator */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginTop: '1rem' }}>
-                {services.map((_, pIdx) => (
-                  <button
-                    key={pIdx}
-                    onClick={() => scrollToServiceIndex(pIdx)}
-                    style={{
-                      width: activeServiceIdx === pIdx ? '32px' : '8px',
-                      height: '6px',
-                      borderRadius: '3px',
-                      backgroundColor: activeServiceIdx === pIdx ? 'var(--brand-lime)' : 'rgba(255, 255, 255, 0.15)',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: 0,
-                      transition: 'all 0.3s ease',
-                    }}
-                    aria-label={`Go to service stream ${pIdx + 1}`}
-                  />
-                ))}
+              <div style={{ fontSize: '0.86rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.4rem' }}>
+                Years in Indian Media
               </div>
-            </>
-          ) : (
-            /* 2. TOP-DOWN FULL STACK SCROLL MODE */
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%' }}>
-              {services.map((svc) => {
-                const SvcIcon = svc.icon;
-                return (
-                  <div
-                    key={svc.id}
-                    id={`service-vertical-${svc.id}`}
-                    style={{
-                      width: '100%',
-                      backgroundColor: 'rgba(7, 13, 20, 0.92)',
-                      border: '1px solid var(--border-dark)',
-                      borderRadius: 'var(--radius-lg)',
-                      padding: 'clamp(1.75rem, 3.5vw, 2.5rem)',
-                      boxShadow: '0 15px 40px rgba(0, 0, 0, 0.35)',
-                      transition: 'border-color 0.25s ease',
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--brand-teal)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border-dark)')}
-                  >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-                        <div style={{ width: '46px', height: '46px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(0, 157, 165, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-teal-light)' }}>
-                          <SvcIcon size={24} />
-                        </div>
-                        <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <span style={{ fontSize: '0.74rem', fontWeight: 800, color: 'var(--brand-lime)', letterSpacing: '0.08em' }}>STREAM {svc.id}</span>
-                            <span style={{ fontSize: '0.74rem', color: 'var(--text-light-subtle)' }}>•</span>
-                            <span style={{ fontSize: '0.74rem', color: 'var(--brand-teal-light)', fontWeight: 700 }}>{svc.code}</span>
-                          </div>
-                          <h3 style={{ fontSize: 'clamp(1.4rem, 2.4vw, 2rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em', margin: '0.25rem 0 0 0' }}>
-                            {svc.title}
-                          </h3>
-                        </div>
-                      </div>
-
-                      {svc.isPitchable ? (
-                        <span style={{ fontSize: '0.7rem', fontWeight: 800, padding: '0.25rem 0.75rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(148, 200, 32, 0.15)', color: 'var(--brand-lime-light)', border: '1px solid rgba(148, 200, 32, 0.35)' }}>
-                          OPEN FOR PITCHING
-                        </span>
-                      ) : (
-                        <span style={{ fontSize: '0.7rem', fontWeight: 700, padding: '0.25rem 0.75rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(255, 255, 255, 0.05)', color: 'var(--text-light-secondary)', border: '1px solid var(--border-dark)' }}>
-                          STUDIO SERVICE
-                        </span>
-                      )}
-                    </div>
-
-                    <p style={{ color: 'var(--brand-teal-light)', fontSize: '0.96rem', fontWeight: 600, marginBottom: '0.75rem' }}>
-                      {svc.subtitle}
-                    </p>
-
-                    <p style={{ color: 'var(--text-light-secondary)', fontSize: '1rem', lineHeight: '1.65', marginBottom: '1.5rem', maxWidth: '1000px' }}>
-                      {svc.overview}
-                    </p>
-
-                    {/* Formats & Target Buyers Matrix */}
-                    <div
-                      style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                        gap: '1.25rem',
-                        padding: '1.25rem',
-                        backgroundColor: 'rgba(11, 19, 31, 0.7)',
-                        borderRadius: 'var(--radius-md)',
-                        border: '1px solid rgba(255, 255, 255, 0.04)',
-                        marginBottom: '1.5rem',
-                      }}
-                    >
-                      <div>
-                        <div style={{ fontSize: '0.74rem', color: 'var(--brand-lime)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
-                          Target Platforms & Buyers:
-                        </div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-                          {svc.buyers.map((b, bI) => (
-                            <span key={bI} style={{ fontSize: '0.76rem', padding: '0.25rem 0.65rem', backgroundColor: 'rgba(0, 157, 165, 0.1)', border: '1px solid rgba(0, 157, 165, 0.25)', borderRadius: 'var(--radius-xs)', color: '#FFFFFF' }}>
-                              {b}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div>
-                        <div style={{ fontSize: '0.74rem', color: 'var(--brand-teal-light)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.5rem' }}>
-                          Accepted Formats:
-                        </div>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-                          {svc.formats.map((f, fI) => (
-                            <span key={fI} style={{ fontSize: '0.76rem', padding: '0.25rem 0.65rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-xs)', color: 'var(--text-light-secondary)' }}>
-                              {f}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Deliverables Checklist */}
-                    <div style={{ marginBottom: '1.75rem' }}>
-                      <div style={{ fontSize: '0.76rem', color: 'var(--text-light-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.65rem' }}>
-                        Execution Deliverables:
-                      </div>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.6rem' }}>
-                        {svc.deliverables.map((del, dI) => (
-                          <div key={dI} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', fontSize: '0.86rem', color: 'var(--text-light-secondary)' }}>
-                            <CheckCircle2 size={15} color="var(--brand-lime)" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
-                            <span>{del}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Card Bottom CTA Strip */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1.25rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)', flexWrap: 'wrap', gap: '1rem' }}>
-                      <div style={{ fontSize: '0.82rem', color: 'var(--text-light-muted)' }}>
-                        Commercial Representation & Rights Mandate
-                      </div>
-                      <button
-                        onClick={() => handleNav(svc.isPitchable ? 'submit-content' : 'contact')}
-                        className={`btn ${svc.isPitchable ? 'btn-lime' : 'btn-secondary-dark'} btn-sm`}
-                      >
-                        <span>{svc.isPitchable ? `PITCH STREAM ${svc.id}` : 'INQUIRE NOW'}</span>
-                        <ArrowUpRight size={14} />
-                      </button>
-                    </div>
-
-                  </div>
-                );
-              })}
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', marginTop: '0.2rem' }}>
+                Film production, satellite & streaming
+              </div>
             </div>
-          )}
 
+            <div style={{ borderLeft: '2px solid var(--brand-teal)', paddingLeft: '1.25rem' }}>
+              <div style={{ fontSize: 'clamp(2rem, 3vw, 2.6rem)', fontWeight: 900, color: '#FFFFFF', lineHeight: 1, fontFamily: 'var(--font-heading)' }}>
+                100%
+              </div>
+              <div style={{ fontSize: '0.86rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.4rem' }}>
+                Clear Legal Paperwork
+              </div>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', marginTop: '0.2rem' }}>
+                Zero copyright or agreement issues
+              </div>
+            </div>
+
+            <div style={{ borderLeft: '2px solid var(--brand-teal)', paddingLeft: '1.25rem' }}>
+              <div style={{ fontSize: 'clamp(2rem, 3vw, 2.6rem)', fontWeight: 900, color: 'var(--brand-teal-light)', lineHeight: 1, fontFamily: 'var(--font-heading)' }}>
+                48–72h
+              </div>
+              <div style={{ fontSize: '0.86rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.4rem' }}>
+                Quick Screener Review
+              </div>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', marginTop: '0.2rem' }}>
+                Fast evaluation & honest feedback
+              </div>
+            </div>
+
+            <div style={{ borderLeft: '2px solid rgba(255, 255, 255, 0.2)', paddingLeft: '1.25rem' }}>
+              <div style={{ fontSize: 'clamp(2rem, 3vw, 2.6rem)', fontWeight: 900, color: '#FFFFFF', lineHeight: 1, fontFamily: 'var(--font-heading)' }}>
+                All Rights
+              </div>
+              <div style={{ fontSize: '0.86rem', fontWeight: 700, color: '#FFFFFF', marginTop: '0.4rem' }}>
+                Under One Roof
+              </div>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', marginTop: '0.2rem' }}>
+                OTT, TV, Dubbing, Remake & Music
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-
       {/* =====================================================================
-          SECTION 05 — HOW WE WORK (Progressive Horizontal Business Journey)
+          SECTION 04 — WHAT WE AGGREGATED & LISTED (Movie Gallery)
           ===================================================================== */}
-      <section className="section section-dark">
+      <section 
+        id="film-gallery"
+        className="section section-dark"
+        style={{
+          paddingTop: 'clamp(4rem, 6.5vw, 5.5rem)',
+          paddingBottom: 'clamp(4rem, 6.5vw, 5.5rem)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.04)'
+        }}
+      >
         <div className="container">
           
-          <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 3.5rem auto' }}>
-            <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Six-Stage Commercial Methodology</span>
-            <h2 className="display-statement" style={{ marginBottom: '0.75rem' }}>
-              FROM CONTENT TO CLOSURE
-            </h2>
-            <p style={{ color: 'var(--text-light-secondary)', fontSize: '1.05rem' }}>
-              A structured institutional representation pipeline ensuring legal compliance, valuation defense, and successful transaction closing.
-            </p>
-          </div>
+          {/* Gallery Header */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2.75rem' }}>
+            <div>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                <span className="badge badge-teal" style={{ background: 'rgba(0, 157, 165, 0.08)', borderColor: 'rgba(0, 157, 165, 0.2)' }}>
+                  <Film size={12} />
+                  <span>Represented Movies & Slates</span>
+                </span>
+              </div>
+              <h2 className="display-statement">
+                MOVIES WE HAVE <span className="gradient-text-teal">REPRESENTED & LICENSED</span>
+              </h2>
+              <p className="text-editorial-body" style={{ maxWidth: '640px', marginTop: '0.5rem', fontSize: '0.98rem' }}>
+                A look at some of the feature films and web series we have taken to top OTT platforms and television networks across India.
+              </p>
+            </div>
 
-          {/* Horizontal Step Tracker */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-            {processStages.map((stage, idx) => {
-              const isActive = activeProcessStep === idx;
-              return (
+            {/* Filter Tabs */}
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {[
+                { id: 'all', label: 'All Titles (6)' },
+                { id: 'feature', label: 'Feature Films' },
+                { id: 'series', label: 'Web Series' },
+                { id: 'music', label: 'Music' }
+              ].map(tab => (
                 <button
-                  key={stage.step}
-                  onClick={() => setActiveProcessStep(idx)}
+                  key={tab.id}
+                  onClick={() => setGalleryFilter(tab.id)}
                   style={{
-                    padding: '1.25rem 1rem',
-                    backgroundColor: isActive ? 'rgba(0, 157, 165, 0.15)' : 'rgba(11, 19, 31, 0.75)',
-                    border: isActive ? '1px solid var(--brand-teal)' : '1px solid var(--border-dark)',
-                    borderRadius: 'var(--radius-md)',
-                    textAlign: 'left',
+                    backgroundColor: galleryFilter === tab.id ? 'var(--brand-teal)' : 'rgba(255, 255, 255, 0.03)',
+                    color: galleryFilter === tab.id ? '#FFFFFF' : 'var(--text-light-secondary)',
+                    border: '1px solid',
+                    borderColor: galleryFilter === tab.id ? 'var(--brand-teal)' : 'rgba(255, 255, 255, 0.06)',
+                    borderRadius: 'var(--radius-full)',
+                    padding: '0.5rem 1.15rem',
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
                     cursor: 'pointer',
-                    transition: 'all 0.25s ease',
+                    transition: 'all 0.2s ease'
                   }}
                 >
-                  <div style={{ fontSize: '1.5rem', fontWeight: 900, color: isActive ? 'var(--brand-lime)' : 'var(--text-light-muted)', fontFamily: 'var(--font-heading)' }}>
-                    {stage.step}
-                  </div>
-                  <div style={{ fontSize: '0.92rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.25rem' }}>
-                    {stage.name}
-                  </div>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--text-light-subtle)', marginTop: '0.2rem' }}>
-                    {stage.shortTitle}
-                  </div>
+                  {tab.label}
                 </button>
-              );
-            })}
+              ))}
+            </div>
           </div>
 
-          {/* Active Process Stage Detail Banner */}
-          <div
+          {/* Film Poster Cards Grid */}
+          <div 
+            style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
+              gap: 'clamp(1.5rem, 2.5vw, 2.25rem)' 
+            }}
+          >
+            {filteredFilms.map((film) => (
+              <div 
+                key={film.id}
+                style={{
+                  backgroundColor: 'rgba(11, 19, 31, 0.85)',
+                  border: '1px solid rgba(255, 255, 255, 0.06)',
+                  borderRadius: 'var(--radius-lg)',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-6px)';
+                  e.currentTarget.style.borderColor = 'rgba(0, 157, 165, 0.35)';
+                  e.currentTarget.style.boxShadow = '0 20px 40px -15px rgba(0, 0, 0, 0.6)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+                onClick={() => setSelectedFilmModal(film)}
+              >
+                {/* Poster Artwork Container */}
+                <div 
+                  style={{ 
+                    position: 'relative', 
+                    width: '100%', 
+                    aspectRatio: '2/3', 
+                    overflow: 'hidden',
+                    backgroundColor: '#070D14'
+                  }}
+                >
+                  <img 
+                    src={film.poster} 
+                    alt={film.title}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      display: 'block'
+                    }}
+                  />
+                  
+                  {/* Subtle Gradient Overlay */}
+                  <div 
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(to top, rgba(11, 19, 31, 0.95) 0%, rgba(11, 19, 31, 0.15) 50%, transparent 100%)',
+                      pointerEvents: 'none'
+                    }}
+                  />
+
+                  {/* Top Year Tag */}
+                  {film.year && (
+                    <div style={{ position: 'absolute', top: '14px', right: '14px', zIndex: 2 }}>
+                      <span 
+                        style={{
+                          backgroundColor: 'rgba(7, 13, 20, 0.75)',
+                          backdropFilter: 'blur(8px)',
+                          color: '#FFFFFF',
+                          fontSize: '0.72rem',
+                          fontWeight: 700,
+                          padding: '0.3rem 0.65rem',
+                          borderRadius: 'var(--radius-full)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)'
+                        }}
+                      >
+                        {film.year}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Bottom Title Info */}
+                  <div style={{ position: 'absolute', bottom: '16px', left: '16px', right: '16px' }}>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--brand-teal-light)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.25rem' }}>
+                      {film.language} • {film.categoryLabel}
+                    </div>
+                    <h3 style={{ fontSize: '1.35rem', fontWeight: 900, color: '#FFFFFF', letterSpacing: '-0.02em', lineHeight: 1.15 }}>
+                      {film.title}
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Card Body */}
+                <div style={{ padding: '1.25rem 1.4rem', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', fontWeight: 600, marginBottom: '0.5rem' }}>
+                      {film.genre}
+                    </div>
+                    
+                    <p style={{ fontSize: '0.84rem', color: 'var(--text-light-secondary)', lineHeight: 1.55, marginBottom: '1.25rem' }}>
+                      {film.synopsis.substring(0, 115)}...
+                    </p>
+                  </div>
+
+                  <div>
+                    {/* Rights Tag */}
+                    <div 
+                      style={{
+                        padding: '0.55rem 0.75rem',
+                        backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                        border: '1px solid rgba(255, 255, 255, 0.06)',
+                        borderRadius: 'var(--radius-sm)',
+                        fontSize: '0.72rem',
+                        color: 'var(--brand-teal-light)',
+                        fontWeight: 600,
+                        marginBottom: '1rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.4rem'
+                      }}
+                    >
+                      <CheckCircle2 size={13} style={{ flexShrink: 0 }} />
+                      <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {film.rightsScope}
+                      </span>
+                    </div>
+
+                    {/* Action Link */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '0.85rem' }}>
+                      <span style={{ fontSize: '0.74rem', color: 'var(--brand-lime)', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <ShieldCheck size={14} />
+                        <span>{film.chainOfTitle}</span>
+                      </span>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedFilmModal(film);
+                        }}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          color: '#FFFFFF',
+                          fontSize: '0.8rem',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.3rem',
+                          padding: 0
+                        }}
+                      >
+                        <span>View Details</span>
+                        <ChevronRight size={14} />
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Simple Prompt Bar */}
+          <div 
             style={{
-              padding: '2rem 2.5rem',
-              backgroundColor: 'rgba(11, 19, 31, 0.85)',
-              border: '1px solid var(--border-dark)',
-              borderRadius: 'var(--radius-md)',
+              marginTop: '3rem',
+              padding: 'clamp(1.75rem, 3vw, 2.25rem)',
+              backgroundColor: 'rgba(11, 19, 31, 0.7)',
+              border: '1px solid rgba(255, 255, 255, 0.06)',
+              borderRadius: 'var(--radius-lg)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
               flexWrap: 'wrap',
-              gap: '1.5rem',
+              gap: '1.5rem'
             }}
           >
             <div>
-              <div style={{ fontSize: '0.78rem', color: 'var(--brand-lime)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                Stage {processStages[activeProcessStep].step} Focus
+              <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.35rem' }}>
+                Have a finished film or web series ready to pitch?
               </div>
-              <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#FFFFFF', marginTop: '0.2rem', marginBottom: '0.5rem' }}>
-                {processStages[activeProcessStep].name} — {processStages[activeProcessStep].shortTitle}
-              </h3>
-              <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.95rem', lineHeight: '1.6', margin: 0, maxWidth: '750px' }}>
-                {processStages[activeProcessStep].desc}
-              </p>
+              <div style={{ fontSize: '0.88rem', color: 'var(--text-light-secondary)' }}>
+                Send us your screener and synopsis. We review projects within 48 to 72 hours and provide direct feedback.
+              </div>
             </div>
 
-            <button
-              onClick={() => handleNav('submit-content')}
-              className="btn btn-lime btn-sm"
-            >
-              <span>INITIATE STAGE 01</span>
-              <ArrowUpRight size={14} />
-            </button>
+            <div style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => handleNav('submit-content')}
+                className="btn btn-lime"
+              >
+                <span>PITCH YOUR MOVIE</span>
+                <ArrowUpRight size={16} />
+              </button>
+              <button
+                onClick={() => handleNav('our-work')}
+                className="btn btn-secondary-dark"
+              >
+                <span>EXPLORE ALL TITLES</span>
+                <ArrowRight size={14} />
+              </button>
+            </div>
           </div>
 
         </div>
       </section>
 
-
       {/* =====================================================================
-          SECTION 06 — CONTENT ECOSYSTEM (2.5D Visual Matrix with Floating Nodes)
+          SECTION 05 — HOW WE WORK FOR PRODUCERS (Simple, Practical Steps)
           ===================================================================== */}
-      <section className="section section-teal-tinted">
+      <section 
+        style={{
+          backgroundColor: '#070D14',
+          paddingTop: 'clamp(4rem, 6.5vw, 5.5rem)',
+          paddingBottom: 'clamp(4rem, 6.5vw, 5.5rem)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.04)'
+        }}
+      >
         <div className="container">
           
-          <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 3.5rem auto' }}>
-            <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Omnichannel Rights & Licensing</span>
-            <h2 className="display-statement" style={{ marginBottom: '0.75rem' }}>
-              CONTENT ACROSS THE ENTERTAINMENT ECOSYSTEM
+          <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 3rem auto' }}>
+            <span className="badge badge-teal" style={{ background: 'rgba(0, 157, 165, 0.08)', borderColor: 'rgba(0, 157, 165, 0.2)', marginBottom: '0.75rem' }}>
+              How We Work
+            </span>
+            <h2 className="display-statement">
+              FROM SCREENER TO <span className="gradient-text-teal">CONTRACT SIGNING</span>
             </h2>
-            <p style={{ color: 'var(--text-light-secondary)', fontSize: '1.05rem' }}>
-              We commercialize intellectual property across the complete spectrum of modern global media distribution channels.
+            <p className="text-editorial-body" style={{ marginTop: '0.5rem', fontSize: '0.98rem' }}>
+              We manage the entire business process so producers can focus on making films.
             </p>
           </div>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '1.25rem',
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+            {practiceHighlights.map((item, idx) => (
+              <div 
+                key={idx}
+                style={{
+                  borderRadius: 'var(--radius-lg)',
+                  padding: 'clamp(1.75rem, 2.5vw, 2.25rem)',
+                  backgroundColor: 'rgba(11, 19, 31, 0.8)',
+                  border: '1px solid rgba(255, 255, 255, 0.06)',
+                  transition: 'transform 0.3s ease, border-color 0.3s ease',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.borderColor = 'rgba(0, 157, 165, 0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+                }}
+              >
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                    <div style={{ 
+                      fontSize: '1.5rem', 
+                      fontWeight: 900, 
+                      fontFamily: 'var(--font-headline)',
+                      color: 'var(--brand-teal)' 
+                    }}>
+                      0{idx + 1}
+                    </div>
+                    <span 
+                      style={{
+                        backgroundColor: 'rgba(0, 157, 165, 0.08)',
+                        border: '1px solid rgba(0, 157, 165, 0.2)',
+                        padding: '0.3rem 0.65rem',
+                        borderRadius: 'var(--radius-full)',
+                        fontSize: '0.72rem',
+                        fontWeight: 700,
+                        color: 'var(--brand-teal-light)'
+                      }}
+                    >
+                      {item.tag}
+                    </span>
+                  </div>
+
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.65rem' }}>
+                    {item.title}
+                  </h3>
+                  <p style={{ fontSize: '0.88rem', color: 'var(--text-light-secondary)', lineHeight: 1.6 }}>
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SECTION 06 — PRODUCER TESTIMONIALS (Real Feedback)
+          ===================================================================== */}
+      <section 
+        className="section"
+        style={{
+          backgroundColor: '#0B131F',
+          paddingTop: 'clamp(4rem, 6.5vw, 5.5rem)',
+          paddingBottom: 'clamp(4rem, 6.5vw, 5.5rem)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.04)'
+        }}
+      >
+        <div className="container">
+          
+          <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 3rem auto' }}>
+            <span className="badge badge-lime" style={{ background: 'rgba(148, 200, 32, 0.08)', borderColor: 'rgba(148, 200, 32, 0.25)', marginBottom: '0.75rem' }}>
+              <Star size={12} fill="var(--brand-lime)" />
+              <span>Producer Experiences</span>
+            </span>
+            <h2 className="display-statement">
+              WHAT PRODUCERS SAY ABOUT <span className="gradient-text-teal">WORKING WITH US</span>
+            </h2>
+            <p className="text-editorial-body" style={{ marginTop: '0.5rem', fontSize: '0.98rem' }}>
+              Real feedback from film producers and directors who trusted Indiark with their movie rights.
+            </p>
+          </div>
+
+          {/* Testimonials Clean Cards (No Images) */}
+          <div 
+            style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
+              gap: 'clamp(1.5rem, 2.5vw, 2.25rem)' 
             }}
           >
-            {[
-              { title: 'FILMS', sub: 'Theatrical & Direct-to-Digital', icon: Film },
-              { title: 'WEB SERIES', sub: 'Original & Commissioned Slates', icon: Tv },
-              { title: 'OTT', sub: 'SVOD, AVOD & TVOD Models', icon: Globe2 },
-              { title: 'TELEVISION', sub: 'Linear Satellite DTH & Cable', icon: Layers },
-              { title: 'MUSIC', sub: 'Masters, BGM & Sync Licensing', icon: Music },
-              { title: 'DIGITAL CONTENT', sub: 'YouTube MCNs & Social Video', icon: Globe2 },
-              { title: 'REGIONAL CONTENT', sub: 'Pan-India & Multilingual', icon: Film },
-              { title: 'IN-FLIGHT ENTERTAINMENT', sub: 'Global Airlines & Transport', icon: Tv },
-              { title: 'INTERNATIONAL RIGHTS', sub: 'Dubbing, Remake & Overseas', icon: Layers }
-            ].map((node, idx) => {
-              const NodeIcon = node.icon;
+            {testimonials.map((t) => (
+              <div 
+                key={t.id}
+                style={{
+                  backgroundColor: 'rgba(7, 13, 20, 0.75)',
+                  border: '1px solid rgba(255, 255, 255, 0.06)',
+                  borderRadius: 'var(--radius-lg)',
+                  padding: 'clamp(1.75rem, 3vw, 2.25rem)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  transition: 'border-color 0.3s ease, transform 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(148, 200, 32, 0.3)';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                <div>
+                  {/* Top Quote Icon & Stars */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                    <div style={{ color: 'var(--brand-teal)', opacity: 0.8 }}>
+                      <Quote size={24} />
+                    </div>
+                    <div style={{ display: 'flex', gap: '0.2rem', color: 'var(--brand-lime)' }}>
+                      {[...Array(t.rating)].map((_, i) => (
+                        <Star key={i} size={14} fill="var(--brand-lime)" />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Movie Badge & Impact */}
+                  <div 
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      backgroundColor: 'rgba(148, 200, 32, 0.08)',
+                      border: '1px solid rgba(148, 200, 32, 0.25)',
+                      color: 'var(--brand-lime)',
+                      fontSize: '0.74rem',
+                      fontWeight: 700,
+                      padding: '0.3rem 0.75rem',
+                      borderRadius: 'var(--radius-full)',
+                      marginBottom: '1.25rem'
+                    }}
+                  >
+                    <span>{t.film}</span>
+                    <span style={{ opacity: 0.5 }}>•</span>
+                    <span>{t.impact}</span>
+                  </div>
+
+                  {/* Quote Body */}
+                  <p style={{ fontSize: '0.94rem', color: 'var(--text-light-secondary)', lineHeight: 1.65, fontStyle: 'italic', marginBottom: '1.75rem' }}>
+                    "{t.quote}"
+                  </p>
+                </div>
+
+                {/* Producer Footer */}
+                <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <div style={{ fontWeight: 800, color: '#FFFFFF', fontSize: '0.94rem' }}>
+                      {t.name}
+                    </div>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--brand-teal-light)' }}>
+                      {t.role} • {t.company}
+                    </div>
+                  </div>
+
+                  <span style={{ fontSize: '0.76rem', color: 'var(--text-light-muted)', fontWeight: 600 }}>
+                    Verified Placed Film
+                  </span>
+                </div>
+
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* =====================================================================
+          SECTION 07 — CORE SERVICES (Simple 4-Card Overview)
+          ===================================================================== */}
+      <section 
+        className="section section-dark"
+        style={{
+          paddingTop: 'clamp(4rem, 6.5vw, 5.5rem)',
+          paddingBottom: 'clamp(4rem, 6.5vw, 5.5rem)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.04)'
+        }}
+      >
+        <div className="container">
+          
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2.75rem' }}>
+            <div>
+              <span className="badge badge-teal" style={{ background: 'rgba(0, 157, 165, 0.08)', borderColor: 'rgba(0, 157, 165, 0.2)', marginBottom: '0.75rem' }}>
+                Our Services
+              </span>
+              <h2 className="display-statement">
+                WHAT WE <span className="gradient-text-teal">DO</span>
+              </h2>
+              <p className="text-editorial-body" style={{ maxWidth: '600px', marginTop: '0.5rem', fontSize: '0.98rem' }}>
+                Complete rights representation and deal management across OTT platforms, satellite channels, and regional dubbing.
+              </p>
+            </div>
+
+            <button
+              onClick={() => handleNav('what-we-do')}
+              className="btn btn-secondary-dark"
+            >
+              <span>EXPLORE ALL SERVICES</span>
+              <ArrowRight size={15} />
+            </button>
+          </div>
+
+          {/* 4 Pillars Grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
+            {coreServices.map((srv) => {
+              const IconComp = srv.icon;
               return (
-                <div
-                  key={idx}
+                <div 
+                  key={srv.id}
                   style={{
-                    padding: '1.75rem 1.25rem',
-                    backgroundColor: 'rgba(7, 13, 20, 0.75)',
-                    border: '1px solid rgba(0, 157, 165, 0.25)',
-                    borderRadius: 'var(--radius-md)',
-                    textAlign: 'center',
-                    transition: 'transform 0.3s ease, border-color 0.3s ease',
+                    backgroundColor: 'rgba(11, 19, 31, 0.7)',
+                    border: '1px solid rgba(255, 255, 255, 0.05)',
+                    borderRadius: 'var(--radius-lg)',
+                    padding: '2rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    transition: 'all 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-4px)';
-                    e.currentTarget.style.borderColor = 'var(--brand-teal-light)';
+                    e.currentTarget.style.borderColor = 'rgba(0, 157, 165, 0.3)';
+                    e.currentTarget.style.transform = 'translateY(-3px)';
                   }}
                   onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.05)';
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.borderColor = 'rgba(0, 157, 165, 0.25)';
                   }}
                 >
-                  <div style={{ width: '38px', height: '38px', borderRadius: '50%', backgroundColor: 'rgba(0, 157, 165, 0.12)', color: 'var(--brand-teal-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 0.85rem auto' }}>
-                    <NodeIcon size={18} />
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                      <div 
+                        style={{
+                          width: '42px',
+                          height: '42px',
+                          borderRadius: 'var(--radius-md)',
+                          backgroundColor: 'rgba(0, 157, 165, 0.1)',
+                          color: 'var(--brand-teal-light)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
+                      >
+                        <IconComp size={20} />
+                      </div>
+                      <span style={{ fontSize: '0.8rem', color: 'var(--brand-lime)', fontWeight: 800 }}>
+                        {srv.code}
+                      </span>
+                    </div>
+
+                    <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
+                      {srv.title}
+                    </h3>
+                    <p style={{ fontSize: '0.86rem', color: 'var(--text-light-secondary)', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                      {srv.desc}
+                    </p>
                   </div>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '0.02em', marginBottom: '0.3rem' }}>
-                    {node.title}
-                  </div>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--brand-teal-light)' }}>
-                    {node.sub}
+
+                  <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    {srv.deliverables.map((d, dI) => (
+                      <div key={dI} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', color: '#CBD5E1' }}>
+                        <Check size={13} color="var(--brand-teal-light)" />
+                        <span>{d}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               );
@@ -1291,292 +1153,55 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
         </div>
       </section>
 
-
       {/* =====================================================================
-          SECTION 07 — OUR WORK (Cinematic Showcase Slider with Large Artwork)
+          SECTION 08 — TWO BUSINESS PATHS (Producers & Buyers)
           ===================================================================== */}
-      <section className="section section-dark">
+      <section 
+        className="section"
+        style={{
+          backgroundColor: '#070D14',
+          paddingTop: 'clamp(4rem, 6.5vw, 5.5rem)',
+          paddingBottom: 'clamp(4rem, 6.5vw, 5.5rem)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.04)'
+        }}
+      >
         <div className="container">
           
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2.5rem' }}>
-            <div>
-              <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Representation Catalogue</span>
-              <h2 className="display-statement">OUR WORK</h2>
-            </div>
+          <div className="two-path-grid">
             
-            {/* Project Navigation Controls */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <button
-                onClick={() => setActiveProjectIdx(prev => (prev === 0 ? projects.length - 1 : prev - 1))}
-                className="btn btn-secondary-dark btn-sm"
-                aria-label="Previous project"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              <span style={{ fontSize: '0.84rem', color: 'var(--text-light-muted)', fontWeight: 700 }}>
-                {activeProjectIdx + 1} / {projects.length || 2}
-              </span>
-              <button
-                onClick={() => setActiveProjectIdx(prev => (prev === projects.length - 1 ? 0 : prev + 1))}
-                className="btn btn-secondary-dark btn-sm"
-                aria-label="Next project"
-              >
-                <ChevronRight size={16} />
-              </button>
-              <button
-                onClick={() => handleNav('our-work')}
-                className="btn btn-outline-teal btn-sm"
-              >
-                <span>Full Catalogue</span>
-                <ArrowRight size={14} />
-              </button>
-            </div>
-          </div>
-
-          {/* Large Project Stage */}
-          <div
-            key={currentProject.id}
-            style={{
-              backgroundColor: 'rgba(11, 19, 31, 0.85)',
-              border: '1px solid var(--border-dark)',
-              borderRadius: 'var(--radius-lg)',
-              overflow: 'hidden',
-              boxShadow: '0 25px 60px -10px rgba(0, 0, 0, 0.6)',
-              animation: 'heroUpwardReveal 0.45s cubic-bezier(0.16, 1, 0.3, 1)',
-            }}
-          >
-            <div className="split-editorial" style={{ gap: 0 }}>
-              
-              {/* Large Poster Artwork Area */}
-              <div style={{ position: 'relative', minHeight: '380px', backgroundColor: '#070D14' }}>
-                {currentProject.posterUrl ? (
-                  <img
-                    src={currentProject.posterUrl}
-                    alt={currentProject.title}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: '380px', display: 'block' }}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = '/secret of kalinga.jpg';
-                    }}
-                  />
-                ) : (
-                  <div style={{ width: '100%', height: '100%', minHeight: '380px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem', textAlign: 'center' }}>
-                    <Film size={48} color="var(--brand-teal)" style={{ marginBottom: '1rem' }} />
-                    <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '1.6rem', color: '#FFFFFF' }}>{currentProject.title}</div>
-                    <div style={{ fontSize: '0.78rem', color: 'var(--brand-lime)', marginTop: '0.35rem' }}>OFFICIAL REPRESENTATION DOSSIER</div>
-                  </div>
-                )}
-                <div style={{ position: 'absolute', top: '16px', left: '16px' }}>
-                  <span className="badge badge-lime">{currentProject.status || 'In Representation'}</span>
-                </div>
-              </div>
-
-              {/* Project Meta & Dossier Area */}
-              <div style={{ padding: 'clamp(2rem, 3.5vw, 3rem)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                <div>
-                  <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--brand-teal-light)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.4rem' }}>
-                    {currentProject.projectType} • {currentProject.language}
-                  </div>
-
-                  <h3 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', fontWeight: 800, color: '#FFFFFF', marginBottom: '1rem', letterSpacing: '-0.02em' }}>
-                    {currentProject.title}
-                  </h3>
-
-                  <p style={{ fontSize: '0.95rem', color: 'var(--text-light-secondary)', lineHeight: '1.65', marginBottom: '1.75rem' }}>
-                    {currentProject.synopsis}
-                  </p>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', padding: '1.25rem', backgroundColor: 'rgba(7, 13, 20, 0.65)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255, 255, 255, 0.04)', marginBottom: '1.75rem' }}>
-                    <div>
-                      <div style={{ fontSize: '0.74rem', color: 'var(--text-light-muted)' }}>Genre</div>
-                      <div style={{ fontSize: '0.88rem', color: '#FFFFFF', fontWeight: 600 }}>{currentProject.genre || 'To be confirmed'}</div>
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '0.74rem', color: 'var(--text-light-muted)' }}>Indiark Role</div>
-                      <div style={{ fontSize: '0.88rem', color: 'var(--brand-lime)', fontWeight: 600 }}>{currentProject.indiarkRole}</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                  <button
-                    onClick={() => onSelectProject && onSelectProject(currentProject)}
-                    className="btn btn-lime"
-                  >
-                    <span>VIEW PROJECT DOSSIER</span>
-                    <Eye size={15} />
-                  </button>
-                  <button
-                    onClick={() => handleNav('for-platforms')}
-                    className="btn btn-secondary-dark"
-                  >
-                    <span>INQUIRE RIGHTS</span>
-                    <Briefcase size={15} />
-                  </button>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-
-      {/* =====================================================================
-          SECTION 08 — WHY INDIARK (6 Strategic Pillars with Interactive Selector)
-          ===================================================================== */}
-      <section className="section section-secondary">
-        <div className="container">
-          
-          <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 3.5rem auto' }}>
-            <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Strategic Differentiators</span>
-            <h2 className="display-statement" style={{ marginBottom: '0.75rem' }}>
-              EXPERIENCE THAT CREATES CONNECTIONS
-            </h2>
-            <p style={{ color: 'var(--text-light-secondary)', fontSize: '1.05rem' }}>
-              Why filmmakers, production houses, and streaming platforms choose Indiark Entertainments to manage high-value commercial mandates.
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'minmax(280px, 1fr) 2fr',
-              gap: '2.5rem',
-              alignItems: 'stretch',
-            }}
-          >
-            {/* Left Pillar Tabs */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {pillars.map((pillar, idx) => {
-                const isSelected = activePillarIdx === idx;
-                return (
-                  <button
-                    key={pillar.id}
-                    onClick={() => setActivePillarIdx(idx)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: '1.1rem 1.25rem',
-                      borderRadius: 'var(--radius-md)',
-                      backgroundColor: isSelected ? 'rgba(0, 157, 165, 0.18)' : 'rgba(255, 255, 255, 0.02)',
-                      border: isSelected ? '1px solid var(--brand-teal)' : '1px solid transparent',
-                      color: isSelected ? '#FFFFFF' : 'var(--text-light-secondary)',
-                      fontFamily: 'var(--font-heading)',
-                      fontWeight: isSelected ? 800 : 600,
-                      fontSize: '0.95rem',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                    }}
-                  >
-                    <span>{pillar.title}</span>
-                    <ChevronRight size={18} color={isSelected ? 'var(--brand-lime)' : 'var(--text-light-subtle)'} />
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Right Pillar Stage Card */}
-            <div
-              key={currentPillar.id}
+            {/* Path 1: Producers */}
+            <div 
               style={{
-                backgroundColor: 'rgba(7, 13, 20, 0.85)',
-                border: '1px solid var(--border-dark)',
-                borderRadius: 'var(--radius-lg)',
-                padding: 'clamp(2rem, 3.5vw, 3rem)',
+                backgroundColor: 'rgba(11, 19, 31, 0.85)',
+                border: '1px solid rgba(148, 200, 32, 0.25)',
+                borderRadius: 'var(--radius-xl)',
+                padding: 'clamp(2rem, 3.5vw, 2.75rem)',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
-                animation: 'heroUpwardReveal 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+                justifyContent: 'space-between'
               }}
             >
               <div>
-                <div style={{ fontSize: '0.78rem', color: 'var(--brand-lime)', fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-                  {currentPillar.subtitle}
-                </div>
-                
-                <h3 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.2rem)', fontWeight: 800, color: '#FFFFFF', marginBottom: '1.25rem' }}>
-                  {currentPillar.title}
+                <span className="badge badge-lime" style={{ background: 'rgba(148, 200, 32, 0.08)', borderColor: 'rgba(148, 200, 32, 0.25)', marginBottom: '1rem' }}>
+                  For Movie Producers & Directors
+                </span>
+                <h3 style={{ fontSize: 'clamp(1.45rem, 2.3vw, 1.9rem)', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.85rem' }}>
+                  SELL YOUR MOVIE & WEB SERIES RIGHTS
                 </h3>
-
-                <p style={{ fontSize: '1.05rem', color: 'var(--text-light-secondary)', lineHeight: '1.7', marginBottom: '2rem' }}>
-                  {currentPillar.desc}
+                <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '1.75rem' }}>
+                  Have a ready feature film, regional movie, or web series? Submit your project to our team. We evaluate your content honestly, check all legal paperwork, and pitch directly to top streaming and television buyers.
                 </p>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-                  {currentPillar.points.map((pt, pIdx) => (
-                    <div key={pIdx} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                      <CheckCircle2 size={18} color="var(--brand-lime)" style={{ flexShrink: 0 }} />
-                      <span style={{ fontSize: '0.92rem', color: 'var(--text-light-primary)' }}>
-                        {pt}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div style={{ marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-dark)', display: 'flex', justifyContent: 'flex-end' }}>
-                <button
-                  onClick={() => handleNav('why-indiark')}
-                  className="btn btn-secondary-dark btn-sm"
-                >
-                  <span>Learn More in Why Indiark</span>
-                  <ArrowRight size={14} />
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-
-      {/* =====================================================================
-          SECTION 09 — TWO BUSINESS PATHS (Interactive Conversion Stage)
-          ===================================================================== */}
-      <section className="section section-dark">
-        <div className="container">
-          
-          <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 3rem auto' }}>
-            <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Strategic Conversion Hub</span>
-            <h2 className="display-statement" style={{ marginBottom: '0.75rem' }}>
-              HOW CAN WE ASSIST YOUR ENTERTAINMENT BUSINESS?
-            </h2>
-            <p style={{ color: 'var(--text-light-secondary)', fontSize: '1.05rem' }}>
-              Select your commercial gateway to begin direct collaboration with Indiark Entertainments.
-            </p>
-          </div>
-
-          <div className="two-path-grid">
-            
-            {/* PATH A: I HAVE CONTENT */}
-            <div
-              className="two-path-card path-creator"
-              onMouseEnter={() => setHoveredPath('creator')}
-              onMouseLeave={() => setHoveredPath(null)}
-            >
-              <div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.75rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(0, 157, 165, 0.15)', color: 'var(--brand-teal-light)', fontSize: '0.74rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1.25rem' }}>
-                  PATH A • FOR CREATORS & PRODUCERS
-                </div>
-
-                <h3 style={{ fontSize: '1.85rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '1rem', letterSpacing: '-0.02em' }}>
-                  I HAVE CONTENT
-                </h3>
-
-                <p style={{ fontSize: '0.95rem', color: 'var(--text-light-secondary)', lineHeight: '1.65', marginBottom: '1.75rem' }}>
-                  For filmmakers, independent producers, production studios, and catalogue owners seeking representation, OTT platform pitching, and multi-territory rights monetisation.
-                </p>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '2rem' }}>
-                  {['Evaluation within 48–72 Hours', 'Direct Commissioning Editor Pitching', 'Commercial Terms & MG Negotiation', 'Chain of Title & Legal Protection'].map((item, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.85rem', color: '#FFFFFF' }}>
-                      <CheckCircle2 size={15} color="var(--brand-teal-light)" />
-                      <span>{item}</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', marginBottom: '2rem' }}>
+                  {[
+                    'Confidential review within 48 to 72 hours',
+                    'Direct access to OTT and TV channel acquisitions heads',
+                    'Valuation defense & Minimum Guarantee (MG) negotiation',
+                    'Complete copyright and contract protection'
+                  ].map((pt, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.86rem', color: '#F8FAFC' }}>
+                      <CheckCircle2 size={16} color="var(--brand-lime)" />
+                      <span>{pt}</span>
                     </div>
                   ))}
                 </div>
@@ -1587,35 +1212,44 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
                 className="btn btn-lime btn-lg"
                 style={{ width: '100%', justifyContent: 'center' }}
               >
-                <span>SUBMIT CONTENT</span>
+                <span>SUBMIT YOUR MOVIE</span>
                 <ArrowUpRight size={18} />
               </button>
             </div>
 
-            {/* PATH B: I NEED CONTENT */}
-            <div
-              className="two-path-card path-buyer"
-              onMouseEnter={() => setHoveredPath('buyer')}
-              onMouseLeave={() => setHoveredPath(null)}
+            {/* Path 2: Platform Buyers */}
+            <div 
+              style={{
+                backgroundColor: 'rgba(11, 19, 31, 0.85)',
+                border: '1px solid rgba(0, 157, 165, 0.25)',
+                borderRadius: 'var(--radius-xl)',
+                padding: 'clamp(2rem, 3.5vw, 2.75rem)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between'
+              }}
             >
               <div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.3rem 0.75rem', borderRadius: 'var(--radius-full)', backgroundColor: 'rgba(148, 200, 32, 0.15)', color: 'var(--brand-lime)', fontSize: '0.74rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1.25rem' }}>
-                  PATH B • FOR PLATFORMS & BUYERS
-                </div>
-
-                <h3 style={{ fontSize: '1.85rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '1rem', letterSpacing: '-0.02em' }}>
-                  I NEED CONTENT
+                <span className="badge badge-teal" style={{ background: 'rgba(0, 157, 165, 0.08)', borderColor: 'rgba(0, 157, 165, 0.2)', marginBottom: '1rem' }}>
+                  For OTT Platforms & TV Channels
+                </span>
+                <h3 style={{ fontSize: 'clamp(1.45rem, 2.3vw, 1.9rem)', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.85rem' }}>
+                  LOOKING FOR FRESH CONTENT FOR YOUR PLATFORM?
                 </h3>
-
-                <p style={{ fontSize: '0.95rem', color: 'var(--text-light-secondary)', lineHeight: '1.65', marginBottom: '1.75rem' }}>
-                  For OTT platforms, broadcasters, distributors, and legitimate buyers looking for curated slates matching specific programming briefs.
+                <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '1.75rem' }}>
+                  Are you an acquisitions head, programming executive, or syndication manager? Explore our curated slate of feature films, series, and regional titles with 100% verified legal chain of title.
                 </p>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '2rem' }}>
-                  {['Verified Clear Chain of Title', 'Curated to Programming Mandates', 'Feature Films, Series & Regional Catalogues', 'Rapid Screener & Rights Delivery'].map((item, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.85rem', color: '#FFFFFF' }}>
-                      <CheckCircle2 size={15} color="var(--brand-lime)" />
-                      <span>{item}</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', marginBottom: '2rem' }}>
+                  {[
+                    '100% verified legal chain of title & agreements',
+                    'Curated content matching your programming requirements',
+                    'Digital OTT, Satellite TV, Dubbing & Airline rights',
+                    'Direct deal closing with an authorized media rights house'
+                  ].map((pt, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.86rem', color: '#F8FAFC' }}>
+                      <CheckCircle2 size={16} color="var(--brand-teal-light)" />
+                      <span>{pt}</span>
                     </div>
                   ))}
                 </div>
@@ -1626,7 +1260,7 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
                 className="btn btn-outline-teal btn-lg"
                 style={{ width: '100%', justifyContent: 'center' }}
               >
-                <span>TELL US YOUR CONTENT REQUIREMENTS</span>
+                <span>REQUEST SLATE ACCESS</span>
                 <Briefcase size={18} />
               </button>
             </div>
@@ -1636,336 +1270,208 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
         </div>
       </section>
 
-
       {/* =====================================================================
-          SECTION 10 — FOR PLATFORMS & BUYERS (Animated Visual Tiles)
+          SECTION 09 — CONTACT & DIRECT SUBMISSION
           ===================================================================== */}
-      <section className="section section-secondary">
+      <section 
+        className="section section-dark"
+        style={{
+          paddingTop: 'clamp(4rem, 6.5vw, 5.5rem)',
+          paddingBottom: 'clamp(4rem, 6.5vw, 5.5rem)'
+        }}
+      >
         <div className="container">
           
-          <div className="split-editorial">
-            <div>
-              <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Buyer Mandate Hub</span>
-              <h2 className="display-statement" style={{ marginBottom: '1.25rem' }}>
-                LOOKING FOR CONTENT?
-              </h2>
-              <p className="text-editorial-body" style={{ marginBottom: '1.75rem' }}>
-                We curate legally verified content slates matching programming briefs, demographic requirements, and broadcast standards for streaming platforms and international buyers.
-              </p>
-              
-              {/* Category Matrix */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem', marginBottom: '2rem' }}>
-                {[
-                  { name: 'MOVIES', desc: 'Theatrical & OTT Premieres' },
-                  { name: 'WEB SERIES', desc: 'Original Episodic Slates' },
-                  { name: 'REGIONAL', desc: 'Malayalam, Tamil, Telugu, Hindi' },
-                  { name: 'DUBBED', desc: 'Multi-Language Audio Assets' },
-                  { name: 'MUSIC', desc: 'Soundtrack Masters & Sync' },
-                  { name: 'CATALOGUES', desc: 'High-Volume Archival Slates' }
-                ].map((cat, idx) => (
-                  <div key={idx} style={{ padding: '0.85rem 1rem', backgroundColor: 'rgba(7, 13, 20, 0.65)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-sm)' }}>
-                    <div style={{ fontSize: '0.86rem', fontWeight: 800, color: '#FFFFFF' }}>{cat.name}</div>
-                    <div style={{ fontSize: '0.74rem', color: 'var(--brand-teal-light)', marginTop: '0.15rem' }}>{cat.desc}</div>
-                  </div>
-                ))}
-              </div>
-
-              <button
-                onClick={() => handleNav('for-platforms')}
-                className="btn btn-lime"
-              >
-                <span>TELL US YOUR CONTENT REQUIREMENTS</span>
-                <ArrowRight size={16} />
-              </button>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: 'rgba(7, 13, 20, 0.75)',
-                border: '1px solid var(--border-dark)',
-                borderRadius: 'var(--radius-lg)',
-                padding: 'clamp(2rem, 3vw, 2.5rem)',
-              }}
-            >
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '1.25rem' }}>
-                Institutional Procurement Standards
-              </h3>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1.1rem', fontSize: '0.9rem', color: 'var(--text-light-secondary)' }}>
-                <li style={{ display: 'flex', gap: '0.75rem' }}>
-                  <CheckCircle2 size={16} color="var(--brand-teal-light)" style={{ flexShrink: 0, marginTop: '0.2rem' }} />
-                  <span><strong>Verified Chain of Title:</strong> Clean legal documentation on all represented titles.</span>
-                </li>
-                <li style={{ display: 'flex', gap: '0.75rem' }}>
-                  <CheckCircle2 size={16} color="var(--brand-teal-light)" style={{ flexShrink: 0, marginTop: '0.2rem' }} />
-                  <span><strong>Zero Mismatch:</strong> We only pitch content that aligns with your specific acquisition briefs.</span>
-                </li>
-                <li style={{ display: 'flex', gap: '0.75rem' }}>
-                  <CheckCircle2 size={16} color="var(--brand-teal-light)" style={{ flexShrink: 0, marginTop: '0.2rem' }} />
-                  <span><strong>Direct Commercial Negotiation:</strong> Structured pricing, term sheets, and closing coordination.</span>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-
-      {/* =====================================================================
-          SECTION 11 — MEDIA EDGE (Academic Ecosystem)
-          ===================================================================== */}
-      <section className="section section-dark">
-        <div className="container">
-          
-          <div
+          <div 
             style={{
-              padding: 'clamp(2.5rem, 4vw, 3.5rem)',
-              backgroundColor: 'rgba(11, 19, 31, 0.85)',
-              border: '1px solid var(--border-teal-subtle)',
-              borderRadius: 'var(--radius-lg)',
+              backgroundColor: 'rgba(11, 19, 31, 0.95)',
+              border: '1px solid rgba(255, 255, 255, 0.06)',
+              borderRadius: 'var(--radius-xl)',
+              padding: 'clamp(2rem, 3.5vw, 3rem)',
               display: 'grid',
-              gridTemplateColumns: '1.2fr 1fr',
-              gap: '2.5rem',
-              alignItems: 'center',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gap: 'clamp(2rem, 3.5vw, 3.5rem)',
+              alignItems: 'center'
             }}
           >
+            {/* Left Info */}
             <div>
-              <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Associated Academic Initiative</span>
-              <h3 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.1rem)', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.75rem' }}>
-                {ASSOCIATED_ORGANIZATION.name}
-              </h3>
-              <p style={{ fontSize: '0.95rem', color: 'var(--text-light-secondary)', lineHeight: '1.65', margin: 0 }}>
-                {ASSOCIATED_ORGANIZATION.description}
-              </p>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: 'rgba(7, 13, 20, 0.75)',
-                padding: '1.5rem',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid rgba(255, 255, 255, 0.06)',
-                textAlign: 'center',
-              }}
-            >
-              <div style={{ fontSize: '0.76rem', color: 'var(--text-light-muted)', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-                Approved Ecosystem Flow
-              </div>
-              <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--brand-lime)', letterSpacing: '0.04em' }}>
-                {ASSOCIATED_ORGANIZATION.ecosystem}
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-
-      {/* =====================================================================
-          SECTION 12 — CONTACT (Let's Talk Content)
-          ===================================================================== */}
-      <section className="section section-secondary" style={{ width: '100%' }}>
-        <div className="container" style={{ width: '100%' }}>
-          
-          <div className="split-editorial" style={{ alignItems: 'flex-start' }}>
-            
-            {/* Left Column: Direct Corporate Overview & Touchpoints */}
-            <div>
-              <span className="badge badge-teal" style={{ marginBottom: '1rem' }}>
-                Direct Commercial Dialogue
+              <span className="badge badge-teal" style={{ background: 'rgba(0, 157, 165, 0.08)', borderColor: 'rgba(0, 157, 165, 0.2)', marginBottom: '1rem' }}>
+                Contact Us
               </span>
-              <h2 className="display-statement" style={{ marginBottom: '1.25rem' }}>
-                LET'S TALK CONTENT
+              <h2 style={{ fontSize: 'clamp(1.75rem, 2.8vw, 2.4rem)', fontWeight: 800, color: '#FFFFFF', marginBottom: '1rem' }}>
+                LET'S TALK ABOUT YOUR <span className="gradient-text-teal">MOVIE RIGHTS</span>
               </h2>
-              <p className="text-editorial-body" style={{ marginBottom: '2rem' }}>
-                Whether you are a creator seeking representation to license a finished project or an acquisition head sourcing curated content slates, our executive team is ready to assist your commercial mandate.
+              <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.94rem', lineHeight: 1.6, marginBottom: '2rem' }}>
+                Whether you have a finished movie, a rough cut, or need satellite and dubbing rights monetisation, our team in Ernakulam is ready to connect.
               </p>
 
-              {/* Touchpoint Cards */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2rem' }}>
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(0, 157, 165, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-teal-light)', flexShrink: 0 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                <div style={{ display: 'flex', gap: '0.85rem', alignItems: 'center' }}>
+                  <div style={{ width: '38px', height: '38px', borderRadius: '50%', backgroundColor: 'rgba(0, 157, 165, 0.1)', color: 'var(--brand-teal-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Mail size={18} />
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.74rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
-                      Official Inquiries Email
-                    </div>
-                    <div style={{ color: '#FFFFFF', fontSize: '0.96rem', fontWeight: 600, marginTop: '0.15rem' }}>
-                      {CONTACT_INFO.emailPlaceholder}
-                    </div>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Email Us</div>
+                    <div style={{ color: '#FFFFFF', fontWeight: 600, fontSize: '0.92rem' }}>{CONTACT_INFO.email}</div>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(148, 200, 32, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-lime)', flexShrink: 0 }}>
+                <div style={{ display: 'flex', gap: '0.85rem', alignItems: 'center' }}>
+                  <div style={{ width: '38px', height: '38px', borderRadius: '50%', backgroundColor: 'rgba(148, 200, 32, 0.1)', color: 'var(--brand-lime)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Phone size={18} />
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.74rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
-                      Telephone / WhatsApp
-                    </div>
-                    <div style={{ color: '#FFFFFF', fontSize: '0.96rem', fontWeight: 600, marginTop: '0.15rem' }}>
-                      {CONTACT_INFO.mobilePlaceholder}
-                    </div>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Call or WhatsApp</div>
+                    <div style={{ color: '#FFFFFF', fontWeight: 600, fontSize: '0.92rem' }}>{CONTACT_INFO.phone}</div>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(255, 255, 255, 0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', flexShrink: 0 }}>
+                <div style={{ display: 'flex', gap: '0.85rem', alignItems: 'center' }}>
+                  <div style={{ width: '38px', height: '38px', borderRadius: '50%', backgroundColor: 'rgba(0, 157, 165, 0.1)', color: 'var(--brand-teal-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <MapPin size={18} />
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.74rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
-                      Principal Operating Office
-                    </div>
-                    <div style={{ color: '#FFFFFF', fontSize: '0.96rem', fontWeight: 600, marginTop: '0.15rem' }}>
-                      {CONTACT_INFO.addressPlaceholder}
-                    </div>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Location</div>
+                    <div style={{ color: '#FFFFFF', fontWeight: 600, fontSize: '0.92rem' }}>{CONTACT_INFO.location}</div>
                   </div>
                 </div>
               </div>
-
-              {/* Direct Fast Routes */}
-              <div style={{ padding: '1.25rem', backgroundColor: 'rgba(7, 13, 20, 0.7)', border: '1px solid var(--border-dark)', borderRadius: 'var(--radius-md)', display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-                <button
-                  onClick={() => handleNav('submit-content')}
-                  className="btn btn-lime btn-sm"
-                  style={{ flex: '1 1 200px', justifyContent: 'center' }}
-                >
-                  <span>PITCH YOUR CONTENT</span>
-                  <ArrowUpRight size={15} />
-                </button>
-                <button
-                  onClick={() => handleNav('for-platforms')}
-                  className="btn btn-secondary-dark btn-sm"
-                  style={{ flex: '1 1 200px', justifyContent: 'center' }}
-                >
-                  <span>BUYER REQUIREMENTS</span>
-                  <Briefcase size={15} />
-                </button>
-              </div>
             </div>
 
-            {/* Right Column: Beautiful Dark Glassmorphic Inquiry Form */}
-            <div
+            {/* Right Contact Form */}
+            <div 
               style={{
-                backgroundColor: 'rgba(7, 13, 20, 0.9)',
-                border: '1px solid var(--border-teal-subtle)',
+                backgroundColor: 'rgba(7, 13, 20, 0.75)',
+                border: '1px solid rgba(255, 255, 255, 0.05)',
                 borderRadius: 'var(--radius-lg)',
-                padding: 'clamp(1.75rem, 3.5vw, 2.75rem)',
-                boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.7)',
-                position: 'relative',
+                padding: 'clamp(1.5rem, 3vw, 2.25rem)'
               }}
             >
               {homeContactSubmitted ? (
-                <div style={{ textAlign: 'center', padding: '2.5rem 1rem' }}>
-                  <div style={{ width: '56px', height: '56px', borderRadius: '50%', backgroundColor: 'rgba(148, 200, 32, 0.15)', border: '1px solid var(--brand-lime)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem auto', color: 'var(--brand-lime)' }}>
+                <div style={{ textAlign: 'center', padding: '2rem 1rem' }}>
+                  <div style={{ width: '56px', height: '56px', borderRadius: '50%', backgroundColor: 'rgba(148, 200, 32, 0.15)', color: 'var(--brand-lime)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem auto' }}>
                     <CheckCircle2 size={32} />
                   </div>
-                  <h3 style={{ fontSize: '1.45rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.6rem' }}>
-                    INQUIRY TRANSMITTED
+                  <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.5rem' }}>
+                    Message Received
                   </h3>
-                  <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.94rem', marginBottom: '1.75rem', lineHeight: '1.6' }}>
-                    Thank you for reaching out. Our business team has received your message and will respond to your corporate email shortly.
+                  <p style={{ color: 'var(--text-light-secondary)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                    Thank you. Our rights and content team will review your message and reply within 24 to 48 hours.
                   </p>
-                  <button onClick={() => setHomeContactSubmitted(false)} className="btn btn-secondary-dark btn-sm">
-                    <span>SEND ANOTHER MESSAGE</span>
+                  <button
+                    onClick={() => setHomeContactSubmitted(false)}
+                    className="btn btn-secondary-dark btn-sm"
+                  >
+                    Send Another Message
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleHomeContactSubmit}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-dark)', paddingBottom: '0.75rem' }}>
+                  <div style={{ fontSize: '1.15rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '1.25rem' }}>
+                    Tell Us About Your Movie
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.25rem' }}>
                     <div>
-                      <span style={{ fontSize: '0.74rem', color: 'var(--brand-lime)', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                        Direct Executive Channel
-                      </span>
-                      <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#FFFFFF', margin: '0.2rem 0 0 0' }}>
-                        Send a Consultation Message
-                      </h3>
-                    </div>
-                  </div>
-
-                  <div className="form-group" style={{ marginBottom: '1.15rem' }}>
-                    <label className="form-label">Full Name *</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Your full name"
-                      value={homeContactForm.name}
-                      onChange={(e) => setHomeContactForm({ ...homeContactForm, name: e.target.value })}
-                      className="form-control"
-                    />
-                  </div>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.15rem' }}>
-                    <div className="form-group" style={{ marginBottom: 0 }}>
-                      <label className="form-label">Corporate Email *</label>
-                      <input
-                        type="email"
+                      <label style={{ display: 'block', fontSize: '0.74rem', color: 'var(--text-light-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                        Your Name
+                      </label>
+                      <input 
+                        type="text" 
                         required
-                        placeholder="name@company.com"
-                        value={homeContactForm.email}
-                        onChange={(e) => setHomeContactForm({ ...homeContactForm, email: e.target.value })}
-                        className="form-control"
+                        value={homeContactForm.name}
+                        onChange={(e) => setHomeContactForm({...homeContactForm, name: e.target.value})}
+                        placeholder="Producer / Director Name"
+                        style={{
+                          width: '100%',
+                          backgroundColor: 'rgba(255, 255, 255, 0.04)',
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                          borderRadius: 'var(--radius-sm)',
+                          padding: '0.75rem 1rem',
+                          color: '#FFFFFF',
+                          fontSize: '0.88rem'
+                        }}
                       />
                     </div>
 
-                    <div className="form-group" style={{ marginBottom: 0 }}>
-                      <label className="form-label">Phone / WhatsApp</label>
-                      <input
-                        type="tel"
-                        placeholder="+91 / International"
-                        value={homeContactForm.phone}
-                        onChange={(e) => setHomeContactForm({ ...homeContactForm, phone: e.target.value })}
-                        className="form-control"
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.85rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.74rem', color: 'var(--text-light-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                          Email Address
+                        </label>
+                        <input 
+                          type="email" 
+                          required
+                          value={homeContactForm.email}
+                          onChange={(e) => setHomeContactForm({...homeContactForm, email: e.target.value})}
+                          placeholder="name@email.com"
+                          style={{
+                            width: '100%',
+                            backgroundColor: 'rgba(255, 255, 255, 0.04)',
+                            border: '1px solid rgba(255, 255, 255, 0.08)',
+                            borderRadius: 'var(--radius-sm)',
+                            padding: '0.75rem 1rem',
+                            color: '#FFFFFF',
+                            fontSize: '0.88rem'
+                          }}
+                        />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.74rem', color: 'var(--text-light-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                          Phone / WhatsApp
+                        </label>
+                        <input 
+                          type="tel" 
+                          value={homeContactForm.phone}
+                          onChange={(e) => setHomeContactForm({...homeContactForm, phone: e.target.value})}
+                          placeholder="+91..."
+                          style={{
+                            width: '100%',
+                            backgroundColor: 'rgba(255, 255, 255, 0.04)',
+                            border: '1px solid rgba(255, 255, 255, 0.08)',
+                            borderRadius: 'var(--radius-sm)',
+                            padding: '0.75rem 1rem',
+                            color: '#FFFFFF',
+                            fontSize: '0.88rem'
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.74rem', color: 'var(--text-light-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.35rem' }}>
+                        Movie Details / Message
+                      </label>
+                      <textarea 
+                        rows={3}
+                        required
+                        value={homeContactForm.message}
+                        onChange={(e) => setHomeContactForm({...homeContactForm, message: e.target.value})}
+                        placeholder="Tell us about your film: title, language, genre, stage (completed/post-production), and which rights you want to sell..."
+                        style={{
+                          width: '100%',
+                          backgroundColor: 'rgba(255, 255, 255, 0.04)',
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                          borderRadius: 'var(--radius-sm)',
+                          padding: '0.75rem 1rem',
+                          color: '#FFFFFF',
+                          fontSize: '0.88rem',
+                          resize: 'vertical'
+                        }}
                       />
                     </div>
-                  </div>
-
-                  <div className="form-group" style={{ marginBottom: '1.15rem' }}>
-                    <label className="form-label">Nature of Inquiry *</label>
-                    <select
-                      value={homeContactForm.subject}
-                      onChange={(e) => setHomeContactForm({ ...homeContactForm, subject: e.target.value })}
-                      className="form-control"
-                    >
-                      <option value="Producer / Slate Representation">Producer / Slate Pitching Representation</option>
-                      <option value="OTT / Broadcaster Requirement">OTT Platform / Broadcaster Content Requirement</option>
-                      <option value="Rights & Catalogue Licensing">Content Rights & Catalogue Licensing</option>
-                      <option value="Music & Sync Licensing">Music Business & Audio Sync</option>
-                      <option value="General Corporate Consultation">General Corporate Consultation</option>
-                    </select>
-                  </div>
-
-                  <div className="form-group" style={{ marginBottom: '1.5rem' }}>
-                    <label className="form-label">Your Message / Requirement *</label>
-                    <textarea
-                      rows={4}
-                      required
-                      placeholder="Briefly describe your project or procurement mandate..."
-                      value={homeContactForm.message}
-                      onChange={(e) => setHomeContactForm({ ...homeContactForm, message: e.target.value })}
-                      className="form-control"
-                      style={{ resize: 'vertical' }}
-                    />
                   </div>
 
                   <button
                     type="submit"
                     disabled={homeContactSubmitting}
-                    className="btn btn-lime btn-lg"
+                    className="btn btn-lime"
                     style={{ width: '100%', justifyContent: 'center' }}
                   >
-                    {homeContactSubmitting ? (
-                      <span>TRANSMITTING MESSAGE...</span>
-                    ) : (
-                      <>
-                        <span>SEND EXECUTIVE MESSAGE</span>
-                        <Send size={16} />
-                      </>
-                    )}
+                    <span>{homeContactSubmitting ? 'SENDING DETAILS...' : 'SEND DETAILS'}</span>
+                    <Send size={15} />
                   </button>
                 </form>
               )}
@@ -1975,6 +1481,115 @@ export const HomePage = ({ setActivePage, projects, onSelectProject }) => {
 
         </div>
       </section>
+
+      {/* =====================================================================
+          FILM MODAL PREVIEW (Interactive Details Dialog)
+          ===================================================================== */}
+      {selectedFilmModal && (
+        <div 
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 9999,
+            backgroundColor: 'rgba(3, 7, 12, 0.85)',
+            backdropFilter: 'blur(12px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1.5rem'
+          }}
+          onClick={() => setSelectedFilmModal(null)}
+        >
+          <div 
+            style={{
+              backgroundColor: '#0B131F',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: 'var(--radius-xl)',
+              maxWidth: '750px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              boxShadow: '0 30px 80px rgba(0, 0, 0, 0.9)',
+              position: 'relative',
+              display: 'grid',
+              gridTemplateColumns: 'minmax(220px, 280px) 1fr',
+              gap: '1.5rem'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Left Poster */}
+            <div style={{ backgroundColor: '#070D14', overflow: 'hidden', borderTopLeftRadius: 'var(--radius-xl)', borderBottomLeftRadius: 'var(--radius-xl)' }}>
+              <img 
+                src={selectedFilmModal.poster} 
+                alt={selectedFilmModal.title}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            </div>
+
+            {/* Modal Right Info */}
+            <div style={{ padding: '2rem 2rem 2rem 0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                  <span className="badge badge-teal">
+                    {selectedFilmModal.categoryLabel}
+                  </span>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-light-muted)' }}>
+                    {selectedFilmModal.year}
+                  </span>
+                </div>
+
+                <h2 style={{ fontSize: '1.75rem', fontWeight: 900, color: '#FFFFFF', marginBottom: '0.35rem' }}>
+                  {selectedFilmModal.title}
+                </h2>
+                
+                <div style={{ fontSize: '0.82rem', color: 'var(--brand-teal-light)', fontWeight: 700, marginBottom: '1.25rem' }}>
+                  {selectedFilmModal.language} • {selectedFilmModal.genre}
+                </div>
+
+                <div style={{ fontSize: '0.9rem', color: 'var(--text-light-secondary)', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                  {selectedFilmModal.synopsis}
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.75rem' }}>
+                  <div style={{ display: 'flex', gap: '0.5rem', fontSize: '0.84rem', color: '#CBD5E1' }}>
+                    <span style={{ color: 'var(--text-light-muted)', minWidth: '95px' }}>Rights Scope:</span>
+                    <strong style={{ color: '#FFFFFF' }}>{selectedFilmModal.rightsScope}</strong>
+                  </div>
+                  <div style={{ display: 'flex', gap: '0.5rem', fontSize: '0.84rem', color: '#CBD5E1' }}>
+                    <span style={{ color: 'var(--text-light-muted)', minWidth: '95px' }}>Paperwork:</span>
+                    <strong style={{ color: 'var(--brand-lime)' }}>{selectedFilmModal.chainOfTitle}</strong>
+                  </div>
+                  <div style={{ display: 'flex', gap: '0.5rem', fontSize: '0.84rem', color: '#CBD5E1' }}>
+                    <span style={{ color: 'var(--text-light-muted)', minWidth: '95px' }}>Deal Status:</span>
+                    <strong style={{ color: 'var(--brand-teal-light)' }}>{selectedFilmModal.placementType}</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* Modal Actions */}
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => {
+                    setSelectedFilmModal(null);
+                    handleNav('for-platforms');
+                  }}
+                  className="btn btn-lime btn-sm"
+                  style={{ flexGrow: 1 }}
+                >
+                  <span>INQUIRE RIGHTS</span>
+                  <ArrowUpRight size={14} />
+                </button>
+                <button
+                  onClick={() => setSelectedFilmModal(null)}
+                  className="btn btn-secondary-dark btn-sm"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

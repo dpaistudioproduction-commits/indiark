@@ -5,13 +5,15 @@ export const OurWorkPage = ({ projects, onSelectProject, onOpenAdmin, setActiveP
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const categories = ['All', 'Feature Film', 'Films', 'In Representation'];
+  const categories = ['All', 'Feature Film', 'Web Series', 'Music', 'In Representation'];
 
   const filteredProjects = projects.filter((proj) => {
     const matchesCategory = 
       selectedCategory === 'All' || 
       proj.category === selectedCategory || 
+      (proj.categories && proj.categories.some(c => c.toLowerCase().includes(selectedCategory.toLowerCase()))) ||
       proj.projectType?.toLowerCase().includes(selectedCategory.toLowerCase()) ||
+      proj.genre?.toLowerCase().includes(selectedCategory.toLowerCase()) ||
       (selectedCategory === 'In Representation' && proj.status === 'In Representation');
       
     const matchesSearch = 

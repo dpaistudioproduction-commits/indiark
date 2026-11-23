@@ -66,7 +66,7 @@ export const Navbar = ({ activePage, setActivePage, onOpenAdmin }) => {
               src="/indiark-logo.png"
               alt="Indiark Entertainments"
               style={{ 
-                height: isScrolled ? '40px' : '46px', 
+                height: isScrolled ? '42px' : '50px', 
                 width: 'auto', 
                 objectFit: 'contain', 
                 transition: 'height 0.3s ease',

@@ -34,22 +34,14 @@ export const Footer = ({ setActivePage, onOpenLegal }) => {
           <div>
             <div 
               onClick={() => handleNav('home')}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', marginBottom: '1.25rem' }}
+              style={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer', marginBottom: '1.25rem' }}
             >
               <img
                 src="/indiark-logo.png"
-                alt="Indiark Logo"
-                style={{ height: '38px', width: 'auto', objectFit: 'contain' }}
+                alt="Indiark Entertainments Logo"
+                style={{ height: '52px', width: 'auto', objectFit: 'contain' }}
                 onError={(e) => { e.target.style.display = 'none'; }}
               />
-              <div>
-                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.2rem', color: '#FFFFFF', lineHeight: 1.1 }}>
-                  INDIARK
-                </div>
-                <div style={{ fontSize: '0.62rem', letterSpacing: '0.12em', color: 'var(--brand-teal-light)', fontWeight: 700 }}>
-                  ENTERTAINMENTS
-                </div>
-              </div>
             </div>
 
             <p style={{ fontSize: '0.9rem', lineHeight: '1.65', color: 'var(--text-light-muted)', marginBottom: '1.5rem' }}>
@@ -59,6 +51,12 @@ export const Footer = ({ setActivePage, onOpenLegal }) => {
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.45rem 0.85rem', backgroundColor: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: 'var(--radius-sm)' }}>
               <span style={{ fontSize: '0.76rem', color: 'var(--brand-lime)', fontWeight: 800 }}>20+ YEARS</span>
               <span style={{ fontSize: '0.74rem', color: 'var(--text-light-secondary)' }}>Media Experience</span>
+            </div>
+
+            <div style={{ marginTop: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.4rem', fontSize: '0.82rem', color: 'var(--text-light-secondary)' }}>
+              <div><strong style={{ color: '#FFFFFF' }}>Email:</strong> <a href={`mailto:${CONTACT_INFO.email}`} style={{ color: 'var(--brand-teal-light)', textDecoration: 'none' }}>{CONTACT_INFO.email}</a></div>
+              <div><strong style={{ color: '#FFFFFF' }}>Phone:</strong> <a href={`tel:${CONTACT_INFO.phone}`} style={{ color: '#FFFFFF', textDecoration: 'none' }}>{CONTACT_INFO.phone}</a></div>
+              <div><strong style={{ color: '#FFFFFF' }}>Location:</strong> {CONTACT_INFO.location}</div>
             </div>
           </div>
 

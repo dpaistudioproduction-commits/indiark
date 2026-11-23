@@ -74,9 +74,9 @@ export const ContactPage = () => {
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 700 }}>
                       Official Inquiries Email
                     </div>
-                    <div style={{ color: '#FFFFFF', fontSize: '0.95rem', fontWeight: 600, marginTop: '0.2rem' }}>
-                      {CONTACT_INFO.emailPlaceholder}
-                    </div>
+                    <a href={`mailto:${CONTACT_INFO.email}`} style={{ color: '#FFFFFF', fontSize: '0.95rem', fontWeight: 600, marginTop: '0.2rem', display: 'block', textDecoration: 'none' }}>
+                      {CONTACT_INFO.email}
+                    </a>
                   </div>
                 </div>
 
@@ -88,9 +88,9 @@ export const ContactPage = () => {
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 700 }}>
                       Telephone / WhatsApp
                     </div>
-                    <div style={{ color: '#FFFFFF', fontSize: '0.95rem', fontWeight: 600, marginTop: '0.2rem' }}>
-                      {CONTACT_INFO.mobilePlaceholder}
-                    </div>
+                    <a href={`tel:${CONTACT_INFO.phone}`} style={{ color: '#FFFFFF', fontSize: '0.95rem', fontWeight: 600, marginTop: '0.2rem', display: 'block', textDecoration: 'none' }}>
+                      {CONTACT_INFO.phone}
+                    </a>
                   </div>
                 </div>
 
@@ -103,7 +103,7 @@ export const ContactPage = () => {
                       Principal Operating Office
                     </div>
                     <div style={{ color: '#FFFFFF', fontSize: '0.95rem', fontWeight: 600, marginTop: '0.2rem' }}>
-                      {CONTACT_INFO.addressPlaceholder}
+                      {CONTACT_INFO.location}
                     </div>
                   </div>
                 </div>

@@ -54,8 +54,8 @@
   --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Containers Unified Alignment */
-  --container-max-w: 1320px;
-  --container-wide-w: 1320px;
+  --container-max-w: 1540px;
+  --container-wide-w: 1620px;
 
   /* Radii */
   --radius-xs: 4px;
@@ -257,14 +257,23 @@ h1, h2, h3, h4, h5, h6 {
 /* ==========================================================================
    Layout Containers & Section Variations
    ========================================================================== */
-.container,
-.container-wide {
+.container {
   width: 100%;
   max-width: var(--container-max-w);
   margin-left: auto;
   margin-right: auto;
-  padding-left: clamp(1.25rem, 4vw, 2.5rem);
-  padding-right: clamp(1.25rem, 4vw, 2.5rem);
+  padding-left: clamp(0.75rem, 1.8vw, 1.5rem);
+  padding-right: clamp(0.75rem, 1.8vw, 1.5rem);
+  box-sizing: border-box;
+}
+
+.container-wide {
+  width: 100%;
+  max-width: var(--container-wide-w);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(0.75rem, 1.8vw, 1.5rem);
+  padding-right: clamp(0.75rem, 1.8vw, 1.5rem);
   box-sizing: border-box;
 }
 
@@ -616,6 +625,89 @@ select.form-control option {
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.75);
+}
+
+/* ==========================================================================
+   Modern Visual Effects & Glass Panels
+   ========================================================================== */
+.card-dark {
+  background-color: rgba(11, 19, 31, 0.85);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+  transition: border-color var(--transition-normal), transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.glass-panel {
+  background: rgba(11, 19, 31, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.65);
+}
+
+.gradient-text-teal {
+  background: linear-gradient(135deg, #18B8C0 0%, #009DA5 50%, #A7DC28 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-lime {
+  background: linear-gradient(135deg, #A7DC28 0%, #94C820 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--brand-lime);
+  box-shadow: 0 0 10px var(--brand-lime);
+  display: inline-block;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 8px var(--brand-lime);
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+    box-shadow: 0 0 16px var(--brand-lime);
+  }
+}
+
+.platform-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-light-secondary);
+  transition: all var(--transition-fast);
+}
+
+.platform-pill:hover {
+  background-color: rgba(0, 157, 165, 0.12);
+  border-color: var(--brand-teal);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 860px) {
+  .ecosystem-layout {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 /* ==========================================================================

@@ -24,7 +24,7 @@ export const ForPlatformsPage = () => {
               LOOKING FOR CURATED CONTENT?
             </h1>
             <p className="text-editorial-body">
-              Indiark Entertainments serves as an institutional supply partner for OTT streaming platforms, satellite broadcasters, airline networks, and international distributors seeking verified, high-quality content slates.
+              Indiark Entertainments provides curated feature films and regional slates for OTT streaming platforms, TV channels, and international distributors with 100% verified legal paperwork.
             </p>
           </div>
         </div>

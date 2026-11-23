@@ -1,33 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 export const Loader = ({ onFinish }) => {
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
+  const onFinishRef = useRef(onFinish);
+  onFinishRef.current = onFinish;
 
   useEffect(() => {
-    // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
-      onFinish();
-      return;
-    }
+    // Quick, guaranteed branded entrance then immediate reveal
+    const progressInterval = setInterval(() => {
+      setProgress(p => Math.min(p + 35, 100));
+    }, 60);
 
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsExiting(true);
-          setTimeout(() => {
-            onFinish();
-          }, 250);
-          return 100;
-        }
-        return prev + 25;
-      });
-    }, 180);
+    const timer = setTimeout(() => {
+      clearInterval(progressInterval);
+      setProgress(100);
+      setIsExiting(true);
+      setTimeout(() => {
+        if (onFinishRef.current) onFinishRef.current();
+      }, 150);
+    }, 280);
 
-    return () => clearInterval(interval);
-  }, [onFinish]);
+    return () => {
+      clearInterval(progressInterval);
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <div
@@ -59,10 +57,10 @@ export const Loader = ({ onFinish }) => {
           src="/indiark-logo.png"
           alt="Indiark Entertainments"
           style={{
-            height: '64px',
+            height: '72px',
             width: 'auto',
             objectFit: 'contain',
-            marginBottom: '0.5rem',
+            marginBottom: '0.75rem',
           }}
         />
 

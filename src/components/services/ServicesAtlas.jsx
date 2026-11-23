@@ -23,7 +23,7 @@ export const ServicesAtlas = ({ onSelectService, onActionClick }) => {
       pitchCtaText: 'PITCH YOUR OTT CONTENT',
       pitchSummary: 'We position your film or series directly in front of OTT commissioning editors & acquisition heads.',
       overview: 'We identify suitable OTT platforms and streaming buyers, position content in accordance with platform programming mandates, and manage the pitching process through commercial discussions and deal coordination.',
-      targetBuyers: ['Netflix', 'Amazon Prime Video', 'SonyLIV', 'ZEE5', 'JioHotstar', 'Aha', 'SunNXT', 'Lionsgate Play'],
+      targetBuyers: ['National SVOD Platforms', 'Premium Regional Streamers', 'Satellite Television Networks', 'Global Digital Aggregators', 'International Buyers', 'AVOD & FAST Networks'],
       commercialModels: ['Outright License Fee', 'Minimum Guarantee (MG)', 'AVOD Revenue Share', 'Multi-Territory Carve-Outs'],
       formats: ['Feature Films', 'Original Web Series', 'Regional Cinema', 'Dubbed & Multilingual', 'Archival Libraries'],
       process: ['Platform Mandate Matching', 'B2B Pitch Deck & Screener', 'Acquisitions Screening', 'Commercial Negotiation', 'Closing Coordination'],

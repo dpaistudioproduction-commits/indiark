@@ -10,9 +10,9 @@ export const WhoWeArePage = ({ setActivePage, team }) => {
 
   return (
     <div style={{ backgroundColor: 'var(--bg-dark-950)' }}>
-      
+
       {/* Page Header */}
-      <section 
+      <section
         className="section section-dark"
         style={{
           paddingTop: 'clamp(3rem, 6vw, 5rem)',
@@ -31,7 +31,7 @@ export const WhoWeArePage = ({ setActivePage, team }) => {
               <span style={{ color: 'var(--brand-teal-light)' }}>INDUSTRY CONNECTIONS.</span>
             </h1>
             <p className="text-editorial-body">
-              Indiark Entertainments is an entertainment rights house and media business agency representing producers, filmmakers, and creators to negotiate and close commercial licensing deals across OTT platforms, broadcasters, and global buyers.
+              Indiark Entertainments is a media rights and distribution agency based in India. We represent film producers and directors to pitch, negotiate, and sell OTT streaming rights, TV satellite broadcast rights, and dubbing rights at the best commercial value.
             </p>
           </div>
         </div>
@@ -104,7 +104,7 @@ export const WhoWeArePage = ({ setActivePage, team }) => {
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {[
-                  'OTT Platform Pitching (Netflix, Prime, SonyLIV, ZEE5, JioHotstar, Regional OTTs)',
+                  'OTT Platform Pitching (National & Regional Premium Streaming Platforms, Broadcasters, Digital Aggregators)',
                   'Producer Representation & Deal Management',
                   'Multi-Territory & Multi-Window Licensing',
                   'Music Master & Sync Rights Administration',
@@ -123,60 +123,126 @@ export const WhoWeArePage = ({ setActivePage, team }) => {
       </section>
 
       {/* Leadership & Professional Team Section */}
-      <section className="section section-secondary">
+      <section className="section section-secondary" style={{ paddingTop: 'clamp(4rem, 6.5vw, 5.5rem)', paddingBottom: 'clamp(4rem, 6.5vw, 5.5rem)' }}>
         <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 3.5rem auto' }}>
-            <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Leadership Team</span>
+          <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 3.5rem auto' }}>
+            <span className="badge badge-teal" style={{ marginBottom: '0.6rem' }}>Indiark Entertainments</span>
             <h2 className="display-statement" style={{ marginBottom: '0.75rem' }}>
-              PROFESSIONAL LEADERSHIP
+              PROFESSIONAL <span className="gradient-text-teal">LEADERSHIP TEAM</span>
             </h2>
-            <p style={{ color: 'var(--text-light-secondary)', fontSize: '1rem' }}>
-              The management and advisory team guiding Indiark Entertainments' commercial mandates.
+            <p style={{ color: 'var(--text-light-secondary)', fontSize: '1rem', lineHeight: 1.65 }}>
+              Our leadership and strategic associates bring together expertise in OTT partnerships, content acquisition, film industry relationships, creative storytelling, and post-production services.
             </p>
           </div>
 
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '1.75rem',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+              gap: '2rem',
             }}
           >
             {team.map((member) => (
               <div
                 key={member.id}
                 style={{
-                  backgroundColor: 'rgba(7, 13, 20, 0.75)',
-                  border: '1px solid var(--border-dark)',
-                  borderRadius: 'var(--radius-md)',
-                  padding: '1.75rem',
+                  backgroundColor: 'rgba(11, 19, 31, 0.85)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  borderRadius: 'var(--radius-lg)',
+                  overflow: 'hidden',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
+                  transition: 'transform 0.3s ease, border-color 0.3s ease',
+                  boxShadow: '0 15px 35px -10px rgba(0, 0, 0, 0.5)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.borderColor = 'rgba(0, 157, 165, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
                 }}
               >
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                    <div style={{ width: '42px', height: '42px', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(0, 157, 165, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-teal-light)' }}>
-                      <UserCheck size={20} />
-                    </div>
-                    <div>
-                      <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
+                  {/* Portrait Photo Frame */}
+                  <div 
+                    style={{ 
+                      width: '100%', 
+                      height: '290px', 
+                      position: 'relative', 
+                      overflow: 'hidden', 
+                      backgroundColor: '#070D14' 
+                    }}
+                  >
+                    {member.photoUrl ? (
+                      <img 
+                        src={member.photoUrl} 
+                        alt={member.name}
+                        style={{ 
+                          width: '100%', 
+                          height: '100%', 
+                          objectFit: 'cover', 
+                          objectPosition: 'center 20%', 
+                          display: 'block' 
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    ) : null}
+
+                    {/* Gradient overlay on portrait */}
+                    <div 
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'linear-gradient(to top, rgba(11, 19, 31, 0.98) 0%, rgba(11, 19, 31, 0.3) 55%, transparent 100%)'
+                      }}
+                    />
+
+                    {/* Name & Designation overlay */}
+                    <div style={{ position: 'absolute', bottom: '16px', left: '16px', right: '16px' }}>
+                      <span 
+                        style={{
+                          backgroundColor: 'rgba(7, 13, 20, 0.85)',
+                          backdropFilter: 'blur(8px)',
+                          color: 'var(--brand-lime)',
+                          border: '1px solid rgba(148, 200, 32, 0.3)',
+                          fontSize: '0.72rem',
+                          fontWeight: 800,
+                          padding: '0.3rem 0.7rem',
+                          borderRadius: 'var(--radius-full)',
+                          display: 'inline-block',
+                          marginBottom: '0.5rem'
+                        }}
+                      >
+                        {member.designation}
+                      </span>
+                      <h3 style={{ fontSize: '1.35rem', fontWeight: 900, color: '#FFFFFF', margin: 0, letterSpacing: '-0.01em' }}>
                         {member.name}
                       </h3>
-                      <div style={{ fontSize: '0.76rem', color: 'var(--brand-lime)', fontWeight: 600 }}>
-                        {member.designation}
-                      </div>
                     </div>
                   </div>
 
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-light-muted)', lineHeight: '1.6', margin: 0 }}>
-                    {member.bio}
-                  </p>
+                  {/* Bio Content */}
+                  <div style={{ padding: '1.5rem' }}>
+                    <p style={{ fontSize: '0.88rem', color: 'var(--text-light-secondary)', lineHeight: 1.65, margin: 0 }}>
+                      {member.bio}
+                    </p>
+                  </div>
                 </div>
 
-                <div style={{ marginTop: '1.5rem', paddingTop: '0.75rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)', fontSize: '0.74rem', color: 'var(--text-light-subtle)' }}>
-                  Indiark Commercial Leadership
+                <div style={{ padding: '0 1.5rem 1.5rem 1.5rem' }}>
+                  <div style={{ paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.74rem', color: 'var(--brand-teal-light)', fontWeight: 600 }}>
+                      Indiark Leadership
+                    </span>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--text-light-muted)' }}>
+                      Executive Team
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
