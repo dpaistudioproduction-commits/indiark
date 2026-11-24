@@ -9,7 +9,7 @@
 
 const STORAGE_KEYS = {
   PROJECTS: 'indiark_projects_v2',
-  TEAM: 'indiark_team_v2',
+  TEAM: 'indiark_team_v3',
   PARTNERS: 'indiark_partners_v1',
   BUYER_SUBMISSIONS: 'indiark_buyer_submissions_v1',
   CONTENT_SUBMISSIONS: 'indiark_content_submissions_v1'
@@ -158,10 +158,10 @@ const INITIAL_TEAM = [
   {
     id: 'arun-dev',
     name: 'Arun Dev',
-    designation: 'AI Film Making',
-    bio: 'Arun Dev is a media and entertainment professional with over 20 years of experience in film production, AI film making, cinematography, creative direction, OTT platforms and digital content distribution. He brings expertise in creative development, production management, content strategy and digital entertainment, with a focus on innovative storytelling and emerging media technologies.',
+    designation: 'AI Filmmaker & Generative AI Director',
+    bio: 'Arun Dev is an AI Filmmaker, Generative AI Director and media professional with over 20 years of experience in film production, cinematography, creative direction and digital media. Specialising in AI filmmaking, generative AI video production, AI-powered advertising and cinematic visual storytelling, he combines traditional filmmaking expertise with emerging artificial intelligence technologies to create innovative films, commercials and digital content. His expertise spans AI-driven film production, cinematic storytelling, visual development, creative strategy and next-generation media production, contributing to the evolving landscape of AI filmmaking and digital entertainment in India.',
     linkedin: '',
-    photoUrl: '/Arun.jpeg'
+    photoUrl: '/Arun Devv.jpg'
   },
   {
     id: 'manu-kc',

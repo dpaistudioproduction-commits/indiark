@@ -178,7 +178,7 @@ export const WhoWeArePage = ({ setActivePage, team }) => {
                   >
                     {member.photoUrl ? (
                       <img 
-                        src={member.photoUrl} 
+                        src={encodeURI(member.photoUrl)} 
                         alt={member.name}
                         style={{ 
                           width: '100%', 
@@ -188,7 +188,12 @@ export const WhoWeArePage = ({ setActivePage, team }) => {
                           display: 'block' 
                         }}
                         onError={(e) => {
-                          e.target.style.display = 'none';
+                          if (member.id === 'arun-dev' && !e.target.dataset.triedFallback) {
+                            e.target.dataset.triedFallback = 'true';
+                            e.target.src = '/Arun.jpeg';
+                          } else {
+                            e.target.style.display = 'none';
+                          }
                         }}
                       />
                     ) : null}
