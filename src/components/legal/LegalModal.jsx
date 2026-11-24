@@ -28,7 +28,7 @@ export const LegalModal = ({ legalType, onClose }) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '1.5rem'
+        padding: 'clamp(0.75rem, 3vw, 1.5rem)'
       }}
       onClick={onClose}
     >
@@ -37,12 +37,13 @@ export const LegalModal = ({ legalType, onClose }) => {
         style={{
           width: '100%',
           maxWidth: '780px',
-          maxHeight: '88vh',
+          maxHeight: 'calc(100dvh - 2rem)',
           display: 'flex',
           flexDirection: 'column',
           padding: 0,
           border: '1px solid var(--border-dark)',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          WebkitOverflowScrolling: 'touch'
         }}
         onClick={(e) => e.stopPropagation()}
       >

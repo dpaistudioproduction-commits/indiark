@@ -200,6 +200,8 @@ export const ProjectDetailModal = ({ project, onClose, onContactForTitle }) => {
           @media (max-width: 680px) {
             .project-modal-grid {
               grid-template-columns: 1fr !important;
+              padding: 1.25rem !important;
+              gap: 1.25rem !important;
             }
           }
         `}</style>

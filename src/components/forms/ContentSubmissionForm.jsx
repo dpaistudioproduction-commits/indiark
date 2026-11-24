@@ -193,7 +193,7 @@ export const ContentSubmissionForm = () => {
             1. Submitter & Rights Holder Information
           </h3>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '1.25rem' }}>
             <div className="form-group">
               <label className="form-label">Submitter Role / Category *</label>
               <select
@@ -274,7 +274,7 @@ export const ContentSubmissionForm = () => {
             2. Project Metadata & Specifications
           </h3>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '1.25rem' }}>
             <div className="form-group">
               <label className="form-label">Project Title *</label>
               <input
@@ -408,7 +408,7 @@ export const ContentSubmissionForm = () => {
             4. Secure Screener & Pitch Materials
           </h3>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '1.25rem' }}>
             <div className="form-group">
               <label className="form-label">Screener Link (Vimeo / Drive / YouTube Unlisted) *</label>
               <input

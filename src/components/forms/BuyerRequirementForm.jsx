@@ -108,11 +108,11 @@ export const BuyerRequirementForm = () => {
         >
           <CheckCircle2 size={36} />
         </div>
-        
+
         <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#FFFFFF', marginBottom: '0.75rem' }}>
           REQUIREMENT REGISTERED
         </h3>
-        
+
         <p style={{ color: 'var(--text-light-secondary)', fontSize: '1.05rem', maxWidth: '600px', margin: '0 auto 1.5rem auto', lineHeight: '1.6' }}>
           Thank you. Your buyer acquisition brief has been logged with Indiark Entertainments. Our content rights team will review your parameters and prepare a curated slate of verified titles matching your mandate.
         </p>
@@ -157,14 +157,14 @@ export const BuyerRequirementForm = () => {
         boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
       }}
     >
-      
+
       {/* Section 1: Company & Platform Profile */}
       <div style={{ marginBottom: '2.5rem' }}>
         <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--brand-teal-light)', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '1.25rem', borderBottom: '1px solid var(--border-dark)', paddingBottom: '0.6rem' }}>
           1. Company & Platform Details
         </h3>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '1.25rem' }}>
           <div className="form-group">
             <label className="form-label">Company / Organization Name *</label>
             <input
@@ -221,7 +221,7 @@ export const BuyerRequirementForm = () => {
           2. Acquisition Contact Information
         </h3>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '1.25rem' }}>
           <div className="form-group">
             <label className="form-label">Contact Person Name *</label>
             <input
@@ -309,7 +309,7 @@ export const BuyerRequirementForm = () => {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem', marginTop: '1.25rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '1.25rem', marginTop: '1.25rem' }}>
           <div className="form-group">
             <label className="form-label">Target Languages *</label>
             <input
@@ -372,7 +372,7 @@ export const BuyerRequirementForm = () => {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem', marginTop: '1.25rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '1.25rem', marginTop: '1.25rem' }}>
           <div className="form-group">
             <label className="form-label">Commercial Deal Structuring Preference</label>
             <select

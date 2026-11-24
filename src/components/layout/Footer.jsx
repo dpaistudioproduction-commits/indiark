@@ -24,9 +24,9 @@ export const Footer = ({ setActivePage, onOpenLegal }) => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: '3rem',
-            marginBottom: '4rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
+            gap: 'clamp(2rem, 3.5vw, 3rem)',
+            marginBottom: '3.5rem',
           }}
         >
           

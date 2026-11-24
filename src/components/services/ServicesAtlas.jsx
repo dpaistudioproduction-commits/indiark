@@ -518,7 +518,7 @@ export const ServicesAtlas = ({ onSelectService, onActionClick }) => {
                     boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
                   }}
                 >
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0.85rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '0.85rem' }}>
                     {/* Target Buyers & Platforms */}
                     <div>
                       <div style={{ fontSize: '0.72rem', color: 'var(--brand-lime)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
@@ -599,7 +599,7 @@ export const ServicesAtlas = ({ onSelectService, onActionClick }) => {
                   <div style={{ fontSize: '0.72rem', color: 'var(--brand-teal-light)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.45rem' }}>
                     Mandate Deliverables & Execution Scope:
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '0.55rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '0.55rem' }}>
                     {current.deliverables.map((del, idx) => (
                       <div
                         key={idx}

@@ -14,6 +14,29 @@ export const Navbar = ({ activePage, setActivePage, onOpenAdmin }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock background scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
+  // Close mobile drawer on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   const navLinks = [
     { id: 'home', label: 'HOME' },
     { id: 'who-we-are', label: 'WHO WE ARE' },
@@ -162,23 +185,27 @@ export const Navbar = ({ activePage, setActivePage, onOpenAdmin }) => {
         </div>
       </header>
 
-      {/* Mobile Drawer Navigation */}
+      {/* Mobile Drawer Navigation (Full Viewport & Safe Area Aware) */}
       {mobileMenuOpen && (
         <div
           style={{
             position: 'fixed',
             inset: 0,
-            top: '70px',
+            top: isScrolled ? '68px' : '78px',
             backgroundColor: 'rgba(7, 13, 20, 0.98)',
-            backdropFilter: 'blur(20px)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
             zIndex: 99,
             display: 'flex',
             flexDirection: 'column',
-            padding: '1.5rem',
+            padding: '1.25rem 1.25rem max(2rem, env(safe-area-inset-bottom)) 1.25rem',
             overflowY: 'auto',
+            WebkitOverflowScrolling: 'touch',
+            height: `calc(100vh - ${isScrolled ? '68px' : '78px'})`,
+            maxHeight: `calc(100dvh - ${isScrolled ? '68px' : '78px'})`
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '2rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', marginBottom: '2rem' }}>
             {navLinks.map((link) => {
               const isActive = activePage === link.id;
               return (
@@ -189,16 +216,18 @@ export const Navbar = ({ activePage, setActivePage, onOpenAdmin }) => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '1rem 1.25rem',
+                    padding: '0.9rem 1.15rem',
+                    minHeight: '48px',
                     borderRadius: 'var(--radius-md)',
-                    background: isActive ? 'rgba(0, 157, 165, 0.15)' : 'rgba(255, 255, 255, 0.02)',
-                    border: isActive ? '1px solid var(--brand-teal)' : '1px solid transparent',
+                    background: isActive ? 'rgba(0, 157, 165, 0.15)' : 'rgba(255, 255, 255, 0.03)',
+                    border: isActive ? '1px solid var(--brand-teal)' : '1px solid rgba(255, 255, 255, 0.05)',
                     color: isActive ? '#FFFFFF' : 'var(--text-light-secondary)',
                     fontFamily: 'var(--font-heading)',
-                    fontSize: '1rem',
-                    fontWeight: isActive ? 700 : 500,
+                    fontSize: '0.98rem',
+                    fontWeight: isActive ? 700 : 600,
                     textAlign: 'left',
                     cursor: 'pointer',
+                    touchAction: 'manipulation'
                   }}
                 >
                   <span>{link.label}</span>
@@ -208,11 +237,11 @@ export const Navbar = ({ activePage, setActivePage, onOpenAdmin }) => {
             })}
           </div>
 
-          <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.75rem', paddingTop: '1rem' }}>
             <button
               onClick={() => handleNavClick('submit-content')}
               className="btn btn-lime btn-lg"
-              style={{ width: '100%', justifyContent: 'center' }}
+              style={{ width: '100%', justifyContent: 'center', minHeight: '48px' }}
             >
               <span>PITCH YOUR CONTENT</span>
               <ArrowUpRight size={18} />
@@ -220,7 +249,7 @@ export const Navbar = ({ activePage, setActivePage, onOpenAdmin }) => {
             <button
               onClick={() => handleNavClick('for-platforms')}
               className="btn btn-secondary-dark btn-lg"
-              style={{ width: '100%', justifyContent: 'center' }}
+              style={{ width: '100%', justifyContent: 'center', minHeight: '48px' }}
             >
               <span>BUYER REQUIREMENTS</span>
             </button>

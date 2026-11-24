@@ -138,8 +138,8 @@ export const WhoWeArePage = ({ setActivePage, team }) => {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-              gap: '2rem',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
+              gap: 'clamp(1.5rem, 2.5vw, 2rem)',
             }}
           >
             {team.map((member) => (

@@ -324,14 +324,7 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
         />
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div 
-            className="split-editorial" 
-            style={{ 
-              alignItems: 'center', 
-              gap: 'clamp(2rem, 4vw, 4rem)', 
-              gridTemplateColumns: 'minmax(0, 1.15fr) minmax(360px, 1fr)'
-            }}
-          >
+          <div className="hero-split-grid">
             
             {/* Left Narrative */}
             <div>
@@ -505,7 +498,7 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
           <div 
             style={{ 
               display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', 
               gap: 'clamp(1.5rem, 3vw, 2.5rem)' 
             }}
           >
@@ -625,7 +618,7 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
           <div 
             style={{ 
               display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))', 
               gap: 'clamp(1.5rem, 2.5vw, 2.25rem)' 
             }}
           >
@@ -857,7 +850,7 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '1.5rem' }}>
             {practiceHighlights.map((item, idx) => (
               <div 
                 key={idx}
@@ -950,7 +943,7 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
           <div 
             style={{ 
               display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', 
               gap: 'clamp(1.5rem, 2.5vw, 2.25rem)' 
             }}
           >
@@ -1075,7 +1068,7 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
           </div>
 
           {/* 4 Pillars Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '1.5rem' }}>
             {coreServices.map((srv) => {
               const IconComp = srv.icon;
               return (
@@ -1279,9 +1272,9 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
               backgroundColor: 'rgba(11, 19, 31, 0.95)',
               border: '1px solid rgba(255, 255, 255, 0.06)',
               borderRadius: 'var(--radius-xl)',
-              padding: 'clamp(2rem, 3.5vw, 3rem)',
+              padding: 'clamp(1.5rem, 3.5vw, 3rem)',
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
               gap: 'clamp(2rem, 3.5vw, 3.5rem)',
               alignItems: 'center'
             }}
@@ -1493,24 +1486,23 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
           onClick={() => setSelectedFilmModal(null)}
         >
           <div 
+            className="film-quick-modal"
             style={{
               backgroundColor: '#0B131F',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: 'var(--radius-xl)',
               maxWidth: '750px',
               width: '100%',
-              maxHeight: '90vh',
+              maxHeight: 'calc(100dvh - 2rem)',
               overflowY: 'auto',
+              WebkitOverflowScrolling: 'touch',
               boxShadow: '0 30px 80px rgba(0, 0, 0, 0.9)',
-              position: 'relative',
-              display: 'grid',
-              gridTemplateColumns: 'minmax(220px, 280px) 1fr',
-              gap: '1.5rem'
+              position: 'relative'
             }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Left Poster */}
-            <div style={{ backgroundColor: '#070D14', overflow: 'hidden', borderTopLeftRadius: 'var(--radius-xl)', borderBottomLeftRadius: 'var(--radius-xl)' }}>
+            <div className="film-modal-poster">
               <img 
                 src={selectedFilmModal.poster} 
                 alt={selectedFilmModal.title}
@@ -1519,7 +1511,7 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
             </div>
 
             {/* Modal Right Info */}
-            <div style={{ padding: '2rem 2rem 2rem 0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div className="film-modal-content">
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
                   <span className="badge badge-teal">

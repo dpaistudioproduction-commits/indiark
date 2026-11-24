@@ -225,7 +225,7 @@ export const WhatWeDoPage = ({ setActivePage }) => {
                   <div
                     style={{
                       display: 'grid',
-                      gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
                       gap: '1.25rem',
                       padding: '1.25rem',
                       backgroundColor: 'rgba(11, 19, 31, 0.75)',
@@ -266,7 +266,7 @@ export const WhatWeDoPage = ({ setActivePage }) => {
                     <div style={{ fontSize: '0.76rem', color: 'var(--text-light-muted)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem' }}>
                       Scope & Deliverables:
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.75rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '0.75rem' }}>
                       {svc.deliverables.map((del, dI) => (
                         <div key={dI} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', padding: '0.65rem 0.85rem', backgroundColor: 'rgba(7, 13, 20, 0.6)', borderRadius: 'var(--radius-xs)', border: '1px solid rgba(255, 255, 255, 0.04)' }}>
                           <CheckCircle2 size={15} color="var(--brand-lime)" style={{ flexShrink: 0, marginTop: '0.2rem' }} />

@@ -102,7 +102,7 @@ export const AuthorizationLetterModal = ({ isOpen, onClose, projectTitle, submit
             </ul>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-dark)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '1.5rem', marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-dark)' }}>
             <div>
               <div style={{ fontSize: '0.78rem', color: 'var(--text-light-muted)', marginBottom: '0.5rem' }}>Authorized Submitter:</div>
               <div style={{ fontWeight: 700, color: '#FFFFFF' }}>{submitterName || 'Authorized Signatory'}</div>

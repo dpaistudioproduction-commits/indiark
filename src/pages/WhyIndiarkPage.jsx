@@ -109,8 +109,8 @@ export const WhyIndiarkPage = ({ setActivePage }) => {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-              gap: '2rem',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+              gap: 'clamp(1.5rem, 2.5vw, 2rem)',
             }}
           >
             {pillars.map((p) => (
