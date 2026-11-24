@@ -150,7 +150,6 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
       role: "Producer",
       company: "Malabar Motion Pictures",
       film: "The Great Indian Kitchen",
-      stillUrl: '/great-indian-kitchen.jpg',
       rating: 5,
       impact: "Streamed Worldwide • OTT Hit"
     },
@@ -161,7 +160,6 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
       role: "Executive Producer",
       company: "Heritage Media Ventures",
       film: "Bhishmar",
-      stillUrl: '/bhishmar.jpg',
       rating: 5,
       impact: "OTT & Music Rights Closed Together"
     },
@@ -172,7 +170,6 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
       role: "Writer & Director",
       company: "Southern Indie Collective",
       film: "Vaanku",
-      stillUrl: '/vaanku.jpg',
       rating: 5,
       impact: "Minimum Guarantee (MG) Defended"
     },
@@ -183,7 +180,6 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
       role: "Managing Director",
       company: "Blue Wave Productions",
       film: "Secret of Kalinga",
-      stillUrl: '/secret-of-kalinga.jpg',
       rating: 5,
       impact: "OTT & Satellite Rights Closed"
     }
@@ -194,25 +190,21 @@ export const HomePage = ({ setActivePage, onSelectProject }) => {
     {
       title: 'Direct Platform Screenings',
       desc: 'We show your movie screener directly to content heads and acquisitions teams at top streaming platforms.',
-      image: '/screening-theater.jpg',
       tag: 'OTT Screenings'
     },
     {
       title: 'Movie Valuation & Pitch Decks',
       desc: 'We evaluate your content honestly, set the right market price, and prepare professional B2B pitch materials.',
-      image: '/camera-rig.jpg',
       tag: 'Producer Representation'
     },
     {
       title: 'Quality Check & Delivery',
       desc: 'We make sure your video, audio, subtitles, and metadata meet all technical broadcast and OTT delivery guidelines.',
-      image: '/editing-color-lab.jpg',
       tag: 'Technical QC'
     },
     {
       title: 'Agreements & Payment Milestones',
       desc: 'We negotiate the contract, holdback periods, theatrical windows, and ensure clear payment terms for you.',
-      image: '/deal-signing.jpg',
       tag: 'Deal Signing'
     }
   ];
